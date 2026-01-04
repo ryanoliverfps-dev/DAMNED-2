@@ -7,7 +7,13 @@
     <style>
         body{margin:0;font-family:Arial, sans-serif;background:#0d0b12;color:#eee; padding-bottom: 80px;}
         header{display:flex;gap:10px;padding:15px;background:#161222;border-bottom: 2px solid #3d2a5c;}
-        header img{width:120px;height:160px;object-fit:cover;border-radius:10px;border:2px solid #3d2a5c;background:#000;cursor:pointer}
+        
+        /* Container da Imagem */
+        .avatar-container { position: relative; width: 120px; height: 160px; }
+        header img { width: 120px; height: 160px; object-fit: cover; border-radius: 10px; border: 2px solid #3d2a5c; background: #000; cursor: pointer; }
+        .img-label { position: absolute; bottom: 5px; width: 100%; text-align: center; font-size: 9px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 0; border-radius: 0 0 10px 10px; pointer-events: none; }
+        #fileInput { display: none; }
+
         .header-info{flex:1}
         .header-info input{width:100%;margin-bottom:6px;padding:8px;border-radius:6px;border:none;background:#1f1a2e;color:#fff;box-sizing:border-box}
         
@@ -44,7 +50,7 @@
         .footer-tools{position: fixed; bottom: 0; width: 100%; background: #161222; padding: 10px; display: flex; justify-content: center; border-top: 1px solid #3d2a5c; z-index: 100;}
         .btn-undo{background: #5c5c2a; font-weight: bold; width: 80%;}
 
-        .list-item{background:#1f1a2e;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #7a4cff; overflow: hidden;}
+        .list-item{background:#1f1a2e;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #7a4cff; overflow: hidden; position: relative;}
         .btn-delete{background: #8b0000; padding: 4px 8px; font-size: 11px; float: right; margin-left: 5px;}
         
         .def-total-box { background: #161222; border: 2px solid #7a4cff; border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 15px; }
@@ -55,7 +61,11 @@
 <body>
 
 <header>
-    <img id="imgChar" src="https://via.placeholder.com/120x160?text=Avatar" onclick="trocarImagem()">
+    <div class="avatar-container" onclick="document.getElementById('fileInput').click()">
+        <img id="imgChar" src="https://via.placeholder.com/120x160?text=Avatar">
+        <div class="img-label">ALTERAR FOTO</div>
+        <input type="file" id="fileInput" accept="image/*" onchange="uploadImagem(event)">
+    </div>
     <div class="header-info">
         <input id="nome" placeholder="Nome" onchange="salvarHeader()">
         <input id="idade" placeholder="Idade" onchange="salvarHeader()">
@@ -100,8 +110,8 @@
 <div class="section" data-sec="3">
     <div class="input-group">
         <input id="armaNome" placeholder="Nome da Arma">
-        <input id="armaDano" placeholder="Dano (ex: 2d10 + 5)">
-        <input id="armaEfeito" placeholder="Efeito (ex: Sangramento)">
+        <input id="armaDano" placeholder="Dano">
+        <input id="armaEfeito" placeholder="Efeito">
         <textarea id="armaDesc" placeholder="Descrição..."></textarea>
         <button onclick="addItem('armas', ['armaNome', 'armaDano', 'armaEfeito', 'armaDesc'], ['n', 'dan', 'ef', 'd'])" style="width:100%">Adicionar Arma</button>
     </div>
@@ -111,7 +121,7 @@
 <div class="section" data-sec="4">
     <div class="def-total-box">DEFESA TOTAL: <b id="defTotal" style="color:#7a4cff; font-size:20px">0</b></div>
     <div class="input-group">
-        <input id="equipNome" placeholder="Equipamento (ex: Escudo)">
+        <input id="equipNome" placeholder="Equipamento">
         <input id="equipDef" type="number" placeholder="Defesa">
         <textarea id="equipDesc" placeholder="Descrição..."></textarea>
         <button onclick="addItem('equipamentos', ['equipNome', 'equipDef', 'equipDesc'], ['n', 'def', 'd'])" style="width:100%">Equipar</button>
@@ -121,9 +131,9 @@
 
 <div class="section" data-sec="5">
     <div class="input-group">
-        <input id="invNome" placeholder="Item (ex: Poção)">
+        <input id="invNome" placeholder="Item">
         <textarea id="invDesc" placeholder="Descrição..."></textarea>
-        <button onclick="addItem('inventario', ['invNome', 'invDesc'], ['n', 'd'])" style="width:100%">Adicionar ao Inventário</button>
+        <button onclick="addItem('inventario', ['invNome', 'invDesc'], ['n', 'd'])" style="width:100%">Adicionar</button>
     </div>
     <div id="listaInventario"></div>
 </div>
@@ -165,7 +175,20 @@ const statusConfig = [{id:'pv', label:'Vida'}, {id:'pe', label:'Energia'}, {id:'
 let historico = [];
 
 function snapshot() { if (historico.length > 20) historico.shift(); historico.push(JSON.stringify(ficha)); }
-function salvar() { localStorage.setItem('fichaRPG_V9', JSON.stringify(ficha)); render(); }
+function salvar() { localStorage.setItem('fichaRPG_V10', JSON.stringify(ficha)); render(); }
+
+function uploadImagem(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            snapshot();
+            ficha.img = e.target.result; // Salva em Base64
+            salvar();
+        };
+        reader.readAsDataURL(file);
+    }
+}
 
 function addItem(key, inputIds, objKeys) {
     const vals = inputIds.map(id => document.getElementById(id).value.trim());
@@ -188,24 +211,19 @@ function addAtributo() {
 }
 
 function removerItem(key, i) { snapshot(); if(key === 'atributos') delete ficha.atributos[i]; else ficha[key].splice(i,1); salvar(); }
-
 function alterarValor(tipo, qtd) {
     snapshot(); ficha[tipo] += qtd;
     if(ficha[tipo] < 0) ficha[tipo] = 0;
     if((tipo==='pv'||tipo==='pe') && ficha[tipo] > ficha[tipo+'Max']) ficha[tipo] = ficha[tipo+'Max'];
     salvar();
 }
-
 function setMax(tipo) { snapshot(); ficha[tipo+'Max'] = parseInt(document.getElementById(tipo+'MaxInput').value)||1; salvar(); }
-
 function desfazer() { if(historico.length > 0) { ficha = JSON.parse(historico.pop()); render(); } }
-
 function salvarSimples() { 
     ficha.historia = document.getElementById('historia').value; 
     ficha.notas = document.getElementById('notas').value; 
-    localStorage.setItem('fichaRPG_V9', JSON.stringify(ficha)); 
+    localStorage.setItem('fichaRPG_V10', JSON.stringify(ficha)); 
 }
-
 function salvarHeader() {
     ficha.nome = document.getElementById('nome').value;
     ficha.idade = document.getElementById('idade').value;
@@ -222,9 +240,12 @@ function render() {
         document.getElementById(s.id+'MaxInput').value = ficha[s.id+'Max'];
     });
 
-    document.getElementById('historia').value = ficha.historia;
-    document.getElementById('notas').value = ficha.notas;
-    document.getElementById('nome').value = ficha.nome;
+    document.getElementById('historia').value = ficha.historia || '';
+    document.getElementById('notas').value = ficha.notas || '';
+    document.getElementById('nome').value = ficha.nome || '';
+    document.getElementById('idade').value = ficha.idade || '';
+    document.getElementById('raca').value = ficha.raca || '';
+    document.getElementById('classe').value = ficha.classe || '';
     document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/120x160?text=Avatar';
 
     const renderList = (id, list, key, template) => {
@@ -237,12 +258,7 @@ function render() {
     renderList('listaHabilidades', ficha.habilidades, 'hab', (it, i) => `<div class="list-item"><b>${it.n}</b><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('habilidades',${i})">X</button></div>`);
     renderList('listaPenitencias', ficha.penitencias, 'pen', (it, i) => `<div class="list-item"><b>${it.n} (LV ${it.lv})</b><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('penitencias',${i})">X</button></div>`);
     renderList('listaInventario', ficha.inventario, 'inv', (it, i) => `<div class="list-item"><b>${it.n}</b><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('inventario',${i})">X</button></div>`);
-    
-    renderList('listaArmas', ficha.armas, 'arma', (it, i) => `
-        <div class="list-item">
-            <b>${it.n}</b> [Dano: ${it.dan}] <small>(${it.ef || 'Sem efeito'})</small><br>
-            <small>${it.d}</small><button class="btn-delete" onclick="removerItem('armas',${i})">X</button>
-        </div>`);
+    renderList('listaArmas', ficha.armas, 'arma', (it, i) => `<div class="list-item"><b>${it.n}</b> [${it.dan}] <small>${it.ef}</small><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('armas',${i})">X</button></div>`);
 
     let defTotal = 0;
     renderList('listaEquipamentos', ficha.equipamentos, 'equip', (it, i) => {
@@ -251,8 +267,6 @@ function render() {
     });
     document.getElementById('defTotal').textContent = defTotal;
 }
-
-function trocarImagem(){ const u = prompt('Link da Imagem:'); if(u){ snapshot(); ficha.img = u; salvar(); } }
 
 window.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('status-container');
@@ -272,7 +286,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.tab-btn, .section').forEach(el => el.classList.remove('active'));
         btn.classList.add('active'); document.querySelector(`.section[data-sec='${btn.dataset.tab}']`).classList.add('active');
     }));
-    const d = localStorage.getItem('fichaRPG_V9'); if(d) ficha = JSON.parse(d); render();
+    const d = localStorage.getItem('fichaRPG_V10'); if(d) ficha = JSON.parse(d); render();
 });
 </script>
 </body>
