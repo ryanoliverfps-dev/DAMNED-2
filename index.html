@@ -322,5 +322,53 @@ function render(){
     };
 
     renderLista('listaAtributos', ficha.atributos, 'atributos', (k, v) => 
-        `<div class="list-item"><span onclick="editarGenerico('atributos', '${k}')"><b>${k}:</b> ${v}</span><button class="
-    
+        `<div class="list-item"><span onclick="editarGenerico('atributos', '${k}')"><b>${k}:</b> ${v}</span><button class="btn-delete" onclick="removerItem('atributos', '${k}')">X</button></div>`);
+
+    renderLista('listaHabilidades', ficha.habilidades, 'habilidades', (item, i) => 
+        `<div class="list-item"><span onclick="editarGenerico('habilidades', ${i}, 'd')"><b>${item.n}</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('habilidades', ${i})">X</button></div>`);
+
+    renderLista('listaArmas', ficha.armas, 'armas', (item, i) => 
+        `<div class="list-item"><span onclick="editarGenerico('armas', ${i}, 'd')"><b>${item.n}</b>: ${item.d}</span><button class="btn-delete" onclick="removerItem('armas', ${i})">X</button></div>`);
+
+    renderLista('listaPenitencias', ficha.penitencias, 'penitencias', (item, i) => 
+        `<div class="list-item"><span onclick="editarGenerico('penitencias', ${i}, 'd')"><b>${item.n} (Nív. ${item.lv})</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('penitencias', ${i})">X</button></div>`);
+}
+
+function alterarValor(tipo, qtd) {
+    snapshot();
+    ficha[tipo] += qtd;
+    // Permite extrapolar o limite superior, mas impede de cair abaixo de zero
+    if(ficha[tipo] < 0) ficha[tipo] = 0;
+    salvar();
+}
+
+function setMax(tipo) {
+    snapshot();
+    ficha[tipo + 'Max'] = parseInt(document.getElementById(tipo + 'MaxInput').value) || 1;
+    salvar();
+}
+
+function trocarImagem(){
+    const u = prompt('URL da imagem'); 
+    if(u) { snapshot(); ficha.img = u; document.getElementById('imgChar').src = u; salvar(); }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelector(`.section[data-sec='${btn.dataset.tab}']`).classList.add('active');
+        });
+    });
+    const d = localStorage.getItem('fichaRPG_V6');
+    if(d) {
+        const saved = JSON.parse(d);
+        ficha = {...ficha, ...saved};
+    }
+    render();
+});
+</script>
+</body>
+</html>
