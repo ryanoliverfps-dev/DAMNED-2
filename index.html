@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha RPG – Anime Medieval</title>
     <style>
-        body{margin:0;font-family:Arial, sans-serif;background:#0d0b12;color:#eee; padding-bottom: 70px;}
+        body{margin:0;font-family:Arial, sans-serif;background:#0d0b12;color:#eee; padding-bottom: 80px;}
         header{display:flex;gap:10px;padding:15px;background:#161222;border-bottom: 2px solid #3d2a5c;}
         header img{width:120px;height:160px;object-fit:cover;border-radius:10px;border:2px solid #3d2a5c;background:#000;cursor:pointer}
         .header-info{flex:1}
@@ -30,16 +30,17 @@
         #vinBar{background: linear-gradient(90deg, #1d5c2d, #4cff77);}
         #corrBar{background: linear-gradient(90deg, #4a1d5c, #a34cff);}
 
-        .bar-controls{display:flex; align-items: center; gap:8px; margin-top:10px; flex-wrap: wrap;}
-        .bar-controls input { width: 60px; background: #0b090f; color: #fff; border: 1px solid #3d2a5c; border-radius: 4px; padding: 5px; }
+        .bar-controls{display:flex; align-items: center; gap:5px; margin-top:10px; flex-wrap: wrap;}
+        .bar-controls input { width: 55px; background: #0b090f; color: #fff; border: 1px solid #3d2a5c; border-radius: 4px; padding: 5px; font-size: 12px;}
         
         .input-group{margin-bottom: 15px; background: #161222; padding: 15px; border-radius: 8px;}
         .input-group label { display: block; margin-bottom: 8px; color: #7a4cff; font-weight: bold; font-size: 14px; }
         
         input, textarea, select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #3d2a5c; background: #1f1a2e; color: #fff; box-sizing: border-box; margin-bottom: 10px; }
         
-        button{background:#3d2a5c;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer; font-size: 14px;}
+        button{background:#3d2a5c;color:#fff;border:none;border-radius:6px;padding:8px 10px;cursor:pointer; font-size: 13px;}
         button:hover{background:#7a4cff}
+        .btn-big{background: #2a2a5c; font-weight: bold;}
         
         .footer-tools{position: fixed; bottom: 0; width: 100%; background: #161222; padding: 10px; display: flex; justify-content: center; border-top: 1px solid #3d2a5c; z-index: 100;}
         .btn-undo{background: #5c5c2a; font-weight: bold; width: 80%;}
@@ -72,60 +73,7 @@
 </div>
 
 <div class="section active" data-sec="0">
-    <div class="bar-block">
-        <div class="bar-info"><span>Vida (PV)</span><span id="pvTxt">10 / 10</span></div>
-        <div class="bar"><div id="pvBar" class="bar-fill"></div></div>
-        <div class="bar-controls">
-            <button onclick="alterarValor('pv', -1)">-1</button>
-            <button onclick="alterarValor('pv', 1)">+1</button>
-            <input type="number" id="pvMaxInput" onchange="setMax('pv')"><span>Máx</span>
-        </div>
-    </div>
-    <div class="bar-block">
-        <div class="bar-info"><span>Energia (PE)</span><span id="peTxt">10 / 10</span></div>
-        <div class="bar"><div id="peBar" class="bar-fill"></div></div>
-        <div class="bar-controls">
-            <button onclick="alterarValor('pe', -1)">-1</button>
-            <button onclick="alterarValor('pe', 1)">+1</button>
-            <input type="number" id="peMaxInput" onchange="setMax('pe')"><span>Máx</span>
-        </div>
-    </div>
-    <div class="bar-block">
-        <div class="bar-info"><span>C. Arcano</span><span id="arcTxt">0 / 10</span></div>
-        <div class="bar"><div id="arcBar" class="bar-fill"></div></div>
-        <div class="bar-controls">
-            <button onclick="alterarValor('arc', -1)">-1</button>
-            <button onclick="alterarValor('arc', 1)">+1</button>
-            <input type="number" id="arcMaxInput" onchange="setMax('arc')"><span>Máx</span>
-        </div>
-    </div>
-    <div class="bar-block">
-        <div class="bar-info"><span>Ocultismo</span><span id="ocuTxt">0 / 10</span></div>
-        <div class="bar"><div id="ocuBar" class="bar-fill"></div></div>
-        <div class="bar-controls">
-            <button onclick="alterarValor('ocu', -1)">-1</button>
-            <button onclick="alterarValor('ocu', 1)">+1</button>
-            <input type="number" id="ocuMaxInput" onchange="setMax('ocu')"><span>Máx</span>
-        </div>
-    </div>
-    <div class="bar-block">
-        <div class="bar-info"><span>Vínculo</span><span id="vinTxt">0 / 10</span></div>
-        <div class="bar"><div id="vinBar" class="bar-fill"></div></div>
-        <div class="bar-controls">
-            <button onclick="alterarValor('vin', -1)">-1</button>
-            <button onclick="alterarValor('vin', 1)">+1</button>
-            <input type="number" id="vinMaxInput" onchange="setMax('vin')"><span>Máx</span>
-        </div>
-    </div>
-    <div class="bar-block">
-        <div class="bar-info"><span>Corrupção</span><span id="corrTxt">0 / 10</span></div>
-        <div class="bar"><div id="corrBar" class="bar-fill"></div></div>
-        <div class="bar-controls">
-            <button onclick="alterarValor('corr', -1)">-1</button>
-            <button onclick="alterarValor('corr', 1)">+1</button>
-            <input type="number" id="corrMaxInput" onchange="setMax('corr')"><span>Máx</span>
-        </div>
-    </div>
+    <div id="status-container"></div>
 </div>
 
 <div class="section" data-sec="1">
@@ -176,7 +124,7 @@
     </div>
     <div class="input-group">
         <label>Anotações Gerais</label>
-        <textarea id="notas" style="height: 200px;" onchange="salvarSimples()" placeholder="Missões, nomes de NPCs, etc..."></textarea>
+        <textarea id="notas" style="height: 200px;" onchange="salvarSimples()" placeholder="Missões..."></textarea>
     </div>
 </div>
 
@@ -193,6 +141,15 @@ let ficha = {
     defesa: 0, historia: '', notas: ''
 };
 
+const statusConfig = [
+    {id: 'pv', label: 'Vida (PV)'},
+    {id: 'pe', label: 'Energia (PE)'},
+    {id: 'arc', label: 'C. Arcano'},
+    {id: 'ocu', label: 'Ocultismo'},
+    {id: 'vin', label: 'Vínculo'},
+    {id: 'corr', label: 'Corrupção'}
+];
+
 let historico = [];
 
 function snapshot() {
@@ -201,54 +158,64 @@ function snapshot() {
 }
 
 function salvar(){ 
-    localStorage.setItem('fichaRPG_V6', JSON.stringify(ficha)); 
+    localStorage.setItem('fichaRPG_V7', JSON.stringify(ficha)); 
     render();
 }
 
-function salvarSimples() {
-    ficha.defesa = document.getElementById('armDef').value;
-    ficha.historia = document.getElementById('historia').value;
-    ficha.notas = document.getElementById('notas').value;
-    salvar();
+function renderStatus() {
+    const container = document.getElementById('status-container');
+    container.innerHTML = '';
+    statusConfig.forEach(s => {
+        container.innerHTML += `
+        <div class="bar-block">
+            <div class="bar-info"><span>${s.label}</span><span id="${s.id}Txt">0 / 0</span></div>
+            <div class="bar"><div id="${s.id}Bar" class="bar-fill"></div></div>
+            <div class="bar-controls">
+                <button class="btn-big" onclick="alterarValor('${s.id}', -5)">-5</button>
+                <button onclick="alterarValor('${s.id}', -1)">-1</button>
+                <button onclick="alterarValor('${s.id}', 1)">+1</button>
+                <button class="btn-big" onclick="alterarValor('${s.id}', 5)">+5</button>
+                <input type="number" id="${s.id}MaxInput" onchange="setMax('${s.id}')">
+                <span style="font-size:10px">MÁX</span>
+            </div>
+        </div>`;
+    });
 }
 
-function salvarHeader() {
-    ficha.nome = document.getElementById('nome').value;
-    ficha.idade = document.getElementById('idade').value;
-    ficha.raca = document.getElementById('raca').value;
-    ficha.classe = document.getElementById('classe').value;
-    salvar();
-}
-
-function desfazer() {
-    if (historico.length > 0) {
-        ficha = JSON.parse(historico.pop());
-        salvar();
-    } else {
-        alert("Nada para desfazer.");
+function alterarValor(tipo, qtd) {
+    snapshot();
+    ficha[tipo] += qtd;
+    if(ficha[tipo] < 0) ficha[tipo] = 0;
+    // Se for PV ou PE, respeita o limite máximo. Outros podem extrapolar.
+    if((tipo === 'pv' || tipo === 'pe') && ficha[tipo] > ficha[tipo+'Max']) {
+        ficha[tipo] = ficha[tipo+'Max'];
     }
+    salvar();
 }
 
+function setMax(tipo) {
+    snapshot();
+    const val = parseInt(document.getElementById(tipo + 'MaxInput').value);
+    ficha[tipo + 'Max'] = isNaN(val) ? 1 : val;
+    salvar();
+}
+
+// Funções de Gerenciamento (Atributos, Poderes, etc - Mantidas)
 function addAtributo() {
     const n = document.getElementById('attrNome').value.trim();
     const v = document.getElementById('attrValor').value;
     if(!n) return;
-    if(ficha.atributos[n]) return alert("Este atributo já existe!");
-    snapshot();
-    ficha.atributos[n] = v;
-    document.getElementById('attrNome').value = '';
-    salvar();
+    if(ficha.atributos[n]) return alert("Já existe!");
+    snapshot(); ficha.atributos[n] = v;
+    document.getElementById('attrNome').value = ''; salvar();
 }
 
 function addHabilidade() {
     const n = document.getElementById('habNome').value.trim();
     const d = document.getElementById('habDesc').value;
     if(!n) return;
-    if(ficha.habilidades.find(h => h.n.toLowerCase() === n.toLowerCase())) return alert("Poder com este nome já existe!");
-    snapshot();
-    ficha.habilidades.push({n, d});
-    document.getElementById('habNome').value = ''; document.getElementById('habDesc').value = '';
-    salvar();
+    snapshot(); ficha.habilidades.push({n, d});
+    document.getElementById('habNome').value = ''; document.getElementById('habDesc').value = ''; salvar();
 }
 
 function addPenitencia() {
@@ -256,20 +223,16 @@ function addPenitencia() {
     const lv = document.getElementById('penLV').value;
     const d = document.getElementById('penDesc').value;
     if(!n) return;
-    snapshot();
-    ficha.penitencias.push({n, lv, d});
-    document.getElementById('penNome').value = ''; document.getElementById('penDesc').value = '';
-    salvar();
+    snapshot(); ficha.penitencias.push({n, lv, d});
+    document.getElementById('penNome').value = ''; document.getElementById('penDesc').value = ''; salvar();
 }
 
 function addArma() {
     const n = document.getElementById('armaNome').value;
     const d = document.getElementById('armaDano').value;
     if(!n) return;
-    snapshot();
-    ficha.armas.push({n, d});
-    document.getElementById('armaNome').value = ''; document.getElementById('armaDano').value = '';
-    salvar();
+    snapshot(); ficha.armas.push({n, d});
+    document.getElementById('armaNome').value = ''; document.getElementById('armaDano').value = ''; salvar();
 }
 
 function removerItem(chave, i) {
@@ -281,25 +244,42 @@ function removerItem(chave, i) {
 
 function editarGenerico(chave, i, campo) {
     snapshot();
-    let novo;
-    if(chave === 'atributos') {
-        novo = prompt("Novo valor para " + i, ficha.atributos[i]);
-        if(novo !== null) ficha.atributos[i] = novo;
-    } else {
-        novo = prompt("Editar:", ficha[chave][i][campo]);
-        if(novo !== null) ficha[chave][i][campo] = novo;
+    let novo = prompt("Editar valor:", chave === 'atributos' ? ficha.atributos[i] : ficha[chave][i][campo]);
+    if(novo !== null) {
+        if(chave === 'atributos') ficha.atributos[i] = novo;
+        else ficha[chave][i][campo] = novo;
+        salvar();
     }
+}
+
+function desfazer() {
+    if (historico.length > 0) {
+        ficha = JSON.parse(historico.pop());
+        render();
+    }
+}
+
+function salvarSimples() {
+    ficha.defesa = document.getElementById('armDef').value;
+    ficha.historia = document.getElementById('historia').value;
+    ficha.notas = document.getElementById('notas').value;
+    localStorage.setItem('fichaRPG_V7', JSON.stringify(ficha));
+}
+
+function salvarHeader() {
+    ficha.nome = document.getElementById('nome').value;
+    ficha.idade = document.getElementById('idade').value;
+    ficha.raca = document.getElementById('raca').value;
+    ficha.classe = document.getElementById('classe').value;
     salvar();
 }
 
 function render(){
-    // Barras (Todas agora seguem o mesmo padrão)
-    const barras = ['pv', 'pe', 'arc', 'ocu', 'vin', 'corr'];
-    barras.forEach(b => {
-        const perc = (ficha[b] / (ficha[b+'Max'] || 1)) * 100;
-        document.getElementById(b+'Txt').textContent = `${ficha[b]} / ${ficha[b+'Max']}`;
-        document.getElementById(b+'Bar').style.width = Math.min(100, Math.max(0, perc)) + '%';
-        document.getElementById(b+'MaxInput').value = ficha[b+'Max'];
+    statusConfig.forEach(s => {
+        const perc = (ficha[s.id] / (ficha[s.id+'Max'] || 1)) * 100;
+        document.getElementById(s.id+'Txt').textContent = `${ficha[s.id]} / ${ficha[s.id+'Max']}`;
+        document.getElementById(s.id+'Bar').style.width = Math.min(100, Math.max(0, perc)) + '%';
+        document.getElementById(s.id+'MaxInput').value = ficha[s.id+'Max'];
     });
 
     document.getElementById('nome').value = ficha.nome;
@@ -321,31 +301,10 @@ function render(){
         }
     };
 
-    renderLista('listaAtributos', ficha.atributos, 'atributos', (k, v) => 
-        `<div class="list-item"><span onclick="editarGenerico('atributos', '${k}')"><b>${k}:</b> ${v}</span><button class="btn-delete" onclick="removerItem('atributos', '${k}')">X</button></div>`);
-
-    renderLista('listaHabilidades', ficha.habilidades, 'habilidades', (item, i) => 
-        `<div class="list-item"><span onclick="editarGenerico('habilidades', ${i}, 'd')"><b>${item.n}</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('habilidades', ${i})">X</button></div>`);
-
-    renderLista('listaArmas', ficha.armas, 'armas', (item, i) => 
-        `<div class="list-item"><span onclick="editarGenerico('armas', ${i}, 'd')"><b>${item.n}</b>: ${item.d}</span><button class="btn-delete" onclick="removerItem('armas', ${i})">X</button></div>`);
-
-    renderLista('listaPenitencias', ficha.penitencias, 'penitencias', (item, i) => 
-        `<div class="list-item"><span onclick="editarGenerico('penitencias', ${i}, 'd')"><b>${item.n} (Nív. ${item.lv})</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('penitencias', ${i})">X</button></div>`);
-}
-
-function alterarValor(tipo, qtd) {
-    snapshot();
-    ficha[tipo] += qtd;
-    // Permite extrapolar o limite superior, mas impede de cair abaixo de zero
-    if(ficha[tipo] < 0) ficha[tipo] = 0;
-    salvar();
-}
-
-function setMax(tipo) {
-    snapshot();
-    ficha[tipo + 'Max'] = parseInt(document.getElementById(tipo + 'MaxInput').value) || 1;
-    salvar();
+    renderLista('listaAtributos', ficha.atributos, 'atributos', (k, v) => `<div class="list-item"><span onclick="editarGenerico('atributos', '${k}')"><b>${k}:</b> ${v}</span><button class="btn-delete" onclick="removerItem('atributos', '${k}')">X</button></div>`);
+    renderLista('listaHabilidades', ficha.habilidades, 'habilidades', (item, i) => `<div class="list-item"><span onclick="editarGenerico('habilidades', ${i}, 'd')"><b>${item.n}</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('habilidades', ${i})">X</button></div>`);
+    renderLista('listaArmas', ficha.armas, 'armas', (item, i) => `<div class="list-item"><span onclick="editarGenerico('armas', ${i}, 'd')"><b>${item.n}</b>: ${item.d}</span><button class="btn-delete" onclick="removerItem('armas', ${i})">X</button></div>`);
+    renderLista('listaPenitencias', ficha.penitencias, 'penitencias', (item, i) => `<div class="list-item"><span onclick="editarGenerico('penitencias', ${i}, 'd')"><b>${item.n} (Nív. ${item.lv})</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('penitencias', ${i})">X</button></div>`);
 }
 
 function trocarImagem(){
@@ -354,6 +313,7 @@ function trocarImagem(){
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    renderStatus();
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -362,7 +322,7 @@ window.addEventListener('DOMContentLoaded', () => {
             document.querySelector(`.section[data-sec='${btn.dataset.tab}']`).classList.add('active');
         });
     });
-    const d = localStorage.getItem('fichaRPG_V6');
+    const d = localStorage.getItem('fichaRPG_V7');
     if(d) {
         const saved = JSON.parse(d);
         ficha = {...ficha, ...saved};
@@ -371,5 +331,4 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </body>
-    </html>
-    
+</html>
