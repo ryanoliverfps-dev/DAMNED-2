@@ -19,11 +19,11 @@
         [data-theme="forest"] { --bg-body: #1a1f16; --bg-header: #262e20; --bg-card: #343d2c; --bg-input: #262e20; --border-color: #4a5c3d; --accent-color: #8db35d; --text-main: #e8f0e0; --text-dim: #99a68d; --text-input: #e8f0e0; }
         [data-theme="cyber"] { --bg-body: #050505; --bg-header: #0a0a0f; --bg-card: #10101a; --bg-input: #0a0a0f; --border-color: #00f2ff; --accent-color: #00f2ff; --text-main: #fff; --text-dim: #00ccff; --text-input: #fff; }
 
-        body { margin:0; font-family:Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 80px; transition: 0.3s; overflow-x: hidden; }
+        body { margin:0; font-family:Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 80px; transition: 3s; overflow-x: hidden; }
 
         /* LOADING */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050508; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
-        .loader-logo { width: 50px; height: 50px; border: 4px solid var(--accent-color); border-top: 4px solid transparent; border-radius: 50%; animation: spin 3s linear infinite; }
+        .loader-logo { width: 50px; height: 50px; border: 4px solid var(--accent-color); border-top: 4px solid transparent; border-radius: 50%; animation: spin 4s linear infinite; }
         #loading-text { color: var(--accent-color); margin-top: 15px; font-size: 14px; font-weight: bold; font-style: italic; } /* Adicionado */
         @keyframes spin { to { transform: rotate(360deg); } }
 
