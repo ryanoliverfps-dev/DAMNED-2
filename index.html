@@ -3,19 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAMNED RPG - V31</title>
+    <title>DAMNED RPG - V32 Negativos</title>
     <style>
-        :root { --bg-body: #0d0b12; --bg-header: #161222; --bg-card: #1f1a2e; --bg-input: #1f1a2e; --border-color: #3d2a5c; --accent-color: #7a4cff; --text-main: #eee; --text-dim: #aaa; }
-        [data-theme="light"] { --bg-body: #e8d5b5; --bg-header: #d4bc93; --bg-card: #f4e4c1; --bg-input: #fffdf5; --border-color: #a68b5a; --accent-color: #8b4513; --text-main: #2b1d0e; --text-dim: #5c4033; }
-        [data-theme="vampire"] { --bg-body: #0f0a0a; --bg-header: #1a0f0f; --bg-card: #261414; --bg-input: #1a0f0f; --border-color: #5c1414; --accent-color: #e61919; --text-main: #f2e6e6; --text-dim: #a68585; }
-        [data-theme="forest"] { --bg-body: #1a1f16; --bg-header: #262e20; --bg-card: #343d2c; --bg-input: #262e20; --border-color: #4a5c3d; --accent-color: #8db35d; --text-main: #e8f0e0; --text-dim: #99a68d; }
-        [data-theme="cyber"] { --bg-body: #050505; --bg-header: #0a0a0f; --bg-card: #10101a; --bg-input: #0a0a0f; --border-color: #00f2ff; --accent-color: #00f2ff; --text-main: #fff; --text-dim: #00ccff; }
+        :root { 
+            --bg-body: #0d0b12; --bg-header: #161222; --bg-card: #1f1a2e; 
+            --bg-input: #1f1a2e; --border-color: #3d2a5c; --accent-color: #7a4cff; 
+            --text-main: #eee; --text-dim: #aaa; --text-input: #ffffff; /* Adicionado */
+        }
+        [data-theme="light"] { 
+            --bg-body: #e8d5b5; --bg-header: #d4bc93; --bg-card: #f4e4c1; 
+            --bg-input: #fffdf5; --border-color: #a68b5a; --accent-color: #8b4513; 
+            --text-main: #2b1d0e; --text-dim: #5c4033; --text-input: #2b1d0e; /* Adicionado */
+        }
+        [data-theme="vampire"] { --bg-body: #0f0a0a; --bg-header: #1a0f0f; --bg-card: #261414; --bg-input: #1a0f0f; --border-color: #5c1414; --accent-color: #e61919; --text-main: #f2e6e6; --text-dim: #a68585; --text-input: #f2e6e6; }
+        [data-theme="forest"] { --bg-body: #1a1f16; --bg-header: #262e20; --bg-card: #343d2c; --bg-input: #262e20; --border-color: #4a5c3d; --accent-color: #8db35d; --text-main: #e8f0e0; --text-dim: #99a68d; --text-input: #e8f0e0; }
+        [data-theme="cyber"] { --bg-body: #050505; --bg-header: #0a0a0f; --bg-card: #10101a; --bg-input: #0a0a0f; --border-color: #00f2ff; --accent-color: #00f2ff; --text-main: #fff; --text-dim: #00ccff; --text-input: #fff; }
 
         body { margin:0; font-family:Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 80px; transition: 0.3s; overflow-x: hidden; }
 
         /* LOADING */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050508; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
         .loader-logo { width: 50px; height: 50px; border: 4px solid var(--accent-color); border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+        #loading-text { color: var(--accent-color); margin-top: 15px; font-size: 14px; font-weight: bold; font-style: italic; } /* Adicionado */
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* SIDEBAR */
@@ -36,7 +45,7 @@
         header { display:flex; gap:10px; padding: 15px; background: var(--bg-header); border-bottom: 2px solid var(--border-color); position: relative; }
         header img { width: 90px; height: 120px; object-fit: cover; border-radius: 8px; border: 2px solid var(--accent-color); cursor: pointer; }
         .header-info { flex:1; }
-        .header-info input { width:100%; margin-bottom:5px; padding:6px; border-radius:6px; border:none; background: var(--bg-input); color: #fff; font-size: 11px; }
+        .header-info input { width:100%; margin-bottom:5px; padding:6px; border-radius:6px; border:none; background: var(--bg-input); color: var(--text-input); font-size: 11px; }
 
         .tabs { display:flex; background: var(--bg-header); overflow-x: auto; position: sticky; top:0; z-index:10; border-bottom: 1px solid var(--border-color); scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
@@ -53,7 +62,7 @@
         .bar-controls button { padding: 5px 8px; border-radius: 4px; border: none; background: var(--border-color); color: #fff; font-size: 10px; cursor: pointer; }
 
         .input-group { background: var(--bg-header); padding: 12px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 15px; }
-        input, textarea { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; margin-bottom: 8px; box-sizing: border-box; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: var(--text-input); margin-bottom: 8px; box-sizing: border-box; }
         .list-item { background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--accent-color); position: relative; }
         .list-item b { cursor: pointer; display: block; color: var(--accent-color); }
         .list-item small { cursor: pointer; color: var(--text-dim); display: block; margin-top: 4px; font-size: 12px; }
@@ -77,7 +86,10 @@
 </div>
 <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-<div id="loading-screen"><div class="loader-logo"></div></div>
+<div id="loading-screen">
+    <div class="loader-logo"></div>
+    <div id="loading-text">Carregando crônicas...</div>
+</div>
 
 <div id="menu-screen">
     <h1 style="text-align:center; color:#fff; margin-top:50px; text-shadow: 0 0 15px var(--accent-color); letter-spacing: 4px;">DAMNED RPG</h1>
@@ -162,9 +174,17 @@
 </div>
 
 <script>
-let db = JSON.parse(localStorage.getItem('RPG_DB_V31')) || [];
+let db = JSON.parse(localStorage.getItem('RPG_DB_V32')) || [];
 let cur = -1; let ficha = {}; let undo = []; let redo = [];
 const temas = ['dark', 'light', 'vampire', 'forest', 'cyber'];
+const frasesLoading = [
+    "Afiando as lâminas...",
+    "Consultando os pergaminhos antigos...",
+    "O mestre está rindo... perigo à frente!",
+    "Rolando iniciativa...",
+    "Preparando as poções...",
+    "Explorando masmorras..."
+];
 
 function cycleTheme() {
     let a = document.body.getAttribute('data-theme') || 'dark';
@@ -178,10 +198,17 @@ function toggleSidebar() {
     s.classList.toggle('open'); o.style.display = s.classList.contains('open') ? 'block' : 'none';
 }
 
-function iniciar() {
+// Corrigido: Chamando iniciar() ao carregar a página
+window.onload = () => {
+    document.getElementById('loading-text').innerText = frasesLoading[Math.floor(Math.random() * frasesLoading.length)];
     document.body.setAttribute('data-theme', localStorage.getItem('RPG_THEME') || 'dark');
-    setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; abrirMenu(); }, 1000);
-}
+    setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; abrirMenu(); }, 1200);
+    
+    document.querySelectorAll('.tab-btn').forEach(b => b.onclick = () => {
+        document.querySelectorAll('.tab-btn, .section').forEach(e => e.classList.remove('active'));
+        b.classList.add('active'); document.querySelector(`.section[data-sec="${b.dataset.tab}"]`).classList.add('active');
+    });
+};
 
 function abrirMenu() {
     cur = -1;
@@ -203,9 +230,6 @@ function renderLista() {
 
 function selecionar(i) {
     cur = i; ficha = JSON.parse(JSON.stringify(db[i]));
-    if(!ficha.inventario) ficha.inventario = [];
-    if(!ficha.historia) ficha.historia = "";
-    if(!ficha.anotacoes) ficha.anotacoes = "";
     document.getElementById('menu-screen').style.display = 'none';
     document.getElementById('btn-menu-global').style.display = 'none';
     document.getElementById('sheet-content').style.display = 'block';
@@ -218,7 +242,7 @@ function novoPersonagem() {
 }
 
 function apagar(i) { if(confirm("Apagar?")) { db.splice(i, 1); salvarBD(); renderLista(); } }
-function salvarBD() { if(cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha)); localStorage.setItem('RPG_DB_V31', JSON.stringify(db)); }
+function salvarBD() { if(cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha)); localStorage.setItem('RPG_DB_V32', JSON.stringify(db)); }
 function snap() { undo.push(JSON.stringify(ficha)); redo = []; if(undo.length > 20) undo.shift(); }
 
 function uploadImagem(event) {
@@ -230,23 +254,20 @@ function editarTexto(key, index, field, msg) {
     let valorAtual;
     if (key === 'at') { valorAtual = field === 'nome' ? index : ficha.atributos[index]; } 
     else { valorAtual = ficha[key][index][field]; }
-
     let novoValor = prompt(msg, valorAtual);
-    if (novoValor !== null && novoValor.trim() !== "") {
+    if (novoValor !== null) {
         snap();
         if (key === 'at') {
             if (field === 'nome') {
-                let tempVal = ficha.atributos[index];
-                delete ficha.atributos[index];
-                ficha.atributos[novoValor] = tempVal;
+                let tempVal = ficha.atributos[index]; delete ficha.atributos[index]; ficha.atributos[novoValor] = tempVal;
             } else { ficha.atributos[index] = novoValor; }
         } else { ficha[key][index][field] = novoValor; }
         render();
     }
 }
 
-function modV(t, q) { snap(); ficha[t] += q; if(ficha[t] < 0) ficha[t] = 0; render(); }
-function setM(t, v) { snap(); ficha[t+'Max'] = parseInt(v) || 1; render(); }
+function modV(t, q) { snap(); ficha[t] = (parseInt(ficha[t]) || 0) + q; render(); }
+function setM(t, v) { snap(); ficha[t+'Max'] = parseInt(v) || 0; render(); }
 
 function addAtributo() {
     const n = document.getElementById('atN').value, v = document.getElementById('atV').value;
@@ -271,43 +292,47 @@ function salvarHeader() {
 function render() {
     const cont = document.getElementById('status-container'); cont.innerHTML = '';
     const st = [{id:'pv', n:'Vida', c:'#c00'}, {id:'pe', n:'Energia', c:'#00c'}, {id:'arc', n:'Arcano', c:'#808'}, {id:'ocu', n:'Ocultismo', c:'#060'}, {id:'vin', n:'Vínculo', c:'#a50'}, {id:'corr', n:'Corrupção', c:'#444'}];
+    
     st.forEach(s => {
-        const p = (ficha[s.id] / ficha[s.id+'Max']) * 100;
+        const atual = parseInt(ficha[s.id]) || 0;
+        const max = parseInt(ficha[s.id+'Max']) || 1;
+        const p = Math.max(0, (atual / max) * 100);
+        
         cont.innerHTML += `<div class="bar-block">
-            <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:bold;"><span>${s.n}</span><span>${ficha[s.id]}/${ficha[s.id+'Max']}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:bold;"><span>${s.n}</span><span style="${atual < 0 ? 'color:#ff4c4c' : ''}">${atual}/${max}</span></div>
             <div class="bar"><div class="bar-fill" style="width:${Math.min(100, p)}%; background:${s.c}"></div></div>
             <div class="bar-controls">
                 <button onclick="modV('${s.id}',-5)">-5</button><button onclick="modV('${s.id}',-1)">-1</button>
                 <button onclick="modV('${s.id}',1)">+1</button><button onclick="modV('${s.id}',5)">+5</button>
-                <input type="number" value="${ficha[s.id+'Max']}" onchange="setM('${s.id}',this.value)" style="width:45px; padding:3px; font-size:10px;">
+                <input type="number" value="${max}" onchange="setM('${s.id}',this.value)" style="width:45px; background:none; border:1px solid var(--border-color); color:var(--text-input); font-size:10px; text-align:center;">
             </div>
         </div>`;
     });
 
-    document.getElementById('nome').value = ficha.nome;
-    document.getElementById('idade').value = ficha.idade;
-    document.getElementById('raca').value = ficha.raca;
-    document.getElementById('classe').value = ficha.classe;
+    document.getElementById('nome').value = ficha.nome || '';
+    document.getElementById('idade').value = ficha.idade || '';
+    document.getElementById('raca').value = ficha.raca || '';
+    document.getElementById('classe').value = ficha.classe || '';
     document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/100x130';
     document.getElementById('historia').value = ficha.historia || '';
     document.getElementById('anotacoes').value = ficha.anotacoes || '';
 
     const rl = (id, list, key, temp) => {
         const el = document.getElementById(id); el.innerHTML = '';
-        if(key === 'at') Object.keys(list).forEach(k => el.innerHTML += temp(k, list[k]));
-        else list.forEach((it, i) => el.innerHTML += temp(it, i));
+        if(key === 'at') Object.keys(list || {}).forEach(k => el.innerHTML += temp(k, list[k]));
+        else (list || []).forEach((it, i) => el.innerHTML += temp(it, i));
     };
 
-    rl('listaAt', ficha.atributos, 'at', (k, v) => `<div class="list-item"><b onclick="editarTexto('at','${k}','nome','Novo nome do atributo:')">${k}:</b> <small onclick="editarTexto('at','${k}','valor','Novo valor:')">${v}</small><button class="btn-del" onclick="remI('at','${k}')">X</button></div>`);
-    rl('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="list-item"><b onclick="editarTexto('habilidades',${i},'n','Novo nome do poder:')">${it.n}</b><small onclick="editarTexto('habilidades',${i},'d','Nova descrição:')">${it.d}</small><button class="btn-del" onclick="remI('habilidades',${i})">X</button></div>`);
-    rl('listaAr', ficha.armas, 'a', (it, i) => `<div class="list-item"><b onclick="editarTexto('armas',${i},'n','Novo nome da arma:')">${it.n}</b><small onclick="editarTexto('armas',${i},'dan','Novo dano (ex: 1d10):')">Dano: ${it.dan}</small><small onclick="editarTexto('armas',${i},'d','Novos efeitos:')">${it.d}</small><button class="btn-del" onclick="remI('armas',${i})">X</button></div>`);
-    rl('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="list-item"><b onclick="editarTexto('penitencias',${i},'n','Novo nome:')">${it.n}</b><small onclick="editarTexto('penitencias',${i},'d','Novo efeito:')">${it.d}</small><button class="btn-del" onclick="remI('penitencias',${i})">X</button></div>`);
-    rl('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="list-item"><b onclick="editarTexto('inventario',${i},'n','Novo nome:')">${it.n}</b><small onclick="editarTexto('inventario',${i},'q','Nova quantidade:')">Qtd: ${it.q}</small><small onclick="editarTexto('inventario',${i},'d','Novos detalhes:')">${it.d}</small><button class="btn-del" onclick="remI('inventario',${i})">X</button></div>`);
+    rl('listaAt', ficha.atributos, 'at', (k, v) => `<div class="list-item"><b onclick="editarTexto('at','${k}','nome','Novo nome:')">${k}:</b> <small onclick="editarTexto('at','${k}','valor','Novo valor:')">${v}</small><button class="btn-del" onclick="remI('at','${k}')">X</button></div>`);
+    rl('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="list-item"><b onclick="editarTexto('habilidades',${i},'n','Nome:')">${it.n}</b><small onclick="editarTexto('habilidades',${i},'d','Desc:')">${it.d}</small><button class="btn-del" onclick="remI('habilidades',${i})">X</button></div>`);
+    rl('listaAr', ficha.armas, 'a', (it, i) => `<div class="list-item"><b onclick="editarTexto('armas',${i},'n','Arma:')">${it.n}</b><small onclick="editarTexto('armas',${i},'dan','Dano:')">${it.dan}</small><small onclick="editarTexto('armas',${i},'d','Efeitos:')">${it.d}</small><button class="btn-del" onclick="remI('armas',${i})">X</button></div>`);
+    rl('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="list-item"><b onclick="editarTexto('inventario',${i},'n','Item:')">${it.n}</b><small onclick="editarTexto('inventario',${i},'q','Qtd:')">x${it.q}</small><small onclick="editarTexto('inventario',${i},'d','Detalhes:')">${it.d}</small><button class="btn-del" onclick="remI('inventario',${i})">X</button></div>`);
+    rl('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="list-item"><b onclick="editarTexto('penitencias',${i},'n','Nome:')">${it.n}</b><small onclick="editarTexto('penitencias',${i},'d','Efeito:')">${it.d}</small><button class="btn-del" onclick="remI('penitencias',${i})">X</button></div>`);
 
     let def = 0;
     rl('listaEq', ficha.equipamentos, 'e', (it, i) => { 
-        def += parseInt(it.v) || 0; 
-        return `<div class="list-item"><b onclick="editarTexto('equipamentos',${i},'n','Novo nome:')">${it.n}</b><small onclick="editarTexto('equipamentos',${i},'v','Novo valor de defesa:')">+${it.v} Def</small><button class="btn-del" onclick="remI('equipamentos',${i})">X</button></div>`;
+        def += parseInt(it.v)||0; 
+        return `<div class="list-item"><b onclick="editarTexto('equipamentos',${i},'n','Nome:')">${it.n}</b><small onclick="editarTexto('equipamentos',${i},'v','Defesa:')">+${it.v} Defesa</small><button class="btn-del" onclick="remI('equipamentos',${i})">X</button></div>`; 
     });
     document.getElementById('defTotal').innerText = def;
     salvarBD();
@@ -315,14 +340,6 @@ function render() {
 
 function desfazer() { if(undo.length > 0) { redo.push(JSON.stringify(ficha)); ficha = JSON.parse(undo.pop()); render(); } }
 function refazer() { if(redo.length > 0) { undo.push(JSON.stringify(ficha)); ficha = JSON.parse(redo.pop()); render(); } }
-
-window.onload = () => {
-    iniciar();
-    document.querySelectorAll('.tab-btn').forEach(b => b.onclick = () => {
-        document.querySelectorAll('.tab-btn, .section').forEach(e => e.classList.remove('active'));
-        b.classList.add('active'); document.querySelector(`.section[data-sec="${b.dataset.tab}"]`).classList.add('active');
-    });
-};
 </script>
 </body>
 </html>
