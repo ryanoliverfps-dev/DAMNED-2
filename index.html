@@ -3,213 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha RPG – Anime Medieval</title>
+    <title>Mística RPG - Sistema de Fichas</title>
     <style>
-        body{margin:0;font-family:Arial, sans-serif;background:#0d0b12;color:#eee; padding-bottom: 80px;}
-        header{display:flex;gap:10px;padding:15px;background:#161222;border-bottom: 2px solid #3d2a5c;}
+        /* TELA DE CARREGAMENTO */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #050508; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo { width: 80px; height: 80px; border: 4px solid #7a4cff; border-radius: 50%; margin-bottom: 20px; animation: pulse 1s infinite alternate; }
+        @keyframes pulse { from { transform: scale(1); opacity: 0.5; } to { transform: scale(1.1); opacity: 1; } }
+
+        /* TELA DE SELEÇÃO COM FUNDO TEMÁTICO */
+        #menu-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://files.catbox.moe/o5f62o.png') no-repeat center center;
+            background-size: cover;
+            z-index: 9000; padding: 20px; box-sizing: border-box;
+            display: none; overflow-y: auto;
+        }
         
-        /* Container da Imagem */
+        #menu-screen::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); z-index: -1;
+        }
+
+        .menu-title { 
+            text-align: center; color: #fff; font-family: 'Georgia', serif; 
+            font-size: 28px; margin: 20px 0; text-transform: uppercase;
+            text-shadow: 0 0 15px #7a4cff;
+        }
+
+        .char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding-bottom: 40px; }
+
+        .char-card {
+            background: rgba(22, 18, 34, 0.85); 
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(122, 76, 255, 0.4); 
+            border-radius: 12px;
+            padding: 10px; text-align: center; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .char-card:hover { border-color: #7a4cff; transform: translateY(-5px); }
+        .char-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; background: #000; margin-bottom: 5px;}
+        .char-card h3 { font-size: 15px; margin: 5px 0; color: #fff; text-shadow: 1px 1px 2px #000; }
+
+        .btn-new-char {
+            grid-column: span 2; background: #7a4cff; color: #fff; border: none;
+            padding: 15px; border-radius: 10px; font-weight: bold; font-size: 16px; 
+            margin-bottom: 20px; cursor: pointer; box-shadow: 0 4px 15px rgba(122, 76, 255, 0.4);
+        }
+
+        /* ESTILO DA FICHA */
+        body{margin:0;font-family:Arial, sans-serif;background:#0d0b12;color:#eee; padding-bottom: 80px;}
+        #sheet-content { display: none; }
+        header{display:flex;gap:10px;padding:15px;background:#161222;border-bottom: 2px solid #3d2a5c; position: relative;}
+        .btn-exit { position: absolute; top: 10px; right: 10px; background: #8b0000; font-size: 10px; padding: 4px 8px; border-radius: 4px; border:none; color:white; font-weight:bold; cursor:pointer;}
+        
         .avatar-container { position: relative; width: 120px; height: 160px; }
         header img { width: 120px; height: 160px; object-fit: cover; border-radius: 10px; border: 2px solid #3d2a5c; background: #000; cursor: pointer; }
         .img-label { position: absolute; bottom: 5px; width: 100%; text-align: center; font-size: 9px; background: rgba(0,0,0,0.6); color: #fff; padding: 2px 0; border-radius: 0 0 10px 10px; pointer-events: none; }
         #fileInput { display: none; }
-
-        .header-info{flex:1}
+        
+        .header-info{flex:1; margin-top: 15px;}
         .header-info input{width:100%;margin-bottom:6px;padding:8px;border-radius:6px;border:none;background:#1f1a2e;color:#fff;box-sizing:border-box}
         
         .tabs{display:flex;background:#161222;overflow-x: auto; position: sticky; top:0; z-index:10; border-bottom: 1px solid #3d2a5c;}
-        .tabs button{flex:none; width: 100px; padding:15px;background:none;border:none;color:#aaa;font-size:11px;cursor:pointer;text-transform: uppercase; font-weight: bold;}
+        .tabs button{flex:none; width: 90px; padding:15px;background:none;border:none;color:#aaa;font-size:10px;cursor:pointer;text-transform: uppercase; font-weight: bold;}
         .tabs button.active{color:#fff;border-bottom:3px solid #7a4cff;background:#1f1a2e}
         
         .section{display:none;padding:15px;animation: fadeIn 0.3s;}
         .section.active{display:block}
-        
         .bar-block{margin-bottom:15px; background: #161222; padding: 12px; border-radius: 8px; border: 1px solid #2a2438;}
         .bar-info{display:flex; justify-content: space-between; margin-bottom: 5px; font-weight: bold; font-size: 14px;}
         .bar{height:14px;background:#2a2438;border-radius:7px;overflow:hidden;margin: 8px 0; border: 1px solid #000;}
         .bar-fill{height:100%;width:0%;transition: width 0.4s;}
-        
         #pvBar{background: linear-gradient(90deg, #8b0000, #ff4c4c);}
         #peBar{background: linear-gradient(90deg, #002db3, #4c7aff);}
         #arcBar{background: linear-gradient(90deg, #4b0082, #9370db);}
         #ocuBar{background: linear-gradient(90deg, #222, #555);}
         #vinBar{background: linear-gradient(90deg, #1d5c2d, #4cff77);}
         #corrBar{background: linear-gradient(90deg, #4a1d5c, #a34cff);}
-
-        .bar-controls{display:flex; align-items: center; gap:5px; margin-top:10px; flex-wrap: wrap;}
-        .bar-controls input { width: 55px; background: #0b090f; color: #fff; border: 1px solid #3d2a5c; border-radius: 4px; padding: 5px; font-size: 12px;}
         
         .input-group{margin-bottom: 15px; background: #161222; padding: 15px; border-radius: 8px;}
-        .input-group label { display: block; margin-bottom: 8px; color: #7a4cff; font-weight: bold; font-size: 14px; }
-        
         input, textarea { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #3d2a5c; background: #1f1a2e; color: #fff; box-sizing: border-box; margin-bottom: 10px; }
-        
         button{background:#3d2a5c;color:#fff;border:none;border-radius:6px;padding:8px 10px;cursor:pointer; font-size: 13px;}
-        button:hover{background:#7a4cff}
-        
-        .footer-tools{position: fixed; bottom: 0; width: 100%; background: #161222; padding: 10px; display: flex; justify-content: center; border-top: 1px solid #3d2a5c; z-index: 100;}
-        .btn-undo{background: #5c5c2a; font-weight: bold; width: 80%;}
-
-        .list-item{background:#1f1a2e;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #7a4cff; overflow: hidden; position: relative;}
-        .btn-delete{background: #8b0000; padding: 4px 8px; font-size: 11px; float: right; margin-left: 5px;}
-        
+        .footer-tools{position: fixed; bottom: 0; width: 100%; background: #161222; padding: 10px; display: flex; justify-content: center; gap: 10px; border-top: 1px solid #3d2a5c; z-index: 100;}
+        .list-item{background:#1f1a2e;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #7a4cff; position: relative;}
+        .btn-delete-item{background: #8b0000; padding: 4px 8px; font-size: 11px; float: right; margin-left: 5px;}
         .def-total-box { background: #161222; border: 2px solid #7a4cff; border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 15px; }
-
         @keyframes fadeIn { from {opacity:0} to {opacity:1} }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="avatar-container" onclick="document.getElementById('fileInput').click()">
-        <img id="imgChar" src="https://via.placeholder.com/120x160?text=Avatar">
-        <div class="img-label">ALTERAR FOTO</div>
-        <input type="file" id="fileInput" accept="image/*" onchange="uploadImagem(event)">
-    </div>
-    <div class="header-info">
-        <input id="nome" placeholder="Nome" onchange="salvarHeader()">
-        <input id="idade" placeholder="Idade" onchange="salvarHeader()">
-        <input id="raca" placeholder="Raça" onchange="salvarHeader()">
-        <input id="classe" placeholder="Classe" onchange="salvarHeader()">
-    </div>
-</header>
-
-<div class="tabs">
-    <button data-tab="0" class="tab-btn active">Status</button>
-    <button data-tab="1" class="tab-btn">Atribs</button>
-    <button data-tab="2" class="tab-btn">Poderes</button>
-    <button data-tab="3" class="tab-btn">Armas</button>
-    <button data-tab="4" class="tab-btn">Equip</button>
-    <button data-tab="5" class="tab-btn">Inven</button>
-    <button data-tab="6" class="tab-btn">Penit</button>
-    <button data-tab="7" class="tab-btn">Diário</button>
+<div id="loading-screen">
+    <div class="loader-logo"></div>
+    <div id="frase-loading" style="color: #7a4cff; font-style: italic; text-align: center; padding: 20px;">Invocando lendas...</div>
 </div>
 
-<div class="section active" data-sec="0">
-    <div id="status-container"></div>
+<div id="menu-screen">
+    <h1 class="menu-title">Caminho do Herói</h1>
+    <button class="btn-new-char" onclick="novoPersonagem()">+ Criar Nova Lenda</button>
+    <div id="lista-personagens" class="char-grid"></div>
 </div>
 
-<div class="section" data-sec="1">
-    <div class="input-group">
-        <input id="attrNome" placeholder="Atributo (ex: Força)">
-        <input id="attrValor" type="number" placeholder="Valor">
-        <button onclick="addAtributo()" style="width:100%">Adicionar</button>
-    </div>
-    <div id="listaAtributos"></div>
-</div>
+<div id="sheet-content">
+    <header>
+        <button class="btn-exit" onclick="voltarAoMenu()">SAIR</button>
+        <div class="avatar-container" onclick="document.getElementById('fileInput').click()">
+            <img id="imgChar" src="">
+            <div class="img-label">ALTERAR FOTO</div>
+            <input type="file" id="fileInput" accept="image/*" onchange="uploadImagem(event)">
+        </div>
+        <div class="header-info">
+            <input id="nome" placeholder="Nome" onchange="salvarHeader()">
+            <input id="idade" placeholder="Idade" onchange="salvarHeader()">
+            <input id="raca" placeholder="Raça" onchange="salvarHeader()">
+            <input id="classe" placeholder="Classe" onchange="salvarHeader()">
+        </div>
+    </header>
 
-<div class="section" data-sec="2">
-    <div class="input-group">
-        <input id="habNome" placeholder="Nome do Poder">
-        <textarea id="habDesc" placeholder="Descrição..."></textarea>
-        <button onclick="addItem('habilidades', ['habNome', 'habDesc'], ['n', 'd'])" style="width:100%">Adicionar Poder</button>
+    <div class="tabs">
+        <button data-tab="0" class="tab-btn active">Status</button>
+        <button data-tab="1" class="tab-btn">Atribs</button>
+        <button data-tab="2" class="tab-btn">Poderes</button>
+        <button data-tab="3" class="tab-btn">Armas</button>
+        <button data-tab="4" class="tab-btn">Equip</button>
+        <button data-tab="5" class="tab-btn">Inven</button>
+        <button data-tab="6" class="tab-btn">Penit</button>
+        <button data-tab="7" class="tab-btn">Diário</button>
     </div>
-    <div id="listaHabilidades"></div>
-</div>
 
-<div class="section" data-sec="3">
-    <div class="input-group">
-        <input id="armaNome" placeholder="Nome da Arma">
-        <input id="armaDano" placeholder="Dano">
-        <input id="armaEfeito" placeholder="Efeito">
-        <textarea id="armaDesc" placeholder="Descrição..."></textarea>
-        <button onclick="addItem('armas', ['armaNome', 'armaDano', 'armaEfeito', 'armaDesc'], ['n', 'dan', 'ef', 'd'])" style="width:100%">Adicionar Arma</button>
+    <div class="section active" data-sec="0"><div id="status-container"></div></div>
+    <div class="section" data-sec="1">
+        <div class="input-group"><input id="attrNome" placeholder="Atributo"><input id="attrValor" type="number" placeholder="Valor"><button onclick="addAtributo()" style="width:100%">Adicionar</button></div>
+        <div id="listaAtributos"></div>
     </div>
-    <div id="listaArmas"></div>
-</div>
+    <div class="section" data-sec="2">
+        <div class="input-group"><input id="habNome" placeholder="Poder"><textarea id="habDesc" placeholder="Descrição"></textarea><button onclick="addItem('habilidades', ['habNome', 'habDesc'], ['n', 'd'])" style="width:100%">Adicionar Poder</button></div>
+        <div id="listaHabilidades"></div>
+    </div>
+    <div class="section" data-sec="3">
+        <div class="input-group"><input id="armaNome" placeholder="Arma"><input id="armaDano" placeholder="Dano"><input id="armaEfeito" placeholder="Efeito"><textarea id="armaDesc" placeholder="Descrição"></textarea><button onclick="addItem('armas', ['armaNome', 'armaDano', 'armaEfeito', 'armaDesc'], ['n', 'dan', 'ef', 'd'])" style="width:100%">Adicionar Arma</button></div>
+        <div id="listaArmas"></div>
+    </div>
+    <div class="section" data-sec="4">
+        <div class="def-total-box">DEFESA TOTAL: <b id="defTotal" style="color:#7a4cff; font-size:20px">0</b></div>
+        <div class="input-group"><input id="equipNome" placeholder="Equipamento"><input id="equipDef" type="number" placeholder="Defesa"><textarea id="equipDesc" placeholder="Descrição"></textarea><button onclick="addItem('equipamentos', ['equipNome', 'equipDef', 'equipDesc'], ['n', 'def', 'd'])" style="width:100%">Equipar</button></div>
+        <div id="listaEquipamentos"></div>
+    </div>
+    <div class="section" data-sec="5">
+        <div class="input-group"><input id="invNome" placeholder="Item"><textarea id="invDesc" placeholder="Descrição"></textarea><button onclick="addItem('inventario', ['invNome', 'invDesc'], ['n', 'd'])" style="width:100%">Adicionar</button></div>
+        <div id="listaInventario"></div>
+    </div>
+    <div class="section" data-sec="6">
+        <div class="input-group"><input id="penNome" placeholder="Penitência"><input id="penLV" type="number" placeholder="Nível"><textarea id="penDesc" placeholder="Descrição"></textarea><button onclick="addItem('penitencias', ['penNome', 'penLV', 'penDesc'], ['n', 'lv', 'd'])" style="width:100%">Adicionar</button></div>
+        <div id="listaPenitencias"></div>
+    </div>
+    <div class="section" data-sec="7">
+        <div class="input-group"><label>História</label><textarea id="historia" style="height:150px" onchange="salvarSimples()"></textarea></div>
+        <div class="input-group"><label>Anotações</label><textarea id="notas" style="height:150px" onchange="salvarSimples()"></textarea></div>
+    </div>
 
-<div class="section" data-sec="4">
-    <div class="def-total-box">DEFESA TOTAL: <b id="defTotal" style="color:#7a4cff; font-size:20px">0</b></div>
-    <div class="input-group">
-        <input id="equipNome" placeholder="Equipamento">
-        <input id="equipDef" type="number" placeholder="Defesa">
-        <textarea id="equipDesc" placeholder="Descrição..."></textarea>
-        <button onclick="addItem('equipamentos', ['equipNome', 'equipDef', 'equipDesc'], ['n', 'def', 'd'])" style="width:100%">Equipar</button>
+    <div class="footer-tools">
+        <button class="btn-undo" onclick="desfazer()" style="flex:1; background:#5c5c2a">↩ DESFAZER</button>
+        <button class="btn-redo" onclick="refazer()" style="flex:1; background:#2a5c5c">↪ REFAZER</button>
     </div>
-    <div id="listaEquipamentos"></div>
-</div>
-
-<div class="section" data-sec="5">
-    <div class="input-group">
-        <input id="invNome" placeholder="Item">
-        <textarea id="invDesc" placeholder="Descrição..."></textarea>
-        <button onclick="addItem('inventario', ['invNome', 'invDesc'], ['n', 'd'])" style="width:100%">Adicionar</button>
-    </div>
-    <div id="listaInventario"></div>
-</div>
-
-<div class="section" data-sec="6">
-    <div class="input-group">
-        <input id="penNome" placeholder="Penitência">
-        <input id="penLV" type="number" placeholder="Nível">
-        <textarea id="penDesc" placeholder="Descrição..."></textarea>
-        <button onclick="addItem('penitencias', ['penNome', 'penLV', 'penDesc'], ['n', 'lv', 'd'])" style="width:100%">Adicionar</button>
-    </div>
-    <div id="listaPenitencias"></div>
-</div>
-
-<div class="section" data-sec="7">
-    <div class="input-group">
-        <label>História</label>
-        <textarea id="historia" style="height:150px" onchange="salvarSimples()"></textarea>
-    </div>
-    <div class="input-group">
-        <label>Anotações</label>
-        <textarea id="notas" style="height:150px" onchange="salvarSimples()"></textarea>
-    </div>
-</div>
-
-<div class="footer-tools">
-    <button class="btn-undo" onclick="desfazer()">↩ DESFAZER ÚLTIMA AÇÃO</button>
 </div>
 
 <script>
-let ficha = {
-    nome: '', idade: '', raca: '', classe: '', img: '',
-    pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, vinMax: 10, corr: 0, corrMax: 10,
-    atributos: {}, habilidades: [], armas: [], equipamentos: [], inventario: [], penitencias: [],
-    historia: '', notas: ''
-};
+const frases = ["Prepare sua alma...", "O mestre está esperando...", "A sorte favorece os corajosos!", "Traçando o destino..."];
+let bancoDeDados = JSON.parse(localStorage.getItem('RPG_DATABASE_V15')) || [];
+let indexAtual = -1;
+let ficha = {};
+let desfazerStack = [];
+let refazerStack = [];
 
 const statusConfig = [{id:'pv', label:'Vida'}, {id:'pe', label:'Energia'}, {id:'arc', label:'Arcano'}, {id:'ocu', label:'Ocultismo'}, {id:'vin', label:'Vínculo'}, {id:'corr', label:'Corrupção'}];
-let historico = [];
 
-function snapshot() { if (historico.length > 20) historico.shift(); historico.push(JSON.stringify(ficha)); }
-function salvar() { localStorage.setItem('fichaRPG_V10', JSON.stringify(ficha)); render(); }
+function iniciarLoading() {
+    document.getElementById('frase-loading').innerText = frases[Math.floor(Math.random() * frases.length)];
+    setTimeout(() => {
+        document.getElementById('loading-screen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            abrirMenu();
+        }, 500);
+    }, 2000);
+}
+
+function abrirMenu() {
+    document.getElementById('sheet-content').style.display = 'none';
+    document.getElementById('menu-screen').style.display = 'block';
+    renderizarListaMenu();
+}
+
+function renderizarListaMenu() {
+    const lista = document.getElementById('lista-personagens');
+    lista.innerHTML = '';
+    bancoDeDados.forEach((char, i) => {
+        lista.innerHTML += `
+            <div class="char-card" onclick="selecionarPersonagem(${i})">
+                <img src="${char.img || 'https://via.placeholder.com/120x160?text=Vazio'}">
+                <h3>${char.nome || 'Herói Sem Nome'}</h3>
+                <small style="color:#d1d1d1">${char.classe || 'Sem Classe'}</small>
+                <br>
+                <button onclick="event.stopPropagation(); deletarPersonagem(${i})" 
+                    style="background:rgba(255,0,0,0.2); color:#ff4c4c; font-size:10px; margin-top:10px; border:1px solid #ff4c4c; padding:6px; border-radius:4px; cursor:pointer; width:100%; font-weight:bold;">
+                    APAGAR HERÓI
+                </button>
+            </div>
+        `;
+    });
+}
+
+function novoPersonagem() {
+    const novo = {
+        nome: 'Novo Herói', idade: '', raca: '', classe: '', img: '',
+        pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, vinMax: 10, corr: 0, corrMax: 10,
+        atributos: {}, habilidades: [], armas: [], equipamentos: [], inventario: [], penitencias: [],
+        historia: '', notas: ''
+    };
+    bancoDeDados.push(novo);
+    salvarBD();
+    selecionarPersonagem(bancoDeDados.length - 1);
+}
+
+function selecionarPersonagem(i) {
+    indexAtual = i;
+    ficha = bancoDeDados[i];
+    document.getElementById('menu-screen').style.display = 'none';
+    document.getElementById('sheet-content').style.display = 'block';
+    desfazerStack = []; refazerStack = [];
+    render();
+}
+
+function deletarPersonagem(i) {
+    if(confirm("Deseja apagar este herói para sempre?")) {
+        bancoDeDados.splice(i, 1);
+        indexAtual = -1;
+        salvarBD();
+        renderizarListaMenu();
+    }
+}
+
+function voltarAoMenu() { salvarBD(); abrirMenu(); }
+function salvarBD() { if(indexAtual !== -1) bancoDeDados[indexAtual] = ficha; localStorage.setItem('RPG_DATABASE_V15', JSON.stringify(bancoDeDados)); }
+function snapshot() { desfazerStack.push(JSON.stringify(ficha)); if (desfazerStack.length > 20) desfazerStack.shift(); refazerStack = []; }
+function salvar() { salvarBD(); render(); }
 
 function uploadImagem(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            snapshot();
-            ficha.img = e.target.result; // Salva em Base64
-            salvar();
-        };
+        reader.onload = (e) => { snapshot(); ficha.img = e.target.result; salvar(); };
         reader.readAsDataURL(file);
     }
 }
-
-function addItem(key, inputIds, objKeys) {
-    const vals = inputIds.map(id => document.getElementById(id).value.trim());
+function addItem(key, ids, keys) {
+    const vals = ids.map(id => document.getElementById(id).value.trim());
     if(!vals[0]) return;
     snapshot();
-    let obj = {};
-    objKeys.forEach((k, i) => obj[k] = vals[i]);
+    let obj = {}; keys.forEach((k, i) => obj[k] = vals[i]);
     ficha[key].push(obj);
-    inputIds.forEach(id => document.getElementById(id).value = '');
+    ids.forEach(id => document.getElementById(id).value = '');
     salvar();
 }
-
 function addAtributo() {
     const n = document.getElementById('attrNome').value.trim();
     const v = document.getElementById('attrValor').value;
     if(!n) return;
-    if(ficha.atributos[n]) return alert("Já existe!");
     snapshot(); ficha.atributos[n] = v;
     document.getElementById('attrNome').value = ''; salvar();
 }
-
 function removerItem(key, i) { snapshot(); if(key === 'atributos') delete ficha.atributos[i]; else ficha[key].splice(i,1); salvar(); }
 function alterarValor(tipo, qtd) {
     snapshot(); ficha[tipo] += qtd;
@@ -218,19 +287,10 @@ function alterarValor(tipo, qtd) {
     salvar();
 }
 function setMax(tipo) { snapshot(); ficha[tipo+'Max'] = parseInt(document.getElementById(tipo+'MaxInput').value)||1; salvar(); }
-function desfazer() { if(historico.length > 0) { ficha = JSON.parse(historico.pop()); render(); } }
-function salvarSimples() { 
-    ficha.historia = document.getElementById('historia').value; 
-    ficha.notas = document.getElementById('notas').value; 
-    localStorage.setItem('fichaRPG_V10', JSON.stringify(ficha)); 
-}
-function salvarHeader() {
-    ficha.nome = document.getElementById('nome').value;
-    ficha.idade = document.getElementById('idade').value;
-    ficha.raca = document.getElementById('raca').value;
-    ficha.classe = document.getElementById('classe').value;
-    salvar();
-}
+function desfazer() { if (desfazerStack.length > 0) { refazerStack.push(JSON.stringify(ficha)); ficha = JSON.parse(desfazerStack.pop()); salvar(); } }
+function refazer() { if (refazerStack.length > 0) { desfazerStack.push(JSON.stringify(ficha)); ficha = JSON.parse(refazerStack.pop()); salvar(); } }
+function salvarSimples() { ficha.historia = document.getElementById('historia').value; ficha.notas = document.getElementById('notas').value; salvarBD(); }
+function salvarHeader() { snapshot(); ficha.nome = document.getElementById('nome').value; ficha.idade = document.getElementById('idade').value; ficha.raca = document.getElementById('raca').value; ficha.classe = document.getElementById('classe').value; salvar(); }
 
 function render() {
     statusConfig.forEach(s => {
@@ -239,7 +299,6 @@ function render() {
         document.getElementById(s.id+'Bar').style.width = Math.min(100, Math.max(0, perc)) + '%';
         document.getElementById(s.id+'MaxInput').value = ficha[s.id+'Max'];
     });
-
     document.getElementById('historia').value = ficha.historia || '';
     document.getElementById('notas').value = ficha.notas || '';
     document.getElementById('nome').value = ficha.nome || '';
@@ -254,21 +313,18 @@ function render() {
         else list.forEach((item, i) => el.innerHTML += template(item, i));
     };
 
-    renderList('listaAtributos', ficha.atributos, 'atributos', (k, v) => `<div class="list-item"><b>${k}:</b> ${v} <button class="btn-delete" onclick="removerItem('atributos','${k}')">X</button></div>`);
-    renderList('listaHabilidades', ficha.habilidades, 'hab', (it, i) => `<div class="list-item"><b>${it.n}</b><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('habilidades',${i})">X</button></div>`);
-    renderList('listaPenitencias', ficha.penitencias, 'pen', (it, i) => `<div class="list-item"><b>${it.n} (LV ${it.lv})</b><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('penitencias',${i})">X</button></div>`);
-    renderList('listaInventario', ficha.inventario, 'inv', (it, i) => `<div class="list-item"><b>${it.n}</b><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('inventario',${i})">X</button></div>`);
-    renderList('listaArmas', ficha.armas, 'arma', (it, i) => `<div class="list-item"><b>${it.n}</b> [${it.dan}] <small>${it.ef}</small><br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('armas',${i})">X</button></div>`);
-
+    renderList('listaAtributos', ficha.atributos, 'atributos', (k, v) => `<div class="list-item"><b>${k}:</b> ${v} <button class="btn-delete-item" onclick="removerItem('atributos','${k}')">X</button></div>`);
+    renderList('listaHabilidades', ficha.habilidades, 'hab', (it, i) => `<div class="list-item"><b>${it.n}</b><br><small>${it.d}</small><button class="btn-delete-item" onclick="removerItem('habilidades',${i})">X</button></div>`);
+    renderList('listaPenitencias', ficha.penitencias, 'pen', (it, i) => `<div class="list-item"><b>${it.n} (LV ${it.lv})</b><br><small>${it.d}</small><button class="btn-delete-item" onclick="removerItem('penitencias',${i})">X</button></div>`);
+    renderList('listaInventario', ficha.inventario, 'inv', (it, i) => `<div class="list-item"><b>${it.n}</b><br><small>${it.d}</small><button class="btn-delete-item" onclick="removerItem('inventario',${i})">X</button></div>`);
+    renderList('listaArmas', ficha.armas, 'arma', (it, i) => `<div class="list-item"><b>${it.n}</b> [${it.dan}] <small>${it.ef}</small><br><small>${it.d}</small><button class="btn-delete-item" onclick="removerItem('armas',${i})">X</button></div>`);
     let defTotal = 0;
-    renderList('listaEquipamentos', ficha.equipamentos, 'equip', (it, i) => {
-        defTotal += parseInt(it.def)||0;
-        return `<div class="list-item"><b>${it.n}</b> (+${it.def} DEF)<br><small>${it.d}</small><button class="btn-delete" onclick="removerItem('equipamentos',${i})">X</button></div>`;
-    });
+    renderList('listaEquipamentos', ficha.equipamentos, 'equip', (it, i) => { defTotal += parseInt(it.def)||0; return `<div class="list-item"><b>${it.n}</b> (+${it.def} DEF)<br><small>${it.d}</small><button class="btn-delete-item" onclick="removerItem('equipamentos',${i})">X</button></div>`; });
     document.getElementById('defTotal').textContent = defTotal;
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    iniciarLoading();
     const container = document.getElementById('status-container');
     statusConfig.forEach(s => {
         container.innerHTML += `
@@ -286,7 +342,6 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.tab-btn, .section').forEach(el => el.classList.remove('active'));
         btn.classList.add('active'); document.querySelector(`.section[data-sec='${btn.dataset.tab}']`).classList.add('active');
     }));
-    const d = localStorage.getItem('fichaRPG_V10'); if(d) ficha = JSON.parse(d); render();
 });
 </script>
 </body>
