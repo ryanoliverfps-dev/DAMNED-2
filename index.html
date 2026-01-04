@@ -27,6 +27,8 @@
         #peBar{background: linear-gradient(90deg, #002db3, #4c7aff);}
         #arcBar{background: linear-gradient(90deg, #4b0082, #9370db);}
         #ocuBar{background: linear-gradient(90deg, #222, #555);}
+        #vinBar{background: linear-gradient(90deg, #1d5c2d, #4cff77);}
+        #corrBar{background: linear-gradient(90deg, #4a1d5c, #a34cff);}
 
         .bar-controls{display:flex; align-items: center; gap:8px; margin-top:10px; flex-wrap: wrap;}
         .bar-controls input { width: 60px; background: #0b090f; color: #fff; border: 1px solid #3d2a5c; border-radius: 4px; padding: 5px; }
@@ -39,7 +41,7 @@
         button{background:#3d2a5c;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer; font-size: 14px;}
         button:hover{background:#7a4cff}
         
-        .footer-tools{position: fixed; bottom: 0; width: 100%; background: #161222; padding: 10px; display: flex; justify-content: center; border-top: 1px solid #3d2a5c;}
+        .footer-tools{position: fixed; bottom: 0; width: 100%; background: #161222; padding: 10px; display: flex; justify-content: center; border-top: 1px solid #3d2a5c; z-index: 100;}
         .btn-undo{background: #5c5c2a; font-weight: bold; width: 80%;}
 
         .list-item{background:#1f1a2e;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #7a4cff; overflow: hidden; position: relative;}
@@ -106,6 +108,24 @@
             <input type="number" id="ocuMaxInput" onchange="setMax('ocu')"><span>Máx</span>
         </div>
     </div>
+    <div class="bar-block">
+        <div class="bar-info"><span>Vínculo</span><span id="vinTxt">0 / 10</span></div>
+        <div class="bar"><div id="vinBar" class="bar-fill"></div></div>
+        <div class="bar-controls">
+            <button onclick="alterarValor('vin', -1)">-1</button>
+            <button onclick="alterarValor('vin', 1)">+1</button>
+            <input type="number" id="vinMaxInput" onchange="setMax('vin')"><span>Máx</span>
+        </div>
+    </div>
+    <div class="bar-block">
+        <div class="bar-info"><span>Corrupção</span><span id="corrTxt">0 / 10</span></div>
+        <div class="bar"><div id="corrBar" class="bar-fill"></div></div>
+        <div class="bar-controls">
+            <button onclick="alterarValor('corr', -1)">-1</button>
+            <button onclick="alterarValor('corr', 1)">+1</button>
+            <input type="number" id="corrMaxInput" onchange="setMax('corr')"><span>Máx</span>
+        </div>
+    </div>
 </div>
 
 <div class="section" data-sec="1">
@@ -167,7 +187,8 @@
 <script>
 let ficha = {
     nome: '', idade: '', raca: '', classe: '', img: '',
-    pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10,
+    pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, 
+    vin: 0, vinMax: 10, corr: 0, corrMax: 10,
     atributos: {}, habilidades: [], armas: [], penitencias: [],
     defesa: 0, historia: '', notas: ''
 };
@@ -175,12 +196,12 @@ let ficha = {
 let historico = [];
 
 function snapshot() {
-    if (historico.length > 10) historico.shift();
+    if (historico.length > 20) historico.shift();
     historico.push(JSON.stringify(ficha));
 }
 
 function salvar(){ 
-    localStorage.setItem('fichaRPG_V5', JSON.stringify(ficha)); 
+    localStorage.setItem('fichaRPG_V6', JSON.stringify(ficha)); 
     render();
 }
 
@@ -203,13 +224,11 @@ function desfazer() {
     if (historico.length > 0) {
         ficha = JSON.parse(historico.pop());
         salvar();
-        alert("Ação revertida!");
     } else {
         alert("Nada para desfazer.");
     }
 }
 
-// Funções de Adição com Validação
 function addAtributo() {
     const n = document.getElementById('attrNome').value.trim();
     const v = document.getElementById('attrValor').value;
@@ -260,7 +279,6 @@ function removerItem(chave, i) {
     salvar();
 }
 
-// Edição
 function editarGenerico(chave, i, campo) {
     snapshot();
     let novo;
@@ -275,21 +293,24 @@ function editarGenerico(chave, i, campo) {
 }
 
 function render(){
-    // Barras
-    ['pv', 'pe', 'arc', 'ocu'].forEach(b => {
+    // Barras (Todas agora seguem o mesmo padrão)
+    const barras = ['pv', 'pe', 'arc', 'ocu', 'vin', 'corr'];
+    barras.forEach(b => {
         const perc = (ficha[b] / (ficha[b+'Max'] || 1)) * 100;
         document.getElementById(b+'Txt').textContent = `${ficha[b]} / ${ficha[b+'Max']}`;
         document.getElementById(b+'Bar').style.width = Math.min(100, Math.max(0, perc)) + '%';
         document.getElementById(b+'MaxInput').value = ficha[b+'Max'];
     });
 
-    // Inputs Simples
     document.getElementById('nome').value = ficha.nome;
+    document.getElementById('idade').value = ficha.idade;
+    document.getElementById('raca').value = ficha.raca;
+    document.getElementById('classe').value = ficha.classe;
     document.getElementById('armDef').value = ficha.defesa || 0;
     document.getElementById('historia').value = ficha.historia || '';
     document.getElementById('notas').value = ficha.notas || '';
+    if(ficha.img) document.getElementById('imgChar').src = ficha.img;
 
-    // Listas
     const renderLista = (id, lista, chave, htmlFunc) => {
         const el = document.getElementById(id);
         el.innerHTML = '';
@@ -301,50 +322,5 @@ function render(){
     };
 
     renderLista('listaAtributos', ficha.atributos, 'atributos', (k, v) => 
-        `<div class="list-item"><span onclick="editarGenerico('atributos', '${k}')"><b>${k}:</b> ${v}</span><button class="btn-delete" onclick="removerItem('atributos', '${k}')">X</button></div>`);
-
-    renderLista('listaHabilidades', ficha.habilidades, 'habilidades', (item, i) => 
-        `<div class="list-item"><span onclick="editarGenerico('habilidades', ${i}, 'd')"><b>${item.n}</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('habilidades', ${i})">X</button></div>`);
-
-    renderLista('listaArmas', ficha.armas, 'armas', (item, i) => 
-        `<div class="list-item"><span onclick="editarGenerico('armas', ${i}, 'd')"><b>${item.n}</b>: ${item.d}</span><button class="btn-delete" onclick="removerItem('armas', ${i})">X</button></div>`);
-
-    renderLista('listaPenitencias', ficha.penitencias, 'penitencias', (item, i) => 
-        `<div class="list-item"><span onclick="editarGenerico('penitencias', ${i}, 'd')"><b>${item.n} (Nív. ${item.lv})</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('penitencias', ${i})">X</button></div>`);
-}
-
-function alterarValor(tipo, qtd) {
-    snapshot();
-    ficha[tipo] += qtd;
-    if(ficha[tipo] > ficha[tipo+'Max']) ficha[tipo] = ficha[tipo+'Max'];
-    if(ficha[tipo] < 0) ficha[tipo] = 0;
-    salvar();
-}
-
-function setMax(tipo) {
-    snapshot();
-    ficha[tipo + 'Max'] = parseInt(document.getElementById(tipo + 'MaxInput').value) || 1;
-    salvar();
-}
-
-function trocarImagem(){
-    const u = prompt('URL da imagem'); 
-    if(u) { ficha.img = u; document.getElementById('imgChar').src = u; salvar(); }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelector(`.section[data-sec='${btn.dataset.tab}']`).classList.add('active');
-        });
-    });
-    const d = localStorage.getItem('fichaRPG_V5');
-    if(d) ficha = JSON.parse(d);
-    render();
-});
-</script>
-</body>
-</html>
+        `<div class="list-item"><span onclick="editarGenerico('atributos', '${k}')"><b>${k}:</b> ${v}</span><button class="
+    
