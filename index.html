@@ -1,752 +1,350 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Meu site rpg #51</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Ficha RPG – Anime Medieval</title>
-
     <style>
-
-        body{margin:0;font-family:Arial, sans-serif;background:#0d0b12;color:#eee; padding-bottom: 50px;}
-
+        body{margin:0;font-family:Arial, sans-serif;background:#0d0b12;color:#eee; padding-bottom: 70px;}
         header{display:flex;gap:10px;padding:15px;background:#161222;border-bottom: 2px solid #3d2a5c;}
-
         header img{width:120px;height:160px;object-fit:cover;border-radius:10px;border:2px solid #3d2a5c;background:#000;cursor:pointer}
-
         .header-info{flex:1}
-
         .header-info input{width:100%;margin-bottom:6px;padding:8px;border-radius:6px;border:none;background:#1f1a2e;color:#fff;box-sizing:border-box}
-
         
-
         .tabs{display:flex;background:#161222;overflow-x: auto; position: sticky; top:0; z-index:10; border-bottom: 1px solid #3d2a5c;}
-
-        .tabs button{flex:1;padding:15px;background:none;border:none;color:#aaa;font-size:12px;cursor:pointer;white-space: nowrap; text-transform: uppercase; font-weight: bold;}
-
+        .tabs button{flex:1;padding:15px;background:none;border:none;color:#aaa;font-size:11px;cursor:pointer;white-space: nowrap; text-transform: uppercase; font-weight: bold;}
         .tabs button.active{color:#fff;border-bottom:3px solid #7a4cff;background:#1f1a2e}
-
         
-
         .section{display:none;padding:15px;animation: fadeIn 0.3s;}
-
         .section.active{display:block}
-
         
-
         .bar-block{margin-bottom:15px; background: #161222; padding: 12px; border-radius: 8px; border: 1px solid #2a2438;}
-
         .bar-info{display:flex; justify-content: space-between; margin-bottom: 5px; font-weight: bold; font-size: 14px;}
-
         .bar{height:14px;background:#2a2438;border-radius:7px;overflow:hidden;margin: 8px 0; border: 1px solid #000;}
-
         .bar-fill{height:100%;width:0%;transition: width 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67);}
-
         
-
         #pvBar{background: linear-gradient(90deg, #8b0000, #ff4c4c);}
-
         #peBar{background: linear-gradient(90deg, #002db3, #4c7aff);}
-
-        #vinBar{background: #4cff77;}
-
-        #corrBar{background: #a34cff;}
-
         #arcBar{background: linear-gradient(90deg, #4b0082, #9370db);}
-
         #ocuBar{background: linear-gradient(90deg, #222, #555);}
 
         .bar-controls{display:flex; align-items: center; gap:8px; margin-top:10px; flex-wrap: wrap;}
-
-        .bar-controls input { width: 70px; background: #0b090f; color: #fff; border: 1px solid #3d2a5c; border-radius: 4px; padding: 5px; }
-
+        .bar-controls input { width: 60px; background: #0b090f; color: #fff; border: 1px solid #3d2a5c; border-radius: 4px; padding: 5px; }
         
-
         .input-group{margin-bottom: 15px; background: #161222; padding: 15px; border-radius: 8px;}
-
         .input-group label { display: block; margin-bottom: 8px; color: #7a4cff; font-weight: bold; font-size: 14px; }
-
         
-
         input, textarea, select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #3d2a5c; background: #1f1a2e; color: #fff; box-sizing: border-box; margin-bottom: 10px; }
-
         
-
         button{background:#3d2a5c;color:#fff;border:none;border-radius:6px;padding:8px 12px;cursor:pointer; font-size: 14px;}
-
         button:hover{background:#7a4cff}
+        
+        .footer-tools{position: fixed; bottom: 0; width: 100%; background: #161222; padding: 10px; display: flex; justify-content: center; border-top: 1px solid #3d2a5c;}
+        .btn-undo{background: #5c5c2a; font-weight: bold; width: 80%;}
 
-        .btn-plus{background: #2a5c3d;}
-
-        .btn-minus{background: #5c2a2a;}
-
+        .list-item{background:#1f1a2e;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #7a4cff; overflow: hidden; position: relative;}
         .btn-delete{background: #8b0000; padding: 4px 8px; font-size: 11px; float: right; margin-left: 5px;}
-
-        .btn-edit{background: #5c4d2a; padding: 4px 8px; font-size: 11px; float: right;}
-
         
-
-        .list-item{background:#1f1a2e;padding:12px;border-radius:6px;margin:8px 0;border-left:4px solid #7a4cff; overflow: hidden; cursor: pointer;}
-
-        .list-item:hover{background: #25203a;}
-
-        
-
         @keyframes fadeIn { from {opacity:0} to {opacity:1} }
-
     </style>
-
 </head>
-
 <body>
 
 <header>
-
     <img id="imgChar" src="https://via.placeholder.com/120x160?text=Avatar" onclick="trocarImagem()">
-
     <div class="header-info">
-
         <input id="nome" placeholder="Nome" onchange="salvarHeader()">
-
         <input id="idade" placeholder="Idade" onchange="salvarHeader()">
-
         <input id="raca" placeholder="Raça" onchange="salvarHeader()">
-
         <input id="classe" placeholder="Classe" onchange="salvarHeader()">
-
     </div>
-
 </header>
 
 <div class="tabs">
-
     <button data-tab="0" class="tab-btn active">Status</button>
-
     <button data-tab="1" class="tab-btn">Atributos</button>
-
-    <button data-tab="2" class="tab-btn">Habilidades</button>
-
-    <button data-tab="5" class="tab-btn">Armadura</button>
-
-    <button data-tab="4" class="tab-btn">Armas</button>
-
-    <button data-tab="3" class="tab-btn">Inventário</button>
-
+    <button data-tab="2" class="tab-btn">Poderes</button>
+    <button data-tab="4" class="tab-btn">Equip</button>
     <button data-tab="6" class="tab-btn">Penitência</button>
-
+    <button data-tab="7" class="tab-btn">Diário</button>
 </div>
 
 <div class="section active" data-sec="0">
-
     <div class="bar-block">
-
         <div class="bar-info"><span>Vida (PV)</span><span id="pvTxt">10 / 10</span></div>
-
         <div class="bar"><div id="pvBar" class="bar-fill"></div></div>
-
         <div class="bar-controls">
-
-            <button class="btn-minus" onclick="alterarValor('pv', -1)">-1</button>
-
-            <button class="btn-plus" onclick="alterarValor('pv', 1)">+1</button>
-
-            <input type="number" id="pvMaxInput" onchange="setMax('pv')">
-
-            <span>Máx</span>
-
+            <button onclick="alterarValor('pv', -1)">-1</button>
+            <button onclick="alterarValor('pv', 1)">+1</button>
+            <input type="number" id="pvMaxInput" onchange="setMax('pv')"><span>Máx</span>
         </div>
-
     </div>
-
     <div class="bar-block">
-
         <div class="bar-info"><span>Energia (PE)</span><span id="peTxt">10 / 10</span></div>
-
         <div class="bar"><div id="peBar" class="bar-fill"></div></div>
-
         <div class="bar-controls">
-
-            <button class="btn-minus" onclick="alterarValor('pe', -1)">-1</button>
-
-            <button class="btn-plus" onclick="alterarValor('pe', 1)">+1</button>
-
-            <input type="number" id="peMaxInput" onchange="setMax('pe')">
-
-            <span>Máx</span>
-
+            <button onclick="alterarValor('pe', -1)">-1</button>
+            <button onclick="alterarValor('pe', 1)">+1</button>
+            <input type="number" id="peMaxInput" onchange="setMax('pe')"><span>Máx</span>
         </div>
-
     </div>
-
     <div class="bar-block">
-
-        <div class="bar-info"><span>Conhecimento Arcano</span><span id="arcTxt">0 / 10</span></div>
-
+        <div class="bar-info"><span>C. Arcano</span><span id="arcTxt">0 / 10</span></div>
         <div class="bar"><div id="arcBar" class="bar-fill"></div></div>
-
         <div class="bar-controls">
-
-            <button class="btn-minus" onclick="alterarValor('arc', -1)">-1</button>
-
-            <button class="btn-plus" onclick="alterarValor('arc', 1)">+1</button>
-
-            <input type="number" id="arcMaxInput" onchange="setMax('arc')">
-
-            <span>Máx</span>
-
+            <button onclick="alterarValor('arc', -1)">-1</button>
+            <button onclick="alterarValor('arc', 1)">+1</button>
+            <input type="number" id="arcMaxInput" onchange="setMax('arc')"><span>Máx</span>
         </div>
-
     </div>
-
     <div class="bar-block">
-
         <div class="bar-info"><span>Ocultismo</span><span id="ocuTxt">0 / 10</span></div>
-
         <div class="bar"><div id="ocuBar" class="bar-fill"></div></div>
-
         <div class="bar-controls">
-
-            <button class="btn-minus" onclick="alterarValor('ocu', -1)">-1</button>
-
-            <button class="btn-plus" onclick="alterarValor('ocu', 1)">+1</button>
-
-            <input type="number" id="ocuMaxInput" onchange="setMax('ocu')">
-
-            <span>Máx</span>
-
+            <button onclick="alterarValor('ocu', -1)">-1</button>
+            <button onclick="alterarValor('ocu', 1)">+1</button>
+            <input type="number" id="ocuMaxInput" onchange="setMax('ocu')"><span>Máx</span>
         </div>
-
     </div>
-
-    <div class="bar-block">
-
-        <div class="bar-info"><span>Vínculo</span><span id="vinTxt">0</span></div>
-
-        <div class="bar"><div id="vinBar" class="bar-fill"></div></div>
-
-        <div class="bar-controls">
-
-            <button class="btn-minus" onclick="alterarValor('vin', -1)">-1</button>
-
-            <button class="btn-plus" onclick="alterarValor('vin', 1)">+1</button>
-
-        </div>
-
-    </div>
-
-    <div class="bar-block">
-
-        <div class="bar-info"><span>Corrupção</span><span id="corrTxt">0</span></div>
-
-        <div class="bar"><div id="corrBar" class="bar-fill"></div></div>
-
-        <div class="bar-controls">
-
-            <button class="btn-minus" onclick="alterarValor('corr', -1)">-1</button>
-
-            <button class="btn-plus" onclick="alterarValor('corr', 1)">+1</button>
-
-        </div>
-
-    </div>
-
 </div>
 
 <div class="section" data-sec="1">
-
     <div class="input-group">
-
-        <input id="attrNome" placeholder="Ex: Força">
-
+        <input id="attrNome" placeholder="Nome (ex: Força)">
         <input id="attrValor" type="number" placeholder="Valor">
-
-        <button id="btnAttr" style="width:100%">Adicionar Atributo</button>
-
+        <button onclick="addAtributo()" style="width:100%">Adicionar Atributo</button>
     </div>
-
     <div id="listaAtributos"></div>
-
 </div>
 
 <div class="section" data-sec="2">
-
     <div class="input-group">
-
-        <input id="habNome" placeholder="Nome da Habilidade">
-
-        <textarea id="habDesc" placeholder="Descrição dos efeitos..."></textarea>
-
-        <button id="btnHab" style="width:100%">Adicionar Habilidade</button>
-
+        <input id="habNome" placeholder="Nome do Poder">
+        <textarea id="habDesc" placeholder="Descrição..."></textarea>
+        <button onclick="addHabilidade()" style="width:100%">Adicionar Poder</button>
     </div>
-
     <div id="listaHabilidades"></div>
-
-</div>
-
-<div class="section" data-sec="3">
-
-    <div class="input-group">
-
-        <input id="itemNome" placeholder="Nome do Item">
-
-        <button id="btnItem" style="width:100%">Adicionar ao Inventário</button>
-
-    </div>
-
-    <div id="listaInventario"></div>
-
 </div>
 
 <div class="section" data-sec="4">
-
     <div class="input-group">
-
-        <input id="armaNome" placeholder="Nome da Arma">
-
-        <input id="armaDano" placeholder="Dano">
-
-        <button id="btnArma" style="width:100%">Adicionar Arma</button>
-
+        <label>Defesa Atual</label>
+        <input id="armDef" type="number" placeholder="Defesa Total" onchange="salvarSimples()">
     </div>
-
+    <div class="input-group">
+        <input id="armaNome" placeholder="Nome da Arma/Item">
+        <input id="armaDano" placeholder="Dano / Efeito">
+        <button onclick="addArma()" style="width:100%">Adicionar Item</button>
+    </div>
     <div id="listaArmas"></div>
-
-</div>
-
-<div class="section" data-sec="5">
-
-    <div class="input-group">
-
-        <label>Equipamento de Defesa</label>
-
-        <input id="armNome" placeholder="Nome da Armadura/Escudo" onchange="salvarArmadura()">
-
-        <input id="armDef" type="number" placeholder="Valor de Defesa" onchange="salvarArmadura()">
-
-        <textarea id="armProp" placeholder="Propriedades..." onchange="salvarArmadura()"></textarea>
-
-    </div>
-
-    <div style="text-align: center; color: #7a4cff;">
-
-        <h3>Defesa Total: <span id="defTotal">0</span></h3>
-
-    </div>
-
 </div>
 
 <div class="section" data-sec="6">
-
     <div class="input-group">
-
-        <label>Nível de Penitência</label>
-
-        <div style="display:flex; gap:10px; align-items:center;">
-
-            <button class="btn-minus" onclick="alterarPenitencia(-1)">-</button>
-
-            <h2 id="penNivel" style="margin:0; flex:1; text-align:center;">0</h2>
-
-            <button class="btn-plus" onclick="alterarPenitencia(1)">+</button>
-
-        </div>
-
+        <input id="penNome" placeholder="Nome da Penitência">
+        <input id="penLV" type="number" placeholder="Nível">
+        <textarea id="penDesc" placeholder="Descrição do fardo..."></textarea>
+        <button onclick="addPenitencia()" style="width:100%">Adicionar Penitência</button>
     </div>
+    <div id="listaPenitencias"></div>
+</div>
 
+<div class="section" data-sec="7">
     <div class="input-group">
-
-        <label>Descrição da Penitência</label>
-
-        <textarea id="penDesc" style="height:200px" placeholder="Fardo do personagem..." onchange="salvarPenitencia()"></textarea>
-
+        <label>História do Personagem</label>
+        <textarea id="historia" style="height: 200px;" onchange="salvarSimples()" placeholder="Era uma vez..."></textarea>
     </div>
+    <div class="input-group">
+        <label>Anotações Gerais</label>
+        <textarea id="notas" style="height: 200px;" onchange="salvarSimples()" placeholder="Missões, nomes de NPCs, etc..."></textarea>
+    </div>
+</div>
 
+<div class="footer-tools">
+    <button class="btn-undo" onclick="desfazer()">↩ DESFAZER ÚLTIMA AÇÃO</button>
 </div>
 
 <script>
-
 let ficha = {
-
     nome: '', idade: '', raca: '', classe: '', img: '',
-
-    pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, corr: 0,
-
-    atributos: {}, habilidades: [], inv: [], armas: [],
-
-    armadura: { nome: '', defesa: 0, propriedades: '' },
-
-    penitencia: { nivel: 0, descricao: '' }
-
+    pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10,
+    atributos: {}, habilidades: [], armas: [], penitencias: [],
+    defesa: 0, historia: '', notas: ''
 };
 
-function salvar(){ localStorage.setItem('fichaRPG_Anime_v4', JSON.stringify(ficha)); }
+let historico = [];
+
+function snapshot() {
+    if (historico.length > 10) historico.shift();
+    historico.push(JSON.stringify(ficha));
+}
+
+function salvar(){ 
+    localStorage.setItem('fichaRPG_V5', JSON.stringify(ficha)); 
+    render();
+}
+
+function salvarSimples() {
+    ficha.defesa = document.getElementById('armDef').value;
+    ficha.historia = document.getElementById('historia').value;
+    ficha.notas = document.getElementById('notas').value;
+    salvar();
+}
 
 function salvarHeader() {
-
     ficha.nome = document.getElementById('nome').value;
-
     ficha.idade = document.getElementById('idade').value;
-
     ficha.raca = document.getElementById('raca').value;
-
     ficha.classe = document.getElementById('classe').value;
-
     salvar();
-
 }
 
-function salvarArmadura() {
-
-    ficha.armadura.nome = document.getElementById('armNome').value;
-
-    ficha.armadura.defesa = parseInt(document.getElementById('armDef').value) || 0;
-
-    ficha.armadura.propriedades = document.getElementById('armProp').value;
-
-    document.getElementById('defTotal').textContent = ficha.armadura.defesa;
-
-    salvar();
-
-}
-
-function salvarPenitencia() {
-
-    ficha.penitencia.descricao = document.getElementById('penDesc').value;
-
-    salvar();
-
-}
-
-function alterarPenitencia(v) {
-
-    ficha.penitencia.nivel += v;
-
-    document.getElementById('penNivel').textContent = ficha.penitencia.nivel;
-
-    salvar();
-
-}
-
-// Funções de Edição
-
-function editarAtributo(k) {
-
-    const novoNome = prompt("Novo nome do atributo:", k);
-
-    if (!novoNome) return;
-
-    const novoValor = prompt("Novo valor:", ficha.atributos[k]);
-
-    if (novoValor !== null) {
-
-        delete ficha.atributos[k];
-
-        ficha.atributos[novoNome] = novoValor;
-
-        render(); salvar();
-
+function desfazer() {
+    if (historico.length > 0) {
+        ficha = JSON.parse(historico.pop());
+        salvar();
+        alert("Ação revertida!");
+    } else {
+        alert("Nada para desfazer.");
     }
-
 }
 
-function editarHabilidade(i) {
+// Funções de Adição com Validação
+function addAtributo() {
+    const n = document.getElementById('attrNome').value.trim();
+    const v = document.getElementById('attrValor').value;
+    if(!n) return;
+    if(ficha.atributos[n]) return alert("Este atributo já existe!");
+    snapshot();
+    ficha.atributos[n] = v;
+    document.getElementById('attrNome').value = '';
+    salvar();
+}
 
-    const n = prompt("Novo nome da habilidade:", ficha.habilidades[i].n);
+function addHabilidade() {
+    const n = document.getElementById('habNome').value.trim();
+    const d = document.getElementById('habDesc').value;
+    if(!n) return;
+    if(ficha.habilidades.find(h => h.n.toLowerCase() === n.toLowerCase())) return alert("Poder com este nome já existe!");
+    snapshot();
+    ficha.habilidades.push({n, d});
+    document.getElementById('habNome').value = ''; document.getElementById('habDesc').value = '';
+    salvar();
+}
 
-    const d = prompt("Nova descrição:", ficha.habilidades[i].d);
+function addPenitencia() {
+    const n = document.getElementById('penNome').value.trim();
+    const lv = document.getElementById('penLV').value;
+    const d = document.getElementById('penDesc').value;
+    if(!n) return;
+    snapshot();
+    ficha.penitencias.push({n, lv, d});
+    document.getElementById('penNome').value = ''; document.getElementById('penDesc').value = '';
+    salvar();
+}
 
-    if (n !== null && d !== null) {
+function addArma() {
+    const n = document.getElementById('armaNome').value;
+    const d = document.getElementById('armaDano').value;
+    if(!n) return;
+    snapshot();
+    ficha.armas.push({n, d});
+    document.getElementById('armaNome').value = ''; document.getElementById('armaDano').value = '';
+    salvar();
+}
 
-        ficha.habilidades[i] = {n, d};
+function removerItem(chave, i) {
+    snapshot();
+    if(chave === 'atributos') delete ficha.atributos[i];
+    else ficha[chave].splice(i, 1);
+    salvar();
+}
 
-        render(); salvar();
-
+// Edição
+function editarGenerico(chave, i, campo) {
+    snapshot();
+    let novo;
+    if(chave === 'atributos') {
+        novo = prompt("Novo valor para " + i, ficha.atributos[i]);
+        if(novo !== null) ficha.atributos[i] = novo;
+    } else {
+        novo = prompt("Editar:", ficha[chave][i][campo]);
+        if(novo !== null) ficha[chave][i][campo] = novo;
     }
-
-}
-
-function editarItem(i) {
-
-    const n = prompt("Editar item:", ficha.inv[i]);
-
-    if (n) { ficha.inv[i] = n; render(); salvar(); }
-
-}
-
-function editarArma(i) {
-
-    const n = prompt("Novo nome da arma:", ficha.armas[i].n);
-
-    const d = prompt("Novo dano:", ficha.armas[i].d);
-
-    if (n !== null && d !== null) {
-
-        ficha.armas[i] = {n, d};
-
-        render(); salvar();
-
-    }
-
+    salvar();
 }
 
 function render(){
-
     // Barras
-
-    const barras = ['pv', 'pe', 'arc', 'ocu'];
-
-    barras.forEach(b => {
-
+    ['pv', 'pe', 'arc', 'ocu'].forEach(b => {
         const perc = (ficha[b] / (ficha[b+'Max'] || 1)) * 100;
-
         document.getElementById(b+'Txt').textContent = `${ficha[b]} / ${ficha[b+'Max']}`;
-
         document.getElementById(b+'Bar').style.width = Math.min(100, Math.max(0, perc)) + '%';
-
-        if(document.getElementById(b+'MaxInput')) document.getElementById(b+'MaxInput').value = ficha[b+'Max'];
-
+        document.getElementById(b+'MaxInput').value = ficha[b+'Max'];
     });
 
-    document.getElementById('vinTxt').textContent = ficha.vin;
-
-    document.getElementById('vinBar').style.width = Math.min(100, Math.max(0, ficha.vin)) + '%';
-
-    document.getElementById('corrTxt').textContent = ficha.corr;
-
-    document.getElementById('corrBar').style.width = Math.min(100, Math.max(0, ficha.corr)) + '%';
-
-    // UI
-
-    document.getElementById('armNome').value = ficha.armadura.nome;
-
-    document.getElementById('armDef').value = ficha.armadura.defesa;
-
-    document.getElementById('armProp').value = ficha.armadura.propriedades;
-
-    document.getElementById('defTotal').textContent = ficha.armadura.defesa;
-
-    document.getElementById('penNivel').textContent = ficha.penitencia.nivel;
-
-    document.getElementById('penDesc').value = ficha.penitencia.descricao;
-
+    // Inputs Simples
     document.getElementById('nome').value = ficha.nome;
+    document.getElementById('armDef').value = ficha.defesa || 0;
+    document.getElementById('historia').value = ficha.historia || '';
+    document.getElementById('notas').value = ficha.notas || '';
 
-    document.getElementById('idade').value = ficha.idade;
+    // Listas
+    const renderLista = (id, lista, chave, htmlFunc) => {
+        const el = document.getElementById(id);
+        el.innerHTML = '';
+        if(chave === 'atributos') {
+            Object.keys(lista).forEach(k => el.innerHTML += htmlFunc(k, lista[k]));
+        } else {
+            lista.forEach((item, i) => el.innerHTML += htmlFunc(item, i));
+        }
+    };
 
-    document.getElementById('raca').value = ficha.raca;
+    renderLista('listaAtributos', ficha.atributos, 'atributos', (k, v) => 
+        `<div class="list-item"><span onclick="editarGenerico('atributos', '${k}')"><b>${k}:</b> ${v}</span><button class="btn-delete" onclick="removerItem('atributos', '${k}')">X</button></div>`);
 
-    document.getElementById('classe').value = ficha.classe;
+    renderLista('listaHabilidades', ficha.habilidades, 'habilidades', (item, i) => 
+        `<div class="list-item"><span onclick="editarGenerico('habilidades', ${i}, 'd')"><b>${item.n}</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('habilidades', ${i})">X</button></div>`);
 
-    if(ficha.img) document.getElementById('imgChar').src = ficha.img;
+    renderLista('listaArmas', ficha.armas, 'armas', (item, i) => 
+        `<div class="list-item"><span onclick="editarGenerico('armas', ${i}, 'd')"><b>${item.n}</b>: ${item.d}</span><button class="btn-delete" onclick="removerItem('armas', ${i})">X</button></div>`);
 
-    renderAtributos();
-
-    renderHabilidades();
-
-    renderInventario();
-
-    renderArmas();
-
-}
-
-function renderAtributos() {
-
-    const el = document.getElementById('listaAtributos');
-
-    el.innerHTML = '';
-
-    Object.keys(ficha.atributos).forEach(k => {
-
-        el.innerHTML += `<div class="list-item">
-
-            <span onclick="editarAtributo('${k}')"><b>${k}:</b> ${ficha.atributos[k]}</span>
-
-            <button class="btn-delete" onclick="removerAttr('${k}')">X</button>
-
-        </div>`;
-
-    });
-
-}
-
-function renderHabilidades() {
-
-    const el = document.getElementById('listaHabilidades');
-
-    el.innerHTML = '';
-
-    ficha.habilidades.forEach((h, i) => {
-
-        el.innerHTML += `<div class="list-item">
-
-            <span onclick="editarHabilidade(${i})"><b>${h.n}</b><br><small>${h.d}</small></span>
-
-            <button class="btn-delete" onclick="removerItem('habilidades', ${i})">X</button>
-
-        </div>`;
-
-    });
-
-}
-
-function renderInventario() {
-
-    const el = document.getElementById('listaInventario');
-
-    el.innerHTML = '';
-
-    ficha.inv.forEach((item, i) => {
-
-        el.innerHTML += `<div class="list-item">
-
-            <span onclick="editarItem(${i})">${item}</span>
-
-            <button class="btn-delete" onclick="removerItem('inv', ${i})">X</button>
-
-        </div>`;
-
-    });
-
-}
-
-function renderArmas() {
-
-    const el = document.getElementById('listaArmas');
-
-    el.innerHTML = '';
-
-    ficha.armas.forEach((a, i) => {
-
-        el.innerHTML += `<div class="list-item">
-
-            <span onclick="editarArma(${i})"><b>${a.n}</b> — Dano: ${a.d}</span>
-
-            <button class="btn-delete" onclick="removerItem('armas', ${i})">X</button>
-
-        </div>`;
-
-    });
-
+    renderLista('listaPenitencias', ficha.penitencias, 'penitencias', (item, i) => 
+        `<div class="list-item"><span onclick="editarGenerico('penitencias', ${i}, 'd')"><b>${item.n} (Nív. ${item.lv})</b><br><small>${item.d}</small></span><button class="btn-delete" onclick="removerItem('penitencias', ${i})">X</button></div>`);
 }
 
 function alterarValor(tipo, qtd) {
-
+    snapshot();
     ficha[tipo] += qtd;
-
-    if(ficha[tipo+'Max'] && ficha[tipo] > ficha[tipo+'Max']) ficha[tipo] = ficha[tipo+'Max'];
-
+    if(ficha[tipo] > ficha[tipo+'Max']) ficha[tipo] = ficha[tipo+'Max'];
     if(ficha[tipo] < 0) ficha[tipo] = 0;
-
-    render(); salvar();
-
+    salvar();
 }
 
 function setMax(tipo) {
-
+    snapshot();
     ficha[tipo + 'Max'] = parseInt(document.getElementById(tipo + 'MaxInput').value) || 1;
-
-    render(); salvar();
-
+    salvar();
 }
 
-function removerAttr(k) { if(confirm('Excluir atributo?')) { delete ficha.atributos[k]; render(); salvar(); } }
-
-function removerItem(chave, i) { if(confirm('Excluir item?')) { ficha[chave].splice(i, 1); render(); salvar(); } }
-
 function trocarImagem(){
-
     const u = prompt('URL da imagem'); 
-
     if(u) { ficha.img = u; document.getElementById('imgChar').src = u; salvar(); }
-
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-
     document.querySelectorAll('.tab-btn').forEach(btn => {
-
         btn.addEventListener('click', () => {
-
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-
             btn.classList.add('active');
-
             document.querySelector(`.section[data-sec='${btn.dataset.tab}']`).classList.add('active');
-
         });
-
     });
-
-    document.getElementById('btnAttr').onclick = () => {
-
-        const n = document.getElementById('attrNome').value;
-
-        const v = document.getElementById('attrValor').value;
-
-        if(n) { ficha.atributos[n] = v; document.getElementById('attrNome').value=''; document.getElementById('attrValor').value=''; render(); salvar(); }
-
-    };
-
-    document.getElementById('btnHab').onclick = () => {
-
-        const n = document.getElementById('habNome').value;
-
-        const d = document.getElementById('habDesc').value;
-
-        if(n) { ficha.habilidades.push({n, d}); document.getElementById('habNome').value=''; document.getElementById('habDesc').value=''; render(); salvar(); }
-
-    };
-
-    document.getElementById('btnItem').onclick = () => {
-
-        const n = document.getElementById('itemNome').value;
-
-        if(n) { ficha.inv.push(n); document.getElementById('itemNome').value=''; render(); salvar(); }
-
-    };
-
-    document.getElementById('btnArma').onclick = () => {
-
-        const n = document.getElementById('armaNome').value;
-
-        const d = document.getElementById('armaDano').value;
-
-        if(n) { ficha.armas.push({n, d}); document.getElementById('armaNome').value=''; document.getElementById('armaDano').value=''; render(); salvar(); }
-
-    };
-
-    const d = localStorage.getItem('fichaRPG_Anime_v4');
-
+    const d = localStorage.getItem('fichaRPG_V5');
     if(d) ficha = JSON.parse(d);
-
     render();
-
 });
-
 </script>
-
 </body>
-
-</html>
-    
-  </body>
-  
 </html>
