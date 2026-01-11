@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAMNED RPG - V32 Negativos</title>
+    <title>DAMNED RPG - V32 Gold</title>
     <style>
         :root { 
             --bg-body: #0d0b12; --bg-header: #161222; --bg-card: #1f1a2e; 
             --bg-input: #1f1a2e; --border-color: #3d2a5c; --accent-color: #7a4cff; 
-            --text-main: #eee; --text-dim: #aaa; --text-input: #ffffff; /* Adicionado */
+            --text-main: #eee; --text-dim: #aaa; --text-input: #ffffff;
+            --pet-gold: #ffd700;
         }
         [data-theme="light"] { 
             --bg-body: #e8d5b5; --bg-header: #d4bc93; --bg-card: #f4e4c1; 
             --bg-input: #fffdf5; --border-color: #a68b5a; --accent-color: #8b4513; 
-            --text-main: #2b1d0e; --text-dim: #5c4033; --text-input: #2b1d0e; /* Adicionado */
+            --text-main: #2b1d0e; --text-dim: #5c4033; --text-input: #2b1d0e;
         }
         [data-theme="vampire"] { --bg-body: #0f0a0a; --bg-header: #1a0f0f; --bg-card: #261414; --bg-input: #1a0f0f; --border-color: #5c1414; --accent-color: #e61919; --text-main: #f2e6e6; --text-dim: #a68585; --text-input: #f2e6e6; }
         [data-theme="forest"] { --bg-body: #1a1f16; --bg-header: #262e20; --bg-card: #343d2c; --bg-input: #262e20; --border-color: #4a5c3d; --accent-color: #8db35d; --text-main: #e8f0e0; --text-dim: #99a68d; --text-input: #e8f0e0; }
@@ -24,7 +25,7 @@
         /* LOADING */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050508; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
         .loader-logo { width: 50px; height: 50px; border: 4px solid var(--accent-color); border-top: 4px solid transparent; border-radius: 50%; animation: spin 3s linear infinite; }
-        #loading-text { color: var(--accent-color); margin-top: 15px; font-size: 14px; font-weight: bold; font-style: italic; } /* Adicionado */
+        #loading-text { color: var(--accent-color); margin-top: 15px; font-size: 14px; font-weight: bold; font-style: italic; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* SIDEBAR */
@@ -68,6 +69,14 @@
         .list-item small { cursor: pointer; color: var(--text-dim); display: block; margin-top: 4px; font-size: 12px; }
         .btn-del { position: absolute; top: 8px; right: 8px; background: #c00; color: #fff; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 10px; }
 
+        /* Estilo Especial Pets */
+        .pet-item { border-left: 4px solid var(--pet-gold) !important; background: rgba(255, 215, 0, 0.05); }
+        .pet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+        .pet-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--pet-gold); object-fit: cover; cursor: pointer; }
+        .pet-item b { color: var(--pet-gold) !important; }
+        .pet-stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 5px; }
+        .pet-stat-box { background: rgba(0,0,0,0.3); padding: 4px; border-radius: 4px; font-size: 10px; color: var(--text-dim); border: 1px solid #333; }
+
         .diario-container { display: flex; flex-direction: column; gap: 15px; }
         .diario-label { font-size: 12px; font-weight: bold; color: var(--accent-color); margin-bottom: 5px; text-transform: uppercase; }
 
@@ -82,6 +91,7 @@
 <div id="sidebar">
     <h3 style="color: var(--accent-color)">Opções</h3>
     <div style="padding: 15px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="cycleTheme()">🌓 Trocar Tema</div>
+    <div style="padding: 15px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="exportarFicha()">📥 Exportar Backup</div>
     <div style="padding: 15px 0; color: #ff4c4c; cursor: pointer;" onclick="toggleSidebar()">✖ Fechar</div>
 </div>
 <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
@@ -119,6 +129,7 @@
         <button data-tab="5" class="tab-btn">Inventário</button>
         <button data-tab="6" class="tab-btn">Penit</button>
         <button data-tab="7" class="tab-btn">Diário</button>
+        <button data-tab="8" class="tab-btn">🐾 Pets</button>
     </div>
 
     <div class="section active" data-sec="0" id="status-container"></div>
@@ -167,6 +178,25 @@
         </div>
     </div>
 
+    <div class="section" data-sec="8">
+        <div class="input-group">
+            <input id="petN" placeholder="Nome do Pet/Invocação">
+            <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+                <button onclick="document.getElementById('petImgInput').click()" style="background:#444; color:#fff; border:1px solid var(--pet-gold); padding:8px; border-radius:6px; flex:1; font-size:10px; font-weight:bold;">🖼️ CARREGAR FOTO</button>
+                <img id="petPreview" src="" style="width:45px; height:45px; border-radius:50%; object-fit:cover; display:none; border: 1px solid var(--pet-gold);">
+            </div>
+            <input type="file" id="petImgInput" accept="image/*" style="display:none" onchange="previewPetImg(event)">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+                <input id="petV" placeholder="Vida Atual">
+                <input id="petDef" placeholder="Defesa">
+            </div>
+            <input id="petAtk" placeholder="Ataque (Ex: 1d6+2)">
+            <textarea id="petD" placeholder="Habilidades Especiais"></textarea>
+            <button onclick="addPetCompleto()" style="width:100%; background:var(--pet-gold); border:none; padding:10px; color:#000; border-radius:6px; font-weight:bold;">CRIAR COMPANHEIRO 🐾</button>
+        </div>
+        <div id="listaPets"></div>
+    </div>
+
     <div class="footer-tools">
         <button onclick="desfazer()" style="background:#444;">↩ VOLTAR</button>
         <button onclick="refazer()" style="background:#555;">AVANÇAR ↪</button>
@@ -176,15 +206,9 @@
 <script>
 let db = JSON.parse(localStorage.getItem('RPG_DB_V32')) || [];
 let cur = -1; let ficha = {}; let undo = []; let redo = [];
+let tempPetImg = ""; // Variável temporária para a foto do pet
 const temas = ['dark', 'light', 'vampire', 'forest', 'cyber'];
-const frasesLoading = [
-    "Afiando as lâminas...",
-    "Consultando os pergaminhos antigos...",
-    "O mestre está rindo... perigo à frente!",
-    "Rolando iniciativa...",
-    "Preparando as poções...",
-    "Explorando masmorras..."
-];
+const frasesLoading = ["Afiando as lâminas...", "Consultando os pets...", "O mestre está rindo...", "Rolando iniciativa..."];
 
 function cycleTheme() {
     let a = document.body.getAttribute('data-theme') || 'dark';
@@ -193,12 +217,22 @@ function cycleTheme() {
     localStorage.setItem('RPG_THEME', p);
 }
 
+function exportarFicha() {
+    if(cur === -1) return alert("Abra uma ficha primeiro!");
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", ficha.nome + "_backup.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
 function toggleSidebar() {
     const s = document.getElementById('sidebar'), o = document.getElementById('overlay');
     s.classList.toggle('open'); o.style.display = s.classList.contains('open') ? 'block' : 'none';
 }
 
-// Corrigido: Chamando iniciar() ao carregar a página
 window.onload = () => {
     document.getElementById('loading-text').innerText = frasesLoading[Math.floor(Math.random() * frasesLoading.length)];
     document.body.setAttribute('data-theme', localStorage.getItem('RPG_THEME') || 'dark');
@@ -230,6 +264,7 @@ function renderLista() {
 
 function selecionar(i) {
     cur = i; ficha = JSON.parse(JSON.stringify(db[i]));
+    if(!ficha.pets) ficha.pets = [];
     document.getElementById('menu-screen').style.display = 'none';
     document.getElementById('btn-menu-global').style.display = 'none';
     document.getElementById('sheet-content').style.display = 'block';
@@ -237,7 +272,7 @@ function selecionar(i) {
 }
 
 function novoPersonagem() {
-    const n = { nome: 'Novo Herói', idade: '', raca: '', classe: '', img: '', pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, vinMax: 10, corr: 0, corrMax: 10, atributos: {}, habilidades: [], armas: [], equipamentos: [], inventario: [], penitencias: [], historia: '', anotacoes: '' };
+    const n = { nome: 'Novo Herói', idade: '', raca: '', classe: '', img: '', pv: 10, pvMax: 10, pe: 10, peMax: 10, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, vinMax: 10, corr: 0, corrMax: 10, atributos: {}, habilidades: [], armas: [], equipamentos: [], inventario: [], penitencias: [], historia: '', anotacoes: '', pets: [] };
     db.push(n); salvarBD(); renderLista();
 }
 
@@ -248,6 +283,42 @@ function snap() { undo.push(JSON.stringify(ficha)); redo = []; if(undo.length > 
 function uploadImagem(event) {
     const r = new FileReader(); r.onload = (e) => { snap(); ficha.img = e.target.result; render(); };
     r.readAsDataURL(event.target.files[0]);
+}
+
+// Funções exclusivas para o Pet
+function previewPetImg(event) {
+    const r = new FileReader(); r.onload = (e) => { 
+        tempPetImg = e.target.result; 
+        document.getElementById('petPreview').src = tempPetImg; 
+        document.getElementById('petPreview').style.display = 'block';
+    };
+    r.readAsDataURL(event.target.files[0]);
+}
+
+function addPetCompleto() {
+    const n = document.getElementById('petN').value; if(!n) return;
+    snap();
+    ficha.pets.push({
+        n: n, v: document.getElementById('petV').value, 
+        def: document.getElementById('petDef').value, 
+        atk: document.getElementById('petAtk').value, 
+        d: document.getElementById('petD').value,
+        img: tempPetImg || "" // Salva a foto em Base64
+    });
+    // Limpar campos
+    document.getElementById('petN').value = ''; document.getElementById('petV').value = '';
+    document.getElementById('petDef').value = ''; document.getElementById('petAtk').value = '';
+    document.getElementById('petD').value = ''; document.getElementById('petPreview').style.display = 'none';
+    tempPetImg = ""; render();
+}
+
+function trocarFotoPet(i) {
+    const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+    input.onchange = (e) => {
+        const r = new FileReader(); r.onload = (ev) => { snap(); ficha.pets[i].img = ev.target.result; render(); };
+        r.readAsDataURL(e.target.files[0]);
+    };
+    input.click();
 }
 
 function editarTexto(key, index, field, msg) {
@@ -297,13 +368,11 @@ function render() {
         const atual = parseInt(ficha[s.id]) || 0;
         const max = parseInt(ficha[s.id+'Max']) || 1;
         const p = Math.max(0, (atual / max) * 100);
-        
         cont.innerHTML += `<div class="bar-block">
-            <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:bold;"><span>${s.n}</span><span style="${atual < 0 ? 'color:#ff4c4c' : ''}">${atual}/${max}</span></div>
+            <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:bold;"><span>${s.n}</span><span>${atual}/${max}</span></div>
             <div class="bar"><div class="bar-fill" style="width:${Math.min(100, p)}%; background:${s.c}"></div></div>
             <div class="bar-controls">
-                <button onclick="modV('${s.id}',-5)">-5</button><button onclick="modV('${s.id}',-1)">-1</button>
-                <button onclick="modV('${s.id}',1)">+1</button><button onclick="modV('${s.id}',5)">+5</button>
+                <button onclick="modV('${s.id}',-1)">-1</button><button onclick="modV('${s.id}',1)">+1</button>
                 <input type="number" value="${max}" onchange="setM('${s.id}',this.value)" style="width:45px; background:none; border:1px solid var(--border-color); color:var(--text-input); font-size:10px; text-align:center;">
             </div>
         </div>`;
@@ -325,14 +394,31 @@ function render() {
 
     rl('listaAt', ficha.atributos, 'at', (k, v) => `<div class="list-item"><b onclick="editarTexto('at','${k}','nome','Novo nome:')">${k}:</b> <small onclick="editarTexto('at','${k}','valor','Novo valor:')">${v}</small><button class="btn-del" onclick="remI('at','${k}')">X</button></div>`);
     rl('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="list-item"><b onclick="editarTexto('habilidades',${i},'n','Nome:')">${it.n}</b><small onclick="editarTexto('habilidades',${i},'d','Desc:')">${it.d}</small><button class="btn-del" onclick="remI('habilidades',${i})">X</button></div>`);
-    rl('listaAr', ficha.armas, 'a', (it, i) => `<div class="list-item"><b onclick="editarTexto('armas',${i},'n','Arma:')">${it.n}</b><small onclick="editarTexto('armas',${i},'dan','Dano:')">${it.dan}</small><small onclick="editarTexto('armas',${i},'d','Efeitos:')">${it.d}</small><button class="btn-del" onclick="remI('armas',${i})">X</button></div>`);
-    rl('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="list-item"><b onclick="editarTexto('inventario',${i},'n','Item:')">${it.n}</b><small onclick="editarTexto('inventario',${i},'q','Qtd:')">x${it.q}</small><small onclick="editarTexto('inventario',${i},'d','Detalhes:')">${it.d}</small><button class="btn-del" onclick="remI('inventario',${i})">X</button></div>`);
+    rl('listaAr', ficha.armas, 'a', (it, i) => `<div class="list-item"><b onclick="editarTexto('armas',${i},'n','Arma:')">${it.n}</b><small onclick="editarTexto('armas',${i},'dan','Dano:')">${it.dan}</small><button class="btn-del" onclick="remI('armas',${i})">X</button></div>`);
+    rl('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="list-item"><b onclick="editarTexto('inventario',${i},'n','Item:')">${it.n}</b><small onclick="editarTexto('inventario',${i},'q','Qtd:')">x${it.q}</small><button class="btn-del" onclick="remI('inventario',${i})">X</button></div>`);
     rl('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="list-item"><b onclick="editarTexto('penitencias',${i},'n','Nome:')">${it.n}</b><small onclick="editarTexto('penitencias',${i},'d','Efeito:')">${it.d}</small><button class="btn-del" onclick="remI('penitencias',${i})">X</button></div>`);
+    
+    // Render Pets Atualizado com Imagem Local
+    rl('listaPets', ficha.pets, 'pet', (it, i) => `
+        <div class="list-item pet-item">
+            <div class="pet-header">
+                <img class="pet-avatar" src="${it.img || 'https://via.placeholder.com/50'}" onclick="trocarFotoPet(${i})" title="Clique para trocar a foto">
+                <b onclick="editarTexto('pets',${i},'n','Nome:')">${it.n}</b>
+            </div>
+            <div class="pet-stats-row">
+                <div class="pet-stat-box" onclick="editarTexto('pets',${i},'v','Vida:')">❤️ HP: ${it.v}</div>
+                <div class="pet-stat-box" onclick="editarTexto('pets',${i},'def','Defesa:')">🛡️ DEF: ${it.def}</div>
+                <div class="pet-stat-box" onclick="editarTexto('pets',${i},'atk','Ataque:')">⚔️ ATK: ${it.atk}</div>
+                <div class="pet-stat-box">✨ ESP</div>
+            </div>
+            <small onclick="editarTexto('pets',${i},'d','Habilidades:')">${it.d}</small>
+            <button class="btn-del" onclick="remI('pets',${i})">X</button>
+        </div>`);
 
     let def = 0;
     rl('listaEq', ficha.equipamentos, 'e', (it, i) => { 
         def += parseInt(it.v)||0; 
-        return `<div class="list-item"><b onclick="editarTexto('equipamentos',${i},'n','Nome:')">${it.n}</b><small onclick="editarTexto('equipamentos',${i},'v','Defesa:')">+${it.v} Defesa</small><button class="btn-del" onclick="remI('equipamentos',${i})">X</button></div>`; 
+        return `<div class="list-item"><b>${it.n}</b><small>+${it.v} Defesa</small><button class="btn-del" onclick="remI('equipamentos',${i})">X</button></div>`; 
     });
     document.getElementById('defTotal').innerText = def;
     salvarBD();
