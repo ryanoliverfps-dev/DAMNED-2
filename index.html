@@ -301,6 +301,22 @@ function setPetMaxHp(idx, val) {
     renderFicha();
 }
 
+function trocarFotoPet(idx) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = e => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            snap();
+            ficha.pets[idx].img = ev.target.result;
+            renderFicha();
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+    input.click();
+}
+
 function addAtributo() {
     const n = document.getElementById('atN').value, v = document.getElementById('atV').value;
     if(!n) return; snap(); ficha.atributos[n] = v; renderFicha();
@@ -322,22 +338,6 @@ function addPetFull() {
         def: document.getElementById('petDef').value, atk: document.getElementById('petAtk').value, d: document.getElementById('petD').value
     });
     tempPetImg = ""; renderFicha();
-}
-
-function trocarFotoPet(idx) {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = e => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            snap();
-            ficha.pets[idx].img = ev.target.result;
-            renderFicha();
-        };
-        reader.readAsDataURL(e.target.files[0]);
-    };
-    input.click();
 }
 
 function remover(key, idx) { snap(); if(key === 'at') delete ficha.atributos[idx]; else ficha[key].splice(idx, 1); renderFicha(); }
@@ -367,7 +367,7 @@ function renderFicha() {
     renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">X</button><h4 onclick="editar('inventario',${i},'n','Item')">${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
     renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">X</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
     
-    // RENDER PETS COM BARRA DE HP IGUAL AO PLAYER
+    // RENDER PETS COM BARRA DE HP E LEVEL EDITÁVEL
     renderGeneric('listaPets', ficha.pets, 'pet', (it, i) => {
         let curV = parseInt(it.v) || 0; let maxV = parseInt(it.vmax) || 1;
         let perc = Math.min(100, (curV / maxV) * 100);
@@ -381,7 +381,7 @@ function renderFicha() {
     </div>
     <div>
         <h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4>
-        <span style="font-size:10px; color:var(--pet-gold)">Nível/Estágio: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span>
+        <span style="font-size:10px; color:var(--pet-gold)">Nível/Estágio: <b style="text-decoration: underline; cursor:pointer;" onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span>
     </div>
 </div>
 
@@ -420,7 +420,7 @@ function renderGeneric(id, data, type, temp) {
 
 function desfazer() { if(undo.length > 0) { redo.push(JSON.stringify(ficha)); ficha = JSON.parse(undo.pop()); renderFicha(); } }
 function refazer() { if(redo.length > 0) { undo.push(JSON.stringify(ficha)); ficha = JSON.parse(redo.pop()); renderFicha(); } }
-function exportarFicha() { const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); const a = document.createElement('a'); a.href = data; a.download = ficha.nome + "_v32gold.json"; a.click(); }
+function exportarFicha() { const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); const a = document.createElement('a'); a.href = data; a.download = (ficha.nome || 'ficha') + "_v32gold.json"; a.click(); }
 function importarFicha() { const input = document.createElement('input'); input.type = 'file'; input.onchange = e => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = ev => { snap(); ficha = JSON.parse(ev.target.result); renderFicha(); }; reader.readAsText(file); }; input.click(); }
 </script>
 </body>
