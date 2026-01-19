@@ -44,7 +44,7 @@
         .header-fields input { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; }
 
         /* TABS */
-        .tabs-wrapper { overflow-x: auto; background: var(--bg-header); sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
+        .tabs-wrapper { overflow-x: auto; background: var(--bg-header); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
         .tabs { display: flex; white-space: nowrap; padding: 5px; }
         .tab-btn { padding: 12px 20px; background: none; border: none; color: var(--text-dim); font-weight: bold; font-size: 12px; text-transform: uppercase; cursor: pointer; }
         .tab-btn.active { color: var(--accent-color); border-bottom: 3px solid var(--accent-color); }
@@ -72,12 +72,13 @@
         .card-item p { margin: 0; font-size: 13px; color: var(--text-dim); line-height: 1.4; cursor: pointer; }
         .btn-delete { position: absolute; top: 10px; right: 10px; background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid #ff4444; border-radius: 5px; padding: 4px 8px; font-size: 10px; }
 
-        /* PETS */
-        .pet-card { border-left-color: var(--pet-gold); background: linear-gradient(90deg, rgba(255,215,0,0.05) 0%, var(--bg-card) 100%); }
-        .pet-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
-        .pet-img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--pet-gold); object-fit: cover; }
-        .pet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .pet-tag { background: rgba(0,0,0,0.3); padding: 6px; border-radius: 6px; font-size: 11px; text-align: center; border: 1px solid #444; }
+        /* PETS GOLD SYSTEM */
+        .pet-card { border-left-color: var(--pet-gold); background: linear-gradient(90deg, rgba(255,215,0,0.05) 0%, var(--bg-card) 100%); border-right: 1px solid rgba(255,215,0,0.2); }
+        .pet-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 15px; }
+        .pet-img { width: 70px; height: 70px; border-radius: 15px; border: 2px solid var(--pet-gold); object-fit: cover; }
+        .pet-bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11px; font-weight: bold; color: var(--pet-gold); }
+        .pet-grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
+        .pet-stat-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #444; font-size: 12px; }
 
         /* FOOTER */
         .footer { position: fixed; bottom: 0; width: 100%; background: var(--bg-header); padding: 15px; display: flex; gap: 10px; border-top: 2px solid var(--accent-color); box-sizing: border-box; }
@@ -85,6 +86,8 @@
         .btn-redo { flex: 1; padding: 15px; background: #444; color: #fff; border: none; border-radius: 10px; font-weight: bold; }
 
         .btn-add-main { width: 100%; padding: 12px; background: var(--accent-color); color: #fff; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        textarea { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; padding: 10px; box-sizing: border-box; resize: vertical; }
+        input { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 6px; box-sizing: border-box; }
     </style>
 </head>
 <body data-theme="dark">
@@ -99,7 +102,7 @@
     <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="exportarFicha()">📥 Exportar Ficha (.json)</div>
     <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="importarFicha()">📤 Importar Ficha</div>
     <div style="padding: 18px 0; color: #ff4444; cursor: pointer; margin-top: 50px;" onclick="abrirMenu()">🚪 Sair da Ficha</div>
-    <div style="position: absolute; bottom: 20px; font-size: 10px; color: var(--text-dim);">V32.8 GOLD - DAMNED RPG SYSTEM</div>
+    <div style="position: absolute; bottom: 20px; font-size: 10px; color: var(--text-dim);">V32.9 GOLD - DAMNED RPG SYSTEM</div>
 </div>
 <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
@@ -142,92 +145,32 @@
         <div id="status-bars-container" class="status-container"></div>
     </div>
 
-    <div class="section" id="sec-1">
-        <div class="add-box">
-            <div style="display:flex; gap:10px;">
-                <input id="atN" placeholder="Ex: Força" style="flex:1">
-                <input id="atV" type="number" placeholder="Valor" style="width:80px">
-            </div>
-            <button class="btn-add-main" onclick="addAtributo()">ADICIONAR ATRIBUTO</button>
-        </div>
-        <div id="listaAt"></div>
-    </div>
-
-    <div class="section" id="sec-2">
-        <div class="add-box">
-            <input id="pdN" placeholder="Nome do Poder">
-            <textarea id="pdD" placeholder="Descrição completa do efeito..." rows="3"></textarea>
-            <button class="btn-add-main" onclick="addItem('habilidades',['pdN','pdD'],['n','d'])">ADICIONAR PODER</button>
-        </div>
-        <div id="listaPd"></div>
-    </div>
-
-    <div class="section" id="sec-3">
-        <div class="add-box">
-            <input id="arN" placeholder="Nome da Arma">
-            <input id="arDan" placeholder="Dano (ex: 2d10 + 5)">
-            <textarea id="arD" placeholder="Efeitos especiais..." rows="2"></textarea>
-            <button class="btn-add-main" onclick="addItem('armas',['arN','arDan','arD'],['n','dan','d'])">ADICIONAR AO ARSENAL</button>
-        </div>
-        <div id="listaAr"></div>
-    </div>
-
-    <div class="section" id="sec-4">
-        <div style="background:var(--accent-color); color:white; padding:20px; border-radius:15px; text-align:center; margin-bottom:20px; box-shadow:0 10px 20px rgba(0,0,0,0.3);">
-            <div style="font-size:12px; opacity:0.8; text-transform:uppercase;">Defesa Total Estimada</div>
-            <div id="defTotal" style="font-size:42px; font-weight:900;">0</div>
-        </div>
-        <div class="add-box">
-            <input id="eqN" placeholder="Equipamento (Escudo, Armadura...)">
-            <input id="eqV" type="number" placeholder="Valor da Defesa">
-            <button class="btn-add-main" onclick="addItem('equipamentos',['eqN','eqV'],['n','v'])">EQUIPAR</button>
-        </div>
-        <div id="listaEq"></div>
-    </div>
-
-    <div class="section" id="sec-5">
-        <div class="add-box">
-            <div style="display:flex; gap:10px;">
-                <input id="invN" placeholder="Item" style="flex:1">
-                <input id="invQ" placeholder="Qtd" style="width:70px">
-            </div>
-            <textarea id="invD" placeholder="Descrição do item..." rows="2"></textarea>
-            <button class="btn-add-main" onclick="addItem('inventario',['invN','invQ','invD'],['n','q','d'])">GUARDAR ITEM</button>
-        </div>
-        <div id="listaInv"></div>
-    </div>
-
-    <div class="section" id="sec-6">
-        <div class="add-box">
-            <input id="peN" placeholder="Nome do Fardo / Penitência">
-            <textarea id="peD" placeholder="O que isso causa ao personagem?" rows="3"></textarea>
-            <button class="btn-add-main" onclick="addItem('penitencias',['peN','peD'],['n','d'])">ADICIONAR PENITÊNCIA</button>
-        </div>
-        <div id="listaPe"></div>
-    </div>
-
-    <div class="section" id="sec-7">
-        <h3 style="color:var(--accent-color)">História da Lenda</h3>
-        <textarea id="historia" style="height:200px; line-height:1.6;" placeholder="Escreva a origem do seu personagem..." onchange="salvarDiario()"></textarea>
-        <h3 style="color:var(--accent-color); margin-top:20px;">Notas de Aventura</h3>
-        <textarea id="anotacoes" style="height:300px; line-height:1.6;" placeholder="Missões, NPCs, segredos..." onchange="salvarDiario()"></textarea>
-    </div>
+    <div class="section" id="sec-1"><div class="add-box"><div style="display:flex; gap:10px;"><input id="atN" placeholder="Ex: Força" style="flex:1"><input id="atV" type="number" placeholder="Valor" style="width:80px"></div><button class="btn-add-main" onclick="addAtributo()">ADICIONAR ATRIBUTO</button></div><div id="listaAt"></div></div>
+    <div class="section" id="sec-2"><div class="add-box"><input id="pdN" placeholder="Nome do Poder"><textarea id="pdD" placeholder="Descrição completa do efeito..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('habilidades',['pdN','pdD'],['n','d'])">ADICIONAR PODER</button></div><div id="listaPd"></div></div>
+    <div class="section" id="sec-3"><div class="add-box"><input id="arN" placeholder="Nome da Arma"><input id="arDan" placeholder="Dano (ex: 2d10 + 5)"><textarea id="arD" placeholder="Efeitos especiais..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('armas',['arN','arDan','arD'],['n','dan','d'])">ADICIONAR AO ARSENAL</button></div><div id="listaAr"></div></div>
+    <div class="section" id="sec-4"><div style="background:var(--accent-color); color:white; padding:20px; border-radius:15px; text-align:center; margin-bottom:20px; box-shadow:0 10px 20px rgba(0,0,0,0.3);"><div style="font-size:12px; opacity:0.8; text-transform:uppercase;">Defesa Total Estimada</div><div id="defTotal" style="font-size:42px; font-weight:900;">0</div></div><div class="add-box"><input id="eqN" placeholder="Equipamento"><input id="eqV" type="number" placeholder="Defesa"><button class="btn-add-main" onclick="addItem('equipamentos',['eqN','eqV'],['n','v'])">EQUIPAR</button></div><div id="listaEq"></div></div>
+    <div class="section" id="sec-5"><div class="add-box"><div style="display:flex; gap:10px;"><input id="invN" placeholder="Item" style="flex:1"><input id="invQ" placeholder="Qtd" style="width:70px"></div><textarea id="invD" placeholder="Descrição..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('inventario',['invN','invQ','invD'],['n','q','d'])">GUARDAR ITEM</button></div><div id="listaInv"></div></div>
+    <div class="section" id="sec-6"><div class="add-box"><input id="peN" placeholder="Nome da Penitência"><textarea id="peD" placeholder="Descrição..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('penitencias',['peN','peD'],['n','d'])">ADICIONAR PENITÊNCIA</button></div><div id="listaPe"></div></div>
+    <div class="section" id="sec-7"><h3 style="color:var(--accent-color)">História</h3><textarea id="historia" style="height:200px;" onchange="salvarDiario()"></textarea><h3 style="color:var(--accent-color); margin-top:20px;">Notas</h3><textarea id="anotacoes" style="height:300px;" onchange="salvarDiario()"></textarea></div>
 
     <div class="section" id="sec-8">
         <div class="add-box">
             <div style="text-align:center; margin-bottom:15px;">
-                <img id="petPreview" src="https://via.placeholder.com/80" style="width:80px; height:80px; border-radius:50%; border:2px solid var(--pet-gold); object-fit:cover; display:none; margin: 0 auto 10px;">
-                <button onclick="document.getElementById('petImgInput').click()" style="background:#333; color:white; border:1px solid var(--pet-gold); padding:8px 15px; border-radius:20px; font-size:11px;">📷 CARREGAR FOTO DO PET</button>
+                <img id="petPreview" src="https://via.placeholder.com/80" style="width:80px; height:80px; border-radius:15px; border:2px solid var(--pet-gold); object-fit:cover; display:none; margin: 0 auto 10px;">
+                <button onclick="document.getElementById('petImgInput').click()" style="background:#333; color:white; border:1px solid var(--pet-gold); padding:8px 15px; border-radius:20px; font-size:11px; cursor:pointer;">📷 CARREGAR FOTO</button>
                 <input type="file" id="petImgInput" accept="image/*" style="display:none" onchange="previewPet(event)">
             </div>
-            <input id="petN" placeholder="Nome do Mascote / Familiar">
-            <div class="pet-grid">
-                <input id="petV" placeholder="HP">
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px; margin-bottom:10px;">
+                <input id="petN" placeholder="Nome do Mascote">
+                <input id="petLvl" placeholder="Nível">
+            </div>
+            <div class="pet-grid-stats" style="grid-template-columns: 1fr 1fr 1fr;">
+                <input id="petV" placeholder="HP Max" type="number">
                 <input id="petDef" placeholder="DEF">
                 <input id="petAtk" placeholder="ATK">
             </div>
-            <textarea id="petD" placeholder="Habilidades do Pet..." style="margin-top:10px;"></textarea>
-            <button class="btn-add-main" style="background:var(--pet-gold); color:#000;" onclick="addPetFull()">CRIAR COMPANHEIRO</button>
+            <textarea id="petD" placeholder="Habilidades e Notas..." style="margin-top:10px;"></textarea>
+            <button class="btn-add-main" style="background:var(--pet-gold); color:#000;" onclick="addPetFull()">VINCULAR COMPANHEIRO</button>
         </div>
         <div id="listaPets"></div>
     </div>
@@ -243,7 +186,6 @@ let db = JSON.parse(localStorage.getItem('RPG_GOLD_V32')) || [];
 let cur = -1; let ficha = {}; let undo = []; let redo = [];
 let tempPetImg = "";
 
-// SISTEMA CORE
 function cycleTheme() {
     const themes = ['dark', 'light', 'vampire'];
     let current = document.body.getAttribute('data-theme');
@@ -267,7 +209,6 @@ window.onload = () => {
     }, 1200);
 };
 
-// NAVEGAÇÃO
 function abrirMenu() {
     cur = -1; 
     document.getElementById('sheet-content').style.display = 'none';
@@ -284,7 +225,6 @@ function switchTab(e, idx) {
     window.scrollTo(0,0);
 }
 
-// GERENCIAMENTO DE PERSONAGENS
 function renderListaMenu() {
     const l = document.getElementById('lista-personagens'); l.innerHTML = '';
     db.forEach((c, i) => {
@@ -317,41 +257,30 @@ function novoPersonagem() {
     db.push(novo); salvarNoBanco(); renderListaMenu();
 }
 
-function apagar(i) { if(confirm("Deseja apagar esta lenda para sempre?")) { db.splice(i, 1); salvarNoBanco(); renderListaMenu(); } }
-
-// UTILITÁRIOS
+function apagar(i) { if(confirm("Deseja apagar esta lenda?")) { db.splice(i, 1); salvarNoBanco(); renderListaMenu(); } }
 function snap() { undo.push(JSON.stringify(ficha)); redo = []; if(undo.length > 30) undo.shift(); }
 function salvarNoBanco() { if(cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha)); localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db)); }
-
 function triggerImg() { document.getElementById('fileInput').click(); }
-
 function uploadImagem(e) {
     const reader = new FileReader();
     reader.onload = (ev) => { snap(); ficha.img = ev.target.result; renderFicha(); };
     reader.readAsDataURL(e.target.files[0]);
 }
-
 function previewPet(e) {
     const reader = new FileReader();
     reader.onload = (ev) => { tempPetImg = ev.target.result; document.getElementById('petPreview').src = tempPetImg; document.getElementById('petPreview').style.display = 'block'; };
     reader.readAsDataURL(e.target.files[0]);
 }
 
-// LOGICA DE EDIÇÃO
 function editar(caminho, idx, campo, rotulo) {
-    let atual;
-    if(caminho === 'at') atual = (campo === 'n') ? idx : ficha.atributos[idx];
-    else atual = ficha[caminho][idx][campo];
-
+    let atual = (caminho === 'at') ? ((campo === 'n') ? idx : ficha.atributos[idx]) : ficha[caminho][idx][campo];
     let novo = prompt(`Editar ${rotulo}:`, atual);
     if(novo !== null) {
         snap();
         if(caminho === 'at') {
             if(campo === 'n') { let val = ficha.atributos[idx]; delete ficha.atributos[idx]; ficha.atributos[novo] = val; }
             else ficha.atributos[idx] = novo;
-        } else {
-            ficha[caminho][idx][campo] = novo;
-        }
+        } else { ficha[caminho][idx][campo] = novo; }
         renderFicha();
     }
 }
@@ -359,126 +288,126 @@ function editar(caminho, idx, campo, rotulo) {
 function modVal(attr, qtd) { snap(); ficha[attr] = (parseInt(ficha[attr]) || 0) + qtd; renderFicha(); }
 function setMax(attr, val) { snap(); ficha[attr+'Max'] = parseInt(val) || 0; renderFicha(); }
 
-// ADIÇÃO DE ITENS
+function modPetHp(idx, qtd) {
+    snap();
+    let p = ficha.pets[idx];
+    p.v = (parseInt(p.v) || 0) + qtd;
+    renderFicha();
+}
+
+function setPetMaxHp(idx, val) {
+    snap();
+    ficha.pets[idx].vmax = parseInt(val) || 0;
+    renderFicha();
+}
+
 function addAtributo() {
     const n = document.getElementById('atN').value, v = document.getElementById('atV').value;
-    if(!n) return; snap(); ficha.atributos[n] = v; 
-    document.getElementById('atN').value = ''; document.getElementById('atV').value = '';
-    renderFicha();
+    if(!n) return; snap(); ficha.atributos[n] = v; renderFicha();
 }
 
 function addItem(key, ids, props) {
     const vals = ids.map(id => document.getElementById(id).value);
-    if(!vals[0]) return;
-    snap();
+    if(!vals[0]) return; snap();
     let obj = {}; props.forEach((p, i) => obj[p] = vals[i]);
-    ficha[key].push(obj);
-    ids.forEach(id => document.getElementById(id).value = '');
-    renderFicha();
+    ficha[key].push(obj); renderFicha();
 }
 
 function addPetFull() {
     const n = document.getElementById('petN').value; if(!n) return;
     snap();
+    let max = document.getElementById('petV').value || 10;
     ficha.pets.push({
-        n: n, img: tempPetImg,
-        v: document.getElementById('petV').value,
-        def: document.getElementById('petDef').value,
-        atk: document.getElementById('petAtk').value,
-        d: document.getElementById('petD').value
+        n: n, img: tempPetImg, v: max, vmax: max, lvl: document.getElementById('petLvl').value || '1',
+        def: document.getElementById('petDef').value, atk: document.getElementById('petAtk').value, d: document.getElementById('petD').value
     });
-    tempPetImg = ""; document.getElementById('petPreview').style.display = 'none';
-    ['petN','petV','petDef','petAtk','petD'].forEach(id => document.getElementById(id).value = '');
-    renderFicha();
+    tempPetImg = ""; renderFicha();
+}
+
+function trocarFotoPet(idx) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = e => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            snap();
+            ficha.pets[idx].img = ev.target.result;
+            renderFicha();
+        };
+        reader.readAsDataURL(e.target.files[0]);
+    };
+    input.click();
 }
 
 function remover(key, idx) { snap(); if(key === 'at') delete ficha.atributos[idx]; else ficha[key].splice(idx, 1); renderFicha(); }
+function salvarHeader() { ficha.nome = document.getElementById('nome').value; ficha.idade = document.getElementById('idade').value; ficha.raca = document.getElementById('raca').value; ficha.classe = document.getElementById('classe').value; salvarNoBanco(); }
+function salvarDiario() { ficha.historia = document.getElementById('historia').value; ficha.anotacoes = document.getElementById('anotacoes').value; salvarNoBanco(); }
 
-function salvarHeader() {
-    ficha.nome = document.getElementById('nome').value;
-    ficha.idade = document.getElementById('idade').value;
-    ficha.raca = document.getElementById('raca').value;
-    ficha.classe = document.getElementById('classe').value;
-    salvarNoBanco();
-}
-
-function salvarDiario() {
-    ficha.historia = document.getElementById('historia').value;
-    ficha.anotacoes = document.getElementById('anotacoes').value;
-    salvarNoBanco();
-}
-
-// RENDERIZAÇÃO
 function renderFicha() {
-    // Atualizar Header
     document.getElementById('nome').value = ficha.nome || '';
     document.getElementById('idade').value = ficha.idade || '';
     document.getElementById('raca').value = ficha.raca || '';
     document.getElementById('classe').value = ficha.classe || '';
     document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/110x150';
 
-    // Render Status Bars
     const sCont = document.getElementById('status-bars-container');
     sCont.innerHTML = '';
-    const stats = [
-        {id:'pv', n:'Pontos de Vida', c:'var(--hp-color)'},
-        {id:'pe', n:'Energia / Mana', c:'var(--en-color)'},
-        {id:'arc', n:'Nível Arcano', c:'var(--ar-color)'},
-        {id:'ocu', n:'Ocultismo', c:'var(--oc-color)'},
-        {id:'vin', n:'Vínculo', c:'var(--vi-color)'},
-        {id:'corr', n:'Corrupção', c:'var(--co-color)'}
-    ];
+    const stats = [{id:'pv', n:'Pontos de Vida', c:'var(--hp-color)'},{id:'pe', n:'Energia / Mana', c:'var(--en-color)'},{id:'arc', n:'Nível Arcano', c:'var(--ar-color)'},{id:'ocu', n:'Ocultismo', c:'var(--oc-color)'},{id:'vin', n:'Vínculo', c:'var(--vi-color)'},{id:'corr', n:'Corrupção', c:'var(--co-color)'}];
 
     stats.forEach(s => {
-        let curV = parseInt(ficha[s.id]) || 0;
-        let maxV = parseInt(ficha[s.id+'Max']) || 1;
+        let curV = parseInt(ficha[s.id]) || 0; let maxV = parseInt(ficha[s.id+'Max']) || 1;
         let perc = Math.min(100, (curV / maxV) * 100);
-        sCont.innerHTML += `
-            <div class="bar-card">
-                <div class="bar-label"><span>${s.n}</span><span>${curV} / ${maxV}</span></div>
-                <div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div></div>
-                <div class="bar-btns">
-                    <button onclick="modVal('${s.id}',-5)">-5</button><button onclick="modVal('${s.id}',-1)">-1</button>
-                    <button onclick="modVal('${s.id}',1)">+1</button><button onclick="modVal('${s.id}',5)">+5</button>
-                    <input type="number" class="max-input" value="${maxV}" onchange="setMax('${s.id}', this.value)">
-                </div>
-            </div>`;
+        sCont.innerHTML += `<div class="bar-card"><div class="bar-label"><span>${s.n}</span><span>${curV} / ${maxV}</span></div><div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div></div><div class="bar-btns"><button onclick="modVal('${s.id}',-5)">-5</button><button onclick="modVal('${s.id}',-1)">-1</button><button onclick="modVal('${s.id}',1)">+1</button><button onclick="modVal('${s.id}',5)">+5</button><input type="number" class="max-input" value="${maxV}" onchange="setMax('${s.id}', this.value)"></div></div>`;
     });
 
-    // Listas
     renderGeneric('listaAt', ficha.atributos, 'at', (k, v) => `<div class="card-item"><button class="btn-delete" onclick="remover('at','${k}')">X</button><h4 onclick="editar('at','${k}','n','Atributo')">${k}</h4><p onclick="editar('at','${k}','v','Valor')">${v}</p></div>`);
     renderGeneric('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('habilidades',${i})">X</button><h4 onclick="editar('habilidades',${i},'n','Poder')">${it.n}</h4><p onclick="editar('habilidades',${i},'d','Descrição')">${it.d}</p></div>`);
     renderGeneric('listaAr', ficha.armas, 'a', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('armas',${i})">X</button><h4 onclick="editar('armas',${i},'n','Arma')">${it.n}</h4><p onclick="editar('armas',${i},'dan','Dano')">Dano: ${it.dan}</p><p onclick="editar('armas',${i},'d','Efeito')">${it.d}</p></div>`);
     renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">X</button><h4 onclick="editar('inventario',${i},'n','Item')">${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
     renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">X</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
     
-    // Pets
-    renderGeneric('listaPets', ficha.pets, 'pet', (it, i) => `
+    // RENDER PETS COM BARRA DE HP IGUAL AO PLAYER
+    renderGeneric('listaPets', ficha.pets, 'pet', (it, i) => {
+        let curV = parseInt(it.v) || 0; let maxV = parseInt(it.vmax) || 1;
+        let perc = Math.min(100, (curV / maxV) * 100);
+        return `
         <div class="card-item pet-card">
             <button class="btn-delete" onclick="remover('pets',${i})">X</button>
-            <div class="pet-meta">
-                <img src="${it.img || 'https://via.placeholder.com/60'}" class="pet-img">
-                <h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4>
-            </div>
-            <div class="pet-grid">
-                <div class="pet-tag" onclick="editar('pets',${i},'v','HP')">❤️ ${it.v} HP</div>
-                <div class="pet-tag" onclick="editar('pets',${i},'def','DEF')">🛡️ ${it.def} DEF</div>
-                <div class="pet-tag" onclick="editar('pets',${i},'atk','ATK')">⚔️ ${it.atk} ATK</div>
-            </div>
-            <p style="margin-top:10px" onclick="editar('pets',${i},'d','Habilidades')">${it.d}</p>
-        </div>`);
+           <div class="pet-meta">
+    <div style="position: relative;">
+        <img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img" onclick="trocarFotoPet(${i})" style="cursor:pointer" title="Clique para mudar a foto">
+        <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.6); font-size: 8px; padding: 2px; border-radius: 3px; pointer-events: none;">📷</div>
+    </div>
+    <div>
+        <h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4>
+        <span style="font-size:10px; color:var(--pet-gold)">Nível/Estágio: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span>
+    </div>
+</div>
 
-    // Defesa
+            <div class="pet-bar-label"><span>PONTOS DE VIDA DO PET</span><span>${curV} / ${maxV}</span></div>
+            <div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:var(--pet-gold); box-shadow: 0 0 8px rgba(255,215,0,0.4);"></div></div>
+            <div class="bar-btns">
+                <button onclick="modPetHp(${i},-5)">-5</button><button onclick="modPetHp(${i},-1)">-1</button>
+                <button onclick="modPetHp(${i},1)">+1</button><button onclick="modPetHp(${i},5)">+5</button>
+                <input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)">
+            </div>
+
+            <div class="pet-grid-stats">
+                <div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div>
+                <div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div>
+            </div>
+            <p style="margin-top:12px; white-space: pre-wrap;" onclick="editar('pets',${i},'d','Habilidades')">${it.d}</p>
+        </div>`});
+
     let totalDef = 0;
     renderGeneric('listaEq', ficha.equipamentos, 'e', (it, i) => {
         totalDef += (parseInt(it.v) || 0);
         return `<div class="card-item"><button class="btn-delete" onclick="remover('equipamentos',${i})">X</button><h4 onclick="editar('equipamentos',${i},'n','Equipamento')">${it.n}</h4><p onclick="editar('equipamentos',${i},'v','Defesa')">Defesa: +${it.v}</p></div>`;
     });
     document.getElementById('defTotal').innerText = totalDef;
-
     document.getElementById('historia').value = ficha.historia || '';
     document.getElementById('anotacoes').value = ficha.anotacoes || '';
-    
     salvarNoBanco();
 }
 
@@ -491,26 +420,8 @@ function renderGeneric(id, data, type, temp) {
 
 function desfazer() { if(undo.length > 0) { redo.push(JSON.stringify(ficha)); ficha = JSON.parse(undo.pop()); renderFicha(); } }
 function refazer() { if(redo.length > 0) { undo.push(JSON.stringify(ficha)); ficha = JSON.parse(redo.pop()); renderFicha(); } }
-
-function exportarFicha() {
-    const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha));
-    const a = document.createElement('a'); a.href = data; a.download = ficha.nome + "_v32gold.json"; a.click();
-}
-
-function importarFicha() {
-    const input = document.createElement('input'); input.type = 'file';
-    input.onchange = e => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = ev => {
-            const importada = JSON.parse(ev.target.result);
-            snap(); ficha = importada; renderFicha();
-        };
-        reader.readAsText(file);
-    };
-    input.click();
-}
+function exportarFicha() { const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); const a = document.createElement('a'); a.href = data; a.download = ficha.nome + "_v32gold.json"; a.click(); }
+function importarFicha() { const input = document.createElement('input'); input.type = 'file'; input.onchange = e => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = ev => { snap(); ficha = JSON.parse(ev.target.result); renderFicha(); }; reader.readAsText(file); }; input.click(); }
 </script>
 </body>
 </html>
-
