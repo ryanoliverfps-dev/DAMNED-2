@@ -1,935 +1,449 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <title>DAMNED RPG - ONLINE GOLD</title>
-
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
-
-    
-
-    <style>
-
-        :root { 
-
-            --bg-body: #0a090d; --bg-header: #12101a; --bg-card: #1a1626; 
-
-            --bg-input: #1f1a2e; --border-color: #3d2a5c; --accent-color: #a370ff; 
-
-            --text-main: #ffffff; --text-dim: #b0a8c4; --text-input: #ffffff;
-
-            --hp-color: #ff4444; --en-color: #4444ff; --ar-color: #cc44ff;
-
-            --oc-color: #44ff44; --vi-color: #ffaa44; --co-color: #666666;
-
-            --pet-gold: #ffd700;
-
-        }
-
-        
-
-        [data-theme="light"] { --bg-body: #f5f5f5; --bg-header: #ffffff; --bg-card: #ffffff; --bg-input: #eee; --border-color: #ccc; --accent-color: #6200ee; --text-main: #111; --text-dim: #555; --text-input: #000; }
-
-        [data-theme="vampire"] { --bg-body: #1a0505; --bg-header: #2d0a0a; --bg-card: #3d0f0f; --bg-input: #2d0a0a; --border-color: #8b0000; --accent-color: #ff0000; --text-main: #ffe0e0; --text-dim: #a07070; }
-
-
-        body { margin:0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 90px; transition: 0.3s; }
-
-
-        /* TELA DE LOGIN */
-
-        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 110000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; text-align: center; }
-
-        .auth-box { background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--accent-color); width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(163, 112, 255, 0.2); }
-
-        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--bg-input); border: 1px solid var(--border-color); color: white; border-radius: 8px; box-sizing: border-box; }
-
-        .btn-auth { width: 100%; padding: 12px; background: var(--accent-color); border: none; color: white; border-radius: 8px; font-weight: bold; margin-bottom: 10px; cursor: pointer; }
-
-
-        /* LOADING */
-
-        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
-
-        .loader-logo { width: 60px; height: 60px; border: 5px solid #333; border-top: 5px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-
-        /* SIDEBAR */
-
-        #sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: var(--bg-header); z-index: 10001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 3px solid var(--accent-color); padding: 25px; box-sizing: border-box; box-shadow: 10px 0 20px rgba(0,0,0,0.5); }
-
-        #sidebar.open { left: 0; }
-
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: none; backdrop-filter: blur(4px); }
-
-        #btn-menu-global { position: fixed; top: 15px; left: 15px; font-size: 22px; background: var(--bg-header); border: 2px solid var(--accent-color); border-radius: 12px; color: var(--accent-color); cursor: pointer; z-index: 9500; width: 48px; height: 48px; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-
-
-        /* MENU INICIAL */
-
-        #menu-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('https://files.catbox.moe/o5f62o.png') center/cover; z-index: 9000; padding: 20px; box-sizing: border-box; overflow-y: auto; text-align: center; display: none; }
-
-        .char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 30px 0; }
-
-        .char-card { background: rgba(20, 20, 30, 0.9); border: 2px solid var(--border-color); border-radius: 15px; padding: 15px; transition: 0.3s; position: relative; }
-
-        .char-card:active { transform: scale(0.95); border-color: var(--accent-color); }
-
-        .char-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--accent-color); }
-
-
-        /* CABEÇALHO */
-
-        header { display:flex; gap:15px; padding: 20px; background: var(--bg-header); border-bottom: 3px solid var(--accent-color); }
-
-        #imgChar { width: 110px; height: 150px; object-fit: cover; border-radius: 12px; border: 2px solid var(--accent-color); box-shadow: 0 0 15px rgba(163, 112, 255, 0.3); }
-
-        .header-fields { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-
-        .header-fields input { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; }
-
-
-        /* TABS */
-
-        .tabs-wrapper { overflow-x: auto; background: var(--bg-header); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
-
-        .tabs { display: flex; white-space: nowrap; padding: 5px; }
-
-        .tab-btn { padding: 12px 20px; background: none; border: none; color: var(--text-dim); font-weight: bold; font-size: 12px; text-transform: uppercase; cursor: pointer; }
-
-        .tab-btn.active { color: var(--accent-color); border-bottom: 3px solid var(--accent-color); }
-
-
-        /* SEÇÕES */
-
-        .section { display: none; padding: 20px; animation: slideUp 0.3s ease-out; }
-
-        .section.active { display: block; }
-
-        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-
-        /* STATUS BARS */
-
-        .status-container { display: grid; gap: 15px; }
-
-        .bar-card { background: var(--bg-card); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-
-        .bar-label { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
-
-        .bar-outer { height: 16px; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; margin-bottom: 12px; }
-
-        .bar-inner { height: 100%; transition: 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
-
-        .bar-btns { display: grid; grid-template-columns: repeat(4, 1fr) 60px; gap: 6px; }
-
-        .bar-btns button { padding: 10px 0; border: none; border-radius: 6px; background: #2a243d; color: #fff; font-weight: bold; font-size: 12px; }
-
-        .bar-btns button:active { background: var(--accent-color); }
-
-        .max-input { background: #000; border: 1px solid var(--border-color); color: var(--accent-color); text-align: center; border-radius: 6px; font-weight: bold; }
-
-
-        /* LISTAS */
-
-        .add-box { background: var(--bg-card); padding: 15px; border-radius: 12px; border: 1px dashed var(--accent-color); margin-bottom: 20px; }
-
-        .card-item { background: var(--bg-card); padding: 15px; border-radius: 12px; margin-bottom: 12px; border-left: 5px solid var(--accent-color); position: relative; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
-
-        .card-item h4 { margin: 0 0 5px 0; color: var(--accent-color); font-size: 16px; cursor: pointer; }
-
-        .card-item p { margin: 0; font-size: 13px; color: var(--text-dim); line-height: 1.4; cursor: pointer; }
-
-        .btn-delete { position: absolute; top: 10px; right: 10px; background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid #ff4444; border-radius: 5px; padding: 4px 8px; font-size: 10px; }
-
-
-        /* PETS GOLD SYSTEM */
-
-        .pet-card { border-left-color: var(--pet-gold); background: linear-gradient(90deg, rgba(255,215,0,0.05) 0%, var(--bg-card) 100%); border-right: 1px solid rgba(255,215,0,0.2); }
-
-        .pet-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 15px; }
-
-        .pet-img { width: 70px; height: 70px; border-radius: 15px; border: 2px solid var(--pet-gold); object-fit: cover; }
-
-        .pet-bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11px; font-weight: bold; color: var(--pet-gold); }
-
-        .pet-grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
-
-        .pet-stat-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #444; font-size: 12px; }
-
-
-        /* FOOTER */
-
-        .footer { position: fixed; bottom: 0; width: 100%; background: var(--bg-header); padding: 15px; display: flex; gap: 10px; border-top: 2px solid var(--accent-color); box-sizing: border-box; }
-
-        .btn-undo { flex: 1; padding: 15px; background: #333; color: #fff; border: none; border-radius: 10px; font-weight: bold; }
-
-        .btn-redo { flex: 1; padding: 15px; background: #444; color: #fff; border: none; border-radius: 10px; font-weight: bold; }
-
-
-        .btn-add-main { width: 100%; padding: 12px; background: var(--accent-color); color: #fff; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
-
-        textarea { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; padding: 10px; box-sizing: border-box; resize: vertical; }
-
-        input { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 6px; box-sizing: border-box; }
-
-    </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DAMNED RPG - ONLINE GOLD</title>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
+    
+    <style>
+        :root { 
+            --bg-body: #0a090d; --bg-header: #12101a; --bg-card: #1a1626; 
+            --bg-input: #1f1a2e; --border-color: #3d2a5c; --accent-color: #a370ff; 
+            --text-main: #ffffff; --text-dim: #b0a8c4; --text-input: #ffffff;
+            --hp-color: #ff4444; --en-color: #4444ff; --ar-color: #cc44ff;
+            --oc-color: #44ff44; --vi-color: #ffaa44; --co-color: #666666;
+            --pet-gold: #ffd700;
+        }
+        
+        [data-theme="light"] { --bg-body: #f5f5f5; --bg-header: #ffffff; --bg-card: #ffffff; --bg-input: #eee; --border-color: #ccc; --accent-color: #6200ee; --text-main: #111; --text-dim: #555; --text-input: #000; }
+        [data-theme="vampire"] { --bg-body: #1a0505; --bg-header: #2d0a0a; --bg-card: #3d0f0f; --bg-input: #2d0a0a; --border-color: #8b0000; --accent-color: #ff0000; --text-main: #ffe0e0; --text-dim: #a07070; }
+
+        body { margin:0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 90px; transition: 0.3s; }
+
+        /* TELA DE LOGIN */
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 110000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; text-align: center; }
+        .auth-box { background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--accent-color); width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(163, 112, 255, 0.2); }
+        .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--bg-input); border: 1px solid var(--border-color); color: white; border-radius: 8px; box-sizing: border-box; }
+        .btn-auth { width: 100%; padding: 12px; background: var(--accent-color); border: none; color: white; border-radius: 8px; font-weight: bold; margin-bottom: 10px; cursor: pointer; }
+
+        /* LOADING */
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
+        .loader-logo { width: 60px; height: 60px; border: 5px solid #333; border-top: 5px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* SIDEBAR */
+        #sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: var(--bg-header); z-index: 10001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 3px solid var(--accent-color); padding: 25px; box-sizing: border-box; box-shadow: 10px 0 20px rgba(0,0,0,0.5); }
+        #sidebar.open { left: 0; }
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: none; backdrop-filter: blur(4px); }
+        #btn-menu-global { position: fixed; top: 15px; left: 15px; font-size: 22px; background: var(--bg-header); border: 2px solid var(--accent-color); border-radius: 12px; color: var(--accent-color); cursor: pointer; z-index: 9500; width: 48px; height: 48px; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+        /* MENU INICIAL */
+        #menu-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('https://files.catbox.moe/o5f62o.png') center/cover; z-index: 9000; padding: 20px; box-sizing: border-box; overflow-y: auto; text-align: center; display: none; }
+        .char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 30px 0; }
+        .char-card { background: rgba(20, 20, 30, 0.9); border: 2px solid var(--border-color); border-radius: 15px; padding: 15px; transition: 0.3s; position: relative; }
+        .char-card:active { transform: scale(0.95); border-color: var(--accent-color); }
+        .char-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--accent-color); }
+
+        /* CABEÇALHO */
+        header { display:flex; gap:15px; padding: 20px; background: var(--bg-header); border-bottom: 3px solid var(--accent-color); }
+        #imgChar { width: 110px; height: 150px; object-fit: cover; border-radius: 12px; border: 2px solid var(--accent-color); box-shadow: 0 0 15px rgba(163, 112, 255, 0.3); }
+        .header-fields { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .header-fields input { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; }
+
+        /* TABS */
+        .tabs-wrapper { overflow-x: auto; background: var(--bg-header); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
+        .tabs { display: flex; white-space: nowrap; padding: 5px; }
+        .tab-btn { padding: 12px 20px; background: none; border: none; color: var(--text-dim); font-weight: bold; font-size: 12px; text-transform: uppercase; cursor: pointer; }
+        .tab-btn.active { color: var(--accent-color); border-bottom: 3px solid var(--accent-color); }
+
+        /* SEÇÕES */
+        .section { display: none; padding: 20px; animation: slideUp 0.3s ease-out; }
+        .section.active { display: block; }
+        @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* STATUS BARS */
+        .status-container { display: grid; gap: 15px; }
+        .bar-card { background: var(--bg-card); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .bar-label { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
+        .bar-outer { height: 16px; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; margin-bottom: 12px; }
+        .bar-inner { height: 100%; transition: 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .bar-btns { display: grid; grid-template-columns: repeat(4, 1fr) 60px; gap: 6px; }
+        .bar-btns button { padding: 10px 0; border: none; border-radius: 6px; background: #2a243d; color: #fff; font-weight: bold; font-size: 12px; }
+        .bar-btns button:active { background: var(--accent-color); }
+        .max-input { background: #000; border: 1px solid var(--border-color); color: var(--accent-color); text-align: center; border-radius: 6px; font-weight: bold; }
+
+        /* LISTAS */
+        .add-box { background: var(--bg-card); padding: 15px; border-radius: 12px; border: 1px dashed var(--accent-color); margin-bottom: 20px; }
+        .card-item { background: var(--bg-card); padding: 15px; border-radius: 12px; margin-bottom: 12px; border-left: 5px solid var(--accent-color); position: relative; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
+        .card-item h4 { margin: 0 0 5px 0; color: var(--accent-color); font-size: 16px; cursor: pointer; }
+        .card-item p { margin: 0; font-size: 13px; color: var(--text-dim); line-height: 1.4; cursor: pointer; }
+        .btn-delete { position: absolute; top: 10px; right: 10px; background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid #ff4444; border-radius: 5px; padding: 4px 8px; font-size: 10px; }
+
+        /* PETS GOLD SYSTEM */
+        .pet-card { border-left-color: var(--pet-gold); background: linear-gradient(90deg, rgba(255,215,0,0.05) 0%, var(--bg-card) 100%); border-right: 1px solid rgba(255,215,0,0.2); }
+        .pet-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 15px; }
+        .pet-img { width: 70px; height: 70px; border-radius: 15px; border: 2px solid var(--pet-gold); object-fit: cover; }
+        .pet-bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11px; font-weight: bold; color: var(--pet-gold); }
+        .pet-grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
+        .pet-stat-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #444; font-size: 12px; }
+
+        /* FOOTER */
+        .footer { position: fixed; bottom: 0; width: 100%; background: var(--bg-header); padding: 15px; display: flex; gap: 10px; border-top: 2px solid var(--accent-color); box-sizing: border-box; }
+        .footer button { flex: 1; padding: 15px; border: none; border-radius: 10px; font-weight: bold; color: #fff; cursor: pointer; }
+        .btn-undo { background: #333; }
+        .btn-redo { background: #444; }
+
+        .btn-add-main { width: 100%; padding: 12px; background: var(--accent-color); color: #fff; border: none; border-radius: 8px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+        textarea { width: 100%; background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; border-radius: 6px; padding: 10px; box-sizing: border-box; resize: vertical; }
+        input { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 6px; box-sizing: border-box; }
+    </style>
 </head>
-
 <body data-theme="dark">
 
-
 <div id="auth-screen">
-
-    <div class="auth-box">
-
-        <h2 style="color:var(--accent-color); margin-bottom:25px;">DAMNED LOGIN</h2>
-
-        <input type="email" id="login-email" class="auth-input" placeholder="Seu E-mail">
-
-        <input type="password" id="login-senha" class="auth-input" placeholder="Sua Senha">
-
-        <button class="btn-auth" onclick="fazerLogin()">ACESSAR FICHA</button>
-
-        <button class="btn-auth" style="background:transparent; border:1px solid var(--accent-color);" onclick="criarConta()">CRIAR NOVA CONTA</button>
-
-        <p id="auth-msg" style="color:#ff4444; font-size:12px; margin-top:10px;"></p>
-
-    </div>
-
+    <div class="auth-box">
+        <h2 style="color:var(--accent-color); margin-bottom:25px;">DAMNED LOGIN</h2>
+        <input type="email" id="login-email" class="auth-input" placeholder="Seu E-mail">
+        <input type="password" id="login-senha" class="auth-input" placeholder="Sua Senha">
+        <button class="btn-auth" onclick="fazerLogin()">ACESSAR FICHA</button>
+        <button class="btn-auth" style="background:transparent; border:1px solid var(--accent-color);" onclick="criarConta()">CRIAR NOVA CONTA</button>
+        <p id="auth-msg" style="color:#ff4444; font-size:12px; margin-top:10px;"></p>
+    </div>
 </div>
-
 
 <div id="loading-screen"><div class="loader-logo"></div><p style="color:white; margin-top:15px; font-size:12px; letter-spacing:2px;">SINCRONIZANDO NUVEM...</p></div>
 
-
 <button id="btn-menu-global" onclick="toggleSidebar()">☰</button>
 
-
 <div id="sidebar">
-
-    <h2 style="color: var(--accent-color); margin-bottom:30px;">MENU GOLD</h2>
-
-    <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="cycleTheme()">🌓 Alternar Tema</div>
-
-    <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="exportarFicha()">📥 Exportar Ficha (.json)</div>
-
-    <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="importarFicha()">📤 Importar Ficha</div>
-
-    <div style="padding: 18px 0; color: #ff4444; cursor: pointer; margin-top: 20px;" onclick="abrirMenu()">🚪 Lista de Fichas</div>
-
-    <div style="padding: 18px 0; color: #ff4444; cursor: pointer;" onclick="fazerLogout()">🔌 Sair da Conta</div>
-
-    <div style="position: absolute; bottom: 20px; font-size: 10px; color: var(--text-dim);">V32.9 ONLINE - DAMNED RPG</div>
-
+    <h2 style="color: var(--accent-color); margin-bottom:30px;">MENU GOLD</h2>
+    <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="cycleTheme()">🌓 Alternar Tema</div>
+    <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="exportarFicha()">📥 Exportar Ficha (.json)</div>
+    <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="importarFicha()">📤 Importar Ficha</div>
+    <div style="padding: 18px 0; color: #ff4444; cursor: pointer; margin-top: 20px;" onclick="abrirMenu()">🚪 Lista de Fichas</div>
+    <div style="padding: 18px 0; color: #ff4444; cursor: pointer;" onclick="fazerLogout()">🔌 Sair da Conta</div>
+    <div style="position: absolute; bottom: 20px; font-size: 10px; color: var(--text-dim);">V32.9 ONLINE - DAMNED RPG</div>
 </div>
-
 <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-
 <div id="menu-screen">
-
-    <h1 style="color:#fff; margin-top:60px; font-size: 32px; text-shadow: 0 0 15px var(--accent-color);">DAMNED RPG</h1>
-
-    <p id="user-display" style="color: var(--text-dim); margin-bottom: 40px;">Sincronizado</p>
-
-    <button onclick="novoPersonagem()" style="width:100%; padding:20px; background:var(--accent-color); color:#fff; border:none; border-radius:15px; font-weight:bold; font-size:16px; box-shadow: 0 5px 15px rgba(0,0,0,0.4);">+ CRIAR NOVA FICHA</button>
-
-    <div id="lista-personagens" class="char-grid"></div>
-
+    <h1 style="color:#fff; margin-top:60px; font-size: 32px; text-shadow: 0 0 15px var(--accent-color);">DAMNED RPG</h1>
+    <p id="user-display" style="color: var(--text-dim); margin-bottom: 40px;">Sincronizado</p>
+    <button onclick="novoPersonagem()" style="width:100%; padding:20px; background:var(--accent-color); color:#fff; border:none; border-radius:15px; font-weight:bold; font-size:16px; box-shadow: 0 5px 15px rgba(0,0,0,0.4);">+ CRIAR NOVA FICHA</button>
+    <div id="lista-personagens" class="char-grid"></div>
 </div>
-
 
 <div id="sheet-content" style="display:none;">
-
-    <header>
-
-        <img id="imgChar" onclick="triggerImg()" src="https://via.placeholder.com/110x150">
-
-        <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="uploadImagem(event)">
-
-        <div class="header-fields">
-
-            <input id="nome" placeholder="Nome do Personagem" onchange="salvarHeader()">
-
-            <div style="display:flex; gap:5px;">
-
-                <input id="idade" placeholder="Idade" style="width:40%" onchange="salvarHeader()">
-
-                <input id="raca" placeholder="Raça" style="flex:1" onchange="salvarHeader()">
-
-            </div>
-
-            <input id="classe" placeholder="Classe / Ocupação" onchange="salvarHeader()">
-
-        </div>
-
-    </header>
-
-
-    <div class="tabs-wrapper">
-
-        <div class="tabs">
-
-            <button class="tab-btn active" onclick="switchTab(event, 0)">Status</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 1)">Atributos</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 2)">Poderes</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 3)">Arsenal</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 4)">Defesa</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 5)">Itens</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 6)">Penitência</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 7)">Diário</button>
-
-            <button class="tab-btn" onclick="switchTab(event, 8)">Mascotes</button>
-
-        </div>
-
-    </div>
-
-
-    <div class="section active" id="sec-0">
-
-        <div id="status-bars-container" class="status-container"></div>
-
-    </div>
-
-
-    <div class="section" id="sec-1"><div class="add-box"><div style="display:flex; gap:10px;"><input id="atN" placeholder="Ex: Força" style="flex:1"><input id="atV" type="number" placeholder="Valor" style="width:80px"></div><button class="btn-add-main" onclick="addAtributo()">ADICIONAR ATRIBUTO</button></div><div id="listaAt"></div></div>
-
-    <div class="section" id="sec-2"><div class="add-box"><input id="pdN" placeholder="Nome do Poder"><textarea id="pdD" placeholder="Descrição completa do efeito..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('habilidades',['pdN','pdD'],['n','d'])">ADICIONAR PODER</button></div><div id="listaPd"></div></div>
-
-    <div class="section" id="sec-3"><div class="add-box"><input id="arN" placeholder="Nome da Arma"><input id="arDan" placeholder="Dano (ex: 2d10 + 5)"><textarea id="arD" placeholder="Efeitos especiais..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('armas',['arN','arDan','arD'],['n','dan','d'])">ADICIONAR AO ARSENAL</button></div><div id="listaAr"></div></div>
-
-    <div class="section" id="sec-4"><div style="background:var(--accent-color); color:white; padding:20px; border-radius:15px; text-align:center; margin-bottom:20px; box-shadow:0 10px 20px rgba(0,0,0,0.3);"><div style="font-size:12px; opacity:0.8; text-transform:uppercase;">Defesa Total Estimada</div><div id="defTotal" style="font-size:42px; font-weight:900;">0</div></div><div class="add-box"><input id="eqN" placeholder="Equipamento"><input id="eqV" type="number" placeholder="Defesa"><button class="btn-add-main" onclick="addItem('equipamentos',['eqN','eqV'],['n','v'])">EQUIPAR</button></div><div id="listaEq"></div></div>
-
-    <div class="section" id="sec-5"><div class="add-box"><div style="display:flex; gap:10px;"><input id="invN" placeholder="Item" style="flex:1"><input id="invQ" placeholder="Qtd" style="width:70px"></div><textarea id="invD" placeholder="Descrição..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('inventario',['invN','invQ','invD'],['n','q','d'])">GUARDAR ITEM</button></div><div id="listaInv"></div></div>
-
-    <div class="section" id="sec-6"><div class="add-box"><input id="peN" placeholder="Nome da Penitência"><textarea id="peD" placeholder="Descrição..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('penitencias',['peN','peD'],['n','d'])">ADICIONAR PENITÊNCIA</button></div><div id="listaPe"></div></div>
-
-    <div class="section" id="sec-7"><h3 style="color:var(--accent-color)">História</h3><textarea id="historia" style="height:200px;" onchange="salvarDiario()"></textarea><h3 style="color:var(--accent-color); margin-top:20px;">Notas</h3><textarea id="anotacoes" style="height:300px;" onchange="salvarDiario()"></textarea></div>
-
-
-    <div class="section" id="sec-8">
-
-        <div class="add-box">
-
-            <div style="text-align:center; margin-bottom:15px;">
-
-                <img id="petPreview" src="https://via.placeholder.com/80" style="width:80px; height:80px; border-radius:15px; border:2px solid var(--pet-gold); object-fit:cover; display:none; margin: 0 auto 10px;">
-
-                <button onclick="document.getElementById('petImgInput').click()" style="background:#333; color:white; border:1px solid var(--pet-gold); padding:8px 15px; border-radius:20px; font-size:11px; cursor:pointer;">📷 CARREGAR FOTO</button>
-
-                <input type="file" id="petImgInput" accept="image/*" style="display:none" onchange="previewPet(event)">
-
-            </div>
-
-            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px; margin-bottom:10px;">
-
-                <input id="petN" placeholder="Nome do Mascote">
-
-                <input id="petLvl" placeholder="Nível">
-
-            </div>
-
-            <div class="pet-grid-stats" style="grid-template-columns: 1fr 1fr 1fr;">
-
-                <input id="petV" placeholder="HP Max" type="number">
-
-                <input id="petDef" placeholder="DEF">
-
-                <input id="petAtk" placeholder="ATK">
-
-            </div>
-
-            <textarea id="petD" placeholder="Habilidades e Notas..." style="margin-top:10px;"></textarea>
-
-            <button class="btn-add-main" style="background:var(--pet-gold); color:#000;" onclick="addPetFull()">VINCULAR COMPANHEIRO</button>
-
-        </div>
-
-        <div id="listaPets"></div>
-
-    </div>
-
-
-    <div class="footer">
-
-        <button class="btn-undo" onclick="desfazer()">↩ VOLTAR</button>
-
-        <button class="btn-redo" onclick="refazer()">AVANÇAR ↪</button>
-
-    </div>
-
+    <header>
+        <img id="imgChar" onclick="triggerImg()" src="https://via.placeholder.com/110x150">
+        <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="uploadImagem(event)">
+        <div class="header-fields">
+            <input id="nome" placeholder="Nome do Personagem" onchange="salvarHeader()">
+            <div style="display:flex; gap:5px;">
+                <input id="idade" placeholder="Idade" style="width:40%" onchange="salvarHeader()">
+                <input id="raca" placeholder="Raça" style="flex:1" onchange="salvarHeader()">
+            </div>
+            <input id="classe" placeholder="Classe / Ocupação" onchange="salvarHeader()">
+        </div>
+    </header>
+
+    <div class="tabs-wrapper">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 0)">Status</button>
+            <button class="tab-btn" onclick="switchTab(event, 1)">Atributos</button>
+            <button class="tab-btn" onclick="switchTab(event, 2)">Poderes</button>
+            <button class="tab-btn" onclick="switchTab(event, 3)">Arsenal</button>
+            <button class="tab-btn" onclick="switchTab(event, 4)">Defesa</button>
+            <button class="tab-btn" onclick="switchTab(event, 5)">Itens</button>
+            <button class="tab-btn" onclick="switchTab(event, 6)">Penitência</button>
+            <button class="tab-btn" onclick="switchTab(event, 7)">Diário</button>
+            <button class="tab-btn" onclick="switchTab(event, 8)">Mascotes</button>
+        </div>
+    </div>
+
+    <div class="section active" id="sec-0">
+        <div id="status-bars-container" class="status-container"></div>
+    </div>
+
+    <div class="section" id="sec-1"><div class="add-box"><div style="display:flex; gap:10px;"><input id="atN" placeholder="Ex: Força" style="flex:1"><input id="atV" type="number" placeholder="Valor" style="width:80px"></div><button class="btn-add-main" onclick="addAtributo()">ADICIONAR ATRIBUTO</button></div><div id="listaAt"></div></div>
+    <div class="section" id="sec-2"><div class="add-box"><input id="pdN" placeholder="Nome do Poder"><textarea id="pdD" placeholder="Descrição completa do efeito..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('habilidades',['pdN','pdD'],['n','d'])">ADICIONAR PODER</button></div><div id="listaPd"></div></div>
+    <div class="section" id="sec-3"><div class="add-box"><input id="arN" placeholder="Nome da Arma"><input id="arDan" placeholder="Dano (ex: 2d10 + 5)"><textarea id="arD" placeholder="Efeitos especiais..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('armas',['arN','arDan','arD'],['n','dan','d'])">ADICIONAR AO ARSENAL</button></div><div id="listaAr"></div></div>
+    <div class="section" id="sec-4"><div style="background:var(--accent-color); color:white; padding:20px; border-radius:15px; text-align:center; margin-bottom:20px; box-shadow:0 10px 20px rgba(0,0,0,0.3);"><div style="font-size:12px; opacity:0.8; text-transform:uppercase;">Defesa Total Estimada</div><div id="defTotal" style="font-size:42px; font-weight:900;">0</div></div><div class="add-box"><input id="eqN" placeholder="Equipamento"><input id="eqV" type="number" placeholder="Defesa"><button class="btn-add-main" onclick="addItem('equipamentos',['eqN','eqV'],['n','v'])">EQUIPAR</button></div><div id="listaEq"></div></div>
+    <div class="section" id="sec-5"><div class="add-box"><div style="display:flex; gap:10px;"><input id="invN" placeholder="Item" style="flex:1"><input id="invQ" placeholder="Qtd" style="width:70px"></div><textarea id="invD" placeholder="Descrição..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('inventario',['invN','invQ','invD'],['n','q','d'])">GUARDAR ITEM</button></div><div id="listaInv"></div></div>
+    <div class="section" id="sec-6"><div class="add-box"><input id="peN" placeholder="Nome da Penitência"><textarea id="peD" placeholder="Descrição..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('penitencias',['peN','peD'],['n','d'])">ADICIONAR PENITÊNCIA</button></div><div id="listaPe"></div></div>
+    <div class="section" id="sec-7"><h3 style="color:var(--accent-color)">História</h3><textarea id="historia" style="height:200px;" onchange="salvarDiario()"></textarea><h3 style="color:var(--accent-color); margin-top:20px;">Notas</h3><textarea id="anotacoes" style="height:300px;" onchange="salvarDiario()"></textarea></div>
+
+    <div class="section" id="sec-8">
+        <div class="add-box">
+            <div style="text-align:center; margin-bottom:15px;">
+                <img id="petPreview" src="https://via.placeholder.com/80" style="width:80px; height:80px; border-radius:15px; border:2px solid var(--pet-gold); object-fit:cover; display:none; margin: 0 auto 10px;">
+                <button onclick="document.getElementById('petImgInput').click()" style="background:#333; color:white; border:1px solid var(--pet-gold); padding:8px 15px; border-radius:20px; font-size:11px; cursor:pointer;">📷 CARREGAR FOTO</button>
+                <input type="file" id="petImgInput" accept="image/*" style="display:none" onchange="previewPet(event)">
+            </div>
+            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px; margin-bottom:10px;">
+                <input id="petN" placeholder="Nome do Mascote">
+                <input id="petLvl" placeholder="Nível">
+            </div>
+            <div class="pet-grid-stats" style="grid-template-columns: 1fr 1fr 1fr;">
+                <input id="petV" placeholder="HP Max" type="number">
+                <input id="petDef" placeholder="DEF">
+                <input id="petAtk" placeholder="ATK">
+            </div>
+            <textarea id="petD" placeholder="Habilidades e Notas..." style="margin-top:10px;"></textarea>
+            <button class="btn-add-main" style="background:var(--pet-gold); color:#000;" onclick="addPetFull()">VINCULAR COMPANHEIRO</button>
+        </div>
+        <div id="listaPets"></div>
+    </div>
+
+    <div class="footer">
+        <button class="btn-undo" onclick="desfazer()">↩ VOLTAR</button>
+        <button class="btn-redo" onclick="refazer()">AVANÇAR ↪</button>
+    </div>
 </div>
 
-
 <script>
-
-// ==========================================
-
-// CONFIGURAÇÃO DO FIREBASE (SUBSTITUA AQUI)
-
-// ==========================================
-
 const firebaseConfig = {
-
-  apiKey: "AIzaSyCffwVZ3zoM0GJNIcMdebDPXogfKq_bp-w",
-
-  authDomain: "damned-rpg.firebaseapp.com",
-
-  databaseURL: "https://damned-rpg-default-rtdb.firebaseio.com",
-
-  projectId: "damned-rpg",
-
-  storageBucket: "damned-rpg.firebasestorage.app",
-
-  messagingSenderId: "753626576411",
-
-  appId: "1:753626576411:web:0b100a3f64b9d9fec8eabe"
-
+  apiKey: "AIzaSyCffwVZ3zoM0GJNIcMdebDPXogfKq_bp-w",
+  authDomain: "damned-rpg.firebaseapp.com",
+  databaseURL: "https://damned-rpg-default-rtdb.firebaseio.com",
+  projectId: "damned-rpg",
+  storageBucket: "damned-rpg.firebasestorage.app",
+  messagingSenderId: "753626576411",
+  appId: "1:753626576411:web:0b100a3f64b9d9fec8eabe"
 };
 
-
 firebase.initializeApp(firebaseConfig);
-
 const auth = firebase.auth();
-
 const rtdb = firebase.database();
-
 let userUID = null;
-
-
-// ==========================================
-
-// VARIÁVEIS DE ESTADO
-
-// ==========================================
-
 let db = [];
-
 let cur = -1; let ficha = {}; let undo = []; let redo = [];
-
 let tempPetImg = "";
 
-
-// ==========================================
-
-// SISTEMA DE AUTENTICAÇÃO
-
-// ==========================================
-
 auth.onAuthStateChanged(user => {
-
-    if (user) {
-
-        userUID = user.uid;
-
-        document.getElementById('auth-screen').style.display = 'none';
-
-        document.getElementById('loading-screen').style.display = 'flex';
-
-        document.getElementById('user-display').innerText = "Logado como: " + user.email;
-
-        carregarFichasOnline();
-
-    } else {
-
-        document.getElementById('auth-screen').style.display = 'flex';
-
-        document.getElementById('menu-screen').style.display = 'none';
-
-        document.getElementById('sheet-content').style.display = 'none';
-
-        document.getElementById('btn-menu-global').style.display = 'none';
-
-    }
-
+    if (user) {
+        userUID = user.uid;
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('loading-screen').style.display = 'flex';
+        document.getElementById('user-display').innerText = "Logado como: " + user.email;
+        carregarFichasOnline();
+    } else {
+        document.getElementById('auth-screen').style.display = 'flex';
+        document.getElementById('menu-screen').style.display = 'none';
+        document.getElementById('sheet-content').style.display = 'none';
+        document.getElementById('btn-menu-global').style.display = 'none';
+    }
 });
 
-
 function criarConta() {
-
-    const email = document.getElementById('login-email').value;
-
-    const senha = document.getElementById('login-senha').value;
-
-    if(!email || !senha) return alert("Preencha tudo!");
-
-    auth.createUserWithEmailAndPassword(email, senha)
-
-        .catch(error => document.getElementById('auth-msg').innerText = error.message);
-
+    const email = document.getElementById('login-email').value;
+    const senha = document.getElementById('login-senha').value;
+    if(!email || !senha) return alert("Preencha tudo!");
+    auth.createUserWithEmailAndPassword(email, senha)
+        .catch(error => document.getElementById('auth-msg').innerText = error.message);
 }
-
 
 function fazerLogin() {
-
-    const email = document.getElementById('login-email').value;
-
-    const senha = document.getElementById('login-senha').value;
-
-    auth.signInWithEmailAndPassword(email, senha)
-
-        .catch(error => document.getElementById('auth-msg').innerText = "Erro: Email ou senha incorretos.");
-
+    const email = document.getElementById('login-email').value;
+    const senha = document.getElementById('login-senha').value;
+    auth.signInWithEmailAndPassword(email, senha)
+        .catch(error => document.getElementById('auth-msg').innerText = "Erro: Email ou senha incorretos.");
 }
 
-
-function fazerLogout() {
-
-    if(confirm("Deseja sair da conta?")) auth.signOut();
-
-}
-
-
-// ==========================================
-
-// LOGICA DE DADOS (ONLINE)
-
-// ==========================================
+function fazerLogout() { if(confirm("Deseja sair da conta?")) auth.signOut(); }
 
 function carregarFichasOnline() {
-
-    rtdb.ref('users/' + userUID + '/fichas').once('value', (snapshot) => {
-
-        db = snapshot.val() || [];
-
-        setTimeout(() => {
-
-            document.getElementById('loading-screen').style.display = 'none';
-
-            abrirMenu();
-
-        }, 800);
-
-    });
-
+    rtdb.ref('users/' + userUID + '/fichas').once('value', (snapshot) => {
+        db = snapshot.val() || [];
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            abrirMenu();
+        }, 800);
+    });
 }
-
 
 function salvarNoBanco() {
-
-    if (cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha));
-
-    if (userUID) {
-
-        // Salva local para agilidade e online para segurança
-
-        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
-
-        rtdb.ref('users/' + userUID + '/fichas').set(db);
-
-    }
-
+    if (cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha));
+    if (userUID) {
+        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
+        rtdb.ref('users/' + userUID + '/fichas').set(db);
+    }
 }
-
-
-// ==========================================
-
-// FUNÇÕES DA FICHA (ADAPTADAS)
-
-// ==========================================
 
 function abrirMenu() {
-
-    cur = -1; 
-
-    document.getElementById('sheet-content').style.display = 'none';
-
-    document.getElementById('btn-menu-global').style.display = 'none';
-
-    document.getElementById('menu-screen').style.display = 'block';
-
-    renderListaMenu();
-
+    cur = -1; 
+    document.getElementById('sheet-content').style.display = 'none';
+    document.getElementById('btn-menu-global').style.display = 'none';
+    document.getElementById('menu-screen').style.display = 'block';
+    renderListaMenu();
 }
-
 
 function renderListaMenu() {
-
-    const l = document.getElementById('lista-personagens'); l.innerHTML = '';
-
-    db.forEach((c, i) => {
-
-        l.innerHTML += `
-
-            <div class="char-card" onclick="selecionar(${i})">
-
-                <img src="${c.img || 'https://via.placeholder.com/150'}">
-
-                <b style="display:block; margin-bottom:5px;">${c.nome}</b>
-
-                <span style="font-size:10px; color:var(--text-dim)">${c.classe || 'Sem Classe'}</span>
-
-                <button onclick="event.stopPropagation(); apagar(${i})" style="position:absolute; top:-10px; right:-10px; background:#ff4444; border:none; color:white; border-radius:50%; width:25px; height:25px;">×</button>
-
-            </div>`;
-
-    });
-
+    const l = document.getElementById('lista-personagens'); l.innerHTML = '';
+    db.forEach((c, i) => {
+        l.innerHTML += `
+            <div class="char-card" onclick="selecionar(${i})">
+                <img src="${c.img || 'https://via.placeholder.com/150'}">
+                <b style="display:block; margin-bottom:5px;">${c.nome}</b>
+                <span style="font-size:10px; color:var(--text-dim)">${c.classe || 'Sem Classe'}</span>
+                <button onclick="event.stopPropagation(); apagar(${i})" style="position:absolute; top:-10px; right:-10px; background:#ff4444; border:none; color:white; border-radius:50%; width:25px; height:25px;">×</button>
+            </div>`;
+    });
 }
-
 
 function selecionar(i) {
-
-    cur = i; ficha = JSON.parse(JSON.stringify(db[i]));
-
-    if(!ficha.pets) ficha.pets = [];
-
-    document.getElementById('menu-screen').style.display = 'none';
-
-    document.getElementById('btn-menu-global').style.display = 'flex';
-
-    document.getElementById('sheet-content').style.display = 'block';
-
-    renderFicha();
-
+    cur = i; ficha = JSON.parse(JSON.stringify(db[i]));
+    if(!ficha.pets) ficha.pets = [];
+    document.getElementById('menu-screen').style.display = 'none';
+    document.getElementById('btn-menu-global').style.display = 'flex';
+    document.getElementById('sheet-content').style.display = 'block';
+    renderFicha();
 }
-
 
 function novoPersonagem() {
-
-    const novo = {
-
-        nome: 'Nova Lenda', idade:'', raca:'', classe:'', img:'',
-
-        pv: 20, pvMax: 20, pe: 20, peMax: 20, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, vinMax: 10, corr: 0, corrMax: 10,
-
-        atributos: {}, habilidades: [], armas: [], equipamentos: [], inventario: [], penitencias: [],
-
-        historia: '', anotacoes: '', pets: []
-
-    };
-
-    db.push(novo); 
-
-    salvarNoBanco(); 
-
-    renderListaMenu();
-
+    const novo = {
+        nome: 'Nova Lenda', idade:'', raca:'', classe:'', img:'',
+        pv: 20, pvMax: 20, pe: 20, peMax: 20, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, vinMax: 10, corr: 0, corrMax: 10,
+        atributos: {}, habilidades: [], armas: [], equipamentos: [], inventario: [], penitencias: [],
+        historia: '', anotacoes: '', pets: []
+    };
+    db.push(novo); 
+    salvarNoBanco(); 
+    renderListaMenu();
 }
-
-
-// --- RESTANTE DAS FUNÇÕES ORIGINAIS (MANTIDAS) ---
 
 function cycleTheme() {
-
-    const themes = ['dark', 'light', 'vampire'];
-
-    let current = document.body.getAttribute('data-theme');
-
-    let next = themes[(themes.indexOf(current) + 1) % themes.length];
-
-    document.body.setAttribute('data-theme', next);
-
-    localStorage.setItem('GOLD_THEME', next);
-
+    const themes = ['dark', 'light', 'vampire'];
+    let current = document.body.getAttribute('data-theme');
+    let next = themes[(themes.indexOf(current) + 1) % themes.length];
+    document.body.setAttribute('data-theme', next);
+    localStorage.setItem('GOLD_THEME', next);
 }
-
 
 function toggleSidebar() {
-
-    const s = document.getElementById('sidebar'), o = document.getElementById('overlay');
-
-    const open = s.classList.toggle('open');
-
-    o.style.display = open ? 'block' : 'none';
-
+    const s = document.getElementById('sidebar'), o = document.getElementById('overlay');
+    const open = s.classList.toggle('open');
+    o.style.display = open ? 'block' : 'none';
 }
-
 
 function switchTab(e, idx) {
-
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-
-    e.target.classList.add('active');
-
-    document.getElementById(`sec-${idx}`).classList.add('active');
-
-    window.scrollTo(0,0);
-
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    e.target.classList.add('active');
+    document.getElementById(`sec-${idx}`).classList.add('active');
+    window.scrollTo(0,0);
 }
-
 
 function apagar(i) { if(confirm("Deseja apagar esta lenda?")) { db.splice(i, 1); salvarNoBanco(); renderListaMenu(); } }
-
 function snap() { undo.push(JSON.stringify(ficha)); redo = []; if(undo.length > 30) undo.shift(); }
-
 function triggerImg() { document.getElementById('fileInput').click(); }
-
 function uploadImagem(e) {
-
-    const reader = new FileReader();
-
-    reader.onload = (ev) => { snap(); ficha.img = ev.target.result; renderFicha(); };
-
-    reader.readAsDataURL(e.target.files[0]);
-
+    const reader = new FileReader();
+    reader.onload = (ev) => { snap(); ficha.img = ev.target.result; renderFicha(); };
+    reader.readAsDataURL(e.target.files[0]);
 }
-
 function previewPet(e) {
-
-    const reader = new FileReader();
-
-    reader.onload = (ev) => { tempPetImg = ev.target.result; document.getElementById('petPreview').src = tempPetImg; document.getElementById('petPreview').style.display = 'block'; };
-
-    reader.readAsDataURL(e.target.files[0]);
-
+    const reader = new FileReader();
+    reader.onload = (ev) => { tempPetImg = ev.target.result; document.getElementById('petPreview').src = tempPetImg; document.getElementById('petPreview').style.display = 'block'; };
+    reader.readAsDataURL(e.target.files[0]);
 }
-
 
 function editar(caminho, idx, campo, rotulo) {
-
-    let atual = (caminho === 'at') ? ((campo === 'n') ? idx : ficha.atributos[idx]) : ficha[caminho][idx][campo];
-
-    let novo = prompt(`Editar ${rotulo}:`, atual);
-
-    if(novo !== null) {
-
-        snap();
-
-        if(caminho === 'at') {
-
-            if(campo === 'n') { let val = ficha.atributos[idx]; delete ficha.atributos[idx]; ficha.atributos[novo] = val; }
-
-            else ficha.atributos[idx] = novo;
-
-        } else { ficha[caminho][idx][campo] = novo; }
-
-        renderFicha();
-
-    }
-
+    let atual = (caminho === 'at') ? ((campo === 'n') ? idx : ficha.atributos[idx]) : ficha[caminho][idx][campo];
+    let novo = prompt(`Editar ${rotulo}:`, atual);
+    if(novo !== null) {
+        snap();
+        if(caminho === 'at') {
+            if(campo === 'n') { let val = ficha.atributos[idx]; delete ficha.atributos[idx]; ficha.atributos[novo] = val; }
+            else ficha.atributos[idx] = novo;
+        } else { ficha[caminho][idx][campo] = novo; }
+        renderFicha();
+    }
 }
-
 
 function modVal(attr, qtd) { snap(); ficha[attr] = (parseInt(ficha[attr]) || 0) + qtd; renderFicha(); }
-
 function setMax(attr, val) { snap(); ficha[attr+'Max'] = parseInt(val) || 0; renderFicha(); }
-
-
-function modPetHp(idx, qtd) {
-
-    snap(); let p = ficha.pets[idx];
-
-    p.v = (parseInt(p.v) || 0) + qtd; renderFicha();
-
-}
-
-
-function setPetMaxHp(idx, val) {
-
-    snap(); ficha.pets[idx].vmax = parseInt(val) || 0; renderFicha();
-
-}
-
+function modPetHp(idx, qtd) { snap(); let p = ficha.pets[idx]; p.v = (parseInt(p.v) || 0) + qtd; renderFicha(); }
+function setPetMaxHp(idx, val) { snap(); ficha.pets[idx].vmax = parseInt(val) || 0; renderFicha(); }
 
 function addAtributo() {
-
-    const n = document.getElementById('atN').value, v = document.getElementById('atV').value;
-
-    if(!n) return; snap(); ficha.atributos[n] = v; renderFicha();
-
+    const n = document.getElementById('atN').value, v = document.getElementById('atV').value;
+    if(!n) return; snap(); ficha.atributos[n] = v; renderFicha();
 }
-
 
 function addItem(key, ids, props) {
-
-    const vals = ids.map(id => document.getElementById(id).value);
-
-    if(!vals[0]) return; snap();
-
-    let obj = {}; props.forEach((p, i) => obj[p] = vals[i]);
-
-    ficha[key].push(obj); renderFicha();
-
+    const vals = ids.map(id => document.getElementById(id).value);
+    if(!vals[0]) return; snap();
+    let obj = {}; props.forEach((p, i) => obj[p] = vals[i]);
+    ficha[key].push(obj); renderFicha();
 }
-
 
 function addPetFull() {
-
-    const n = document.getElementById('petN').value; if(!n) return;
-
-    snap();
-
-    let max = document.getElementById('petV').value || 10;
-
-    ficha.pets.push({
-
-        n: n, img: tempPetImg, v: max, vmax: max, lvl: document.getElementById('petLvl').value || '1',
-
-        def: document.getElementById('petDef').value, atk: document.getElementById('petAtk').value, d: document.getElementById('petD').value
-
-    });
-
-    tempPetImg = ""; renderFicha();
-
+    const n = document.getElementById('petN').value; if(!n) return;
+    snap();
+    let max = document.getElementById('petV').value || 10;
+    ficha.pets.push({
+        n: n, img: tempPetImg, v: max, vmax: max, lvl: document.getElementById('petLvl').value || '1',
+        def: document.getElementById('petDef').value, atk: document.getElementById('petAtk').value, d: document.getElementById('petD').value
+    });
+    tempPetImg = ""; renderFicha();
 }
-
 
 function remover(key, idx) { snap(); if(key === 'at') delete ficha.atributos[idx]; else ficha[key].splice(idx, 1); renderFicha(); }
-
 function salvarHeader() { ficha.nome = document.getElementById('nome').value; ficha.idade = document.getElementById('idade').value; ficha.raca = document.getElementById('raca').value; ficha.classe = document.getElementById('classe').value; salvarNoBanco(); }
-
 function salvarDiario() { ficha.historia = document.getElementById('historia').value; ficha.anotacoes = document.getElementById('anotacoes').value; salvarNoBanco(); }
 
-
 function renderFicha() {
+    document.getElementById('nome').value = ficha.nome || '';
+    document.getElementById('idade').value = ficha.idade || '';
+    document.getElementById('raca').value = ficha.raca || '';
+    document.getElementById('classe').value = ficha.classe || '';
+    document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/110x150';
 
-    document.getElementById('nome').value = ficha.nome || '';
+    const sCont = document.getElementById('status-bars-container');
+    sCont.innerHTML = '';
+    const stats = [{id:'pv', n:'Pontos de Vida', c:'var(--hp-color)'},{id:'pe', n:'Energia / Mana', c:'var(--en-color)'},{id:'arc', n:'Nível Arcano', c:'var(--ar-color)'},{id:'ocu', n:'Ocultismo', c:'var(--oc-color)'},{id:'vin', n:'Vínculo', c:'var(--vi-color)'},{id:'corr', n:'Corrupção', c:'var(--co-color)'}];
 
-    document.getElementById('idade').value = ficha.idade || '';
+    stats.forEach(s => {
+        let curV = parseInt(ficha[s.id]) || 0; let maxV = parseInt(ficha[s.id+'Max']) || 1;
+        let perc = Math.min(100, (curV / maxV) * 100);
+        sCont.innerHTML += `<div class="bar-card"><div class="bar-label"><span>${s.n}</span><span>${curV} / ${maxV}</span></div><div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div></div><div class="bar-btns"><button onclick="modVal('${s.id}',-5)">-5</button><button onclick="modVal('${s.id}',-1)">-1</button><button onclick="modVal('${s.id}',1)">+1</button><button onclick="modVal('${s.id}',5)">+5</button><input type="number" class="max-input" value="${maxV}" onchange="setMax('${s.id}', this.value)"></div></div>`;
+    });
 
-    document.getElementById('raca').value = ficha.raca || '';
+    renderGeneric('listaAt', ficha.atributos, 'at', (k, v) => `<div class="card-item"><button class="btn-delete" onclick="remover('at','${k}')">X</button><h4 onclick="editar('at','${k}','n','Atributo')">${k}</h4><p onclick="editar('at','${k}','v','Valor')">${v}</p></div>`);
+    renderGeneric('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('habilidades',${i})">X</button><h4 onclick="editar('habilidades',${i},'n','Poder')">${it.n}</h4><p onclick="editar('habilidades',${i},'d','Descrição')">${it.d}</p></div>`);
+    renderGeneric('listaAr', ficha.armas, 'a', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('armas',${i})">X</button><h4 onclick="editar('armas',${i},'n','Arma')">${it.n}</h4><p onclick="editar('armas',${i},'dan','Dano')">Dano: ${it.dan}</p><p onclick="editar('armas',${i},'d','Efeito')">${it.d}</p></div>`);
+    renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">X</button><h4 onclick="editar('inventario',${i},'n','Item')">${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
+    renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">X</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
+    
+    renderGeneric('listaPets', ficha.pets, 'pet', (it, i) => {
+        let curV = parseInt(it.v) || 0; let maxV = parseInt(it.vmax) || 1;
+        let perc = Math.min(100, (curV / maxV) * 100);
+        return `<div class="card-item pet-card"><button class="btn-delete" onclick="remover('pets',${i})">X</button><div class="pet-meta"><img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img"><div><h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4><span style="font-size:10px; color:var(--pet-gold)">Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span></div></div><div class="pet-bar-label"><span>HP DO PET</span><span>${curV} / ${maxV}</span></div><div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:var(--pet-gold);"></div></div><div class="bar-btns"><button onclick="modPetHp(${i},-1)">-1</button><button onclick="modPetHp(${i},1)">+1</button><input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)"></div><div class="pet-grid-stats"><div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div><div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div></div></div>`});
 
-    document.getElementById('classe').value = ficha.classe || '';
-
-    document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/110x150';
-
-
-    const sCont = document.getElementById('status-bars-container');
-
-    sCont.innerHTML = '';
-
-    const stats = [{id:'pv', n:'Pontos de Vida', c:'var(--hp-color)'},{id:'pe', n:'Energia / Mana', c:'var(--en-color)'},{id:'arc', n:'Nível Arcano', c:'var(--ar-color)'},{id:'ocu', n:'Ocultismo', c:'var(--oc-color)'},{id:'vin', n:'Vínculo', c:'var(--vi-color)'},{id:'corr', n:'Corrupção', c:'var(--co-color)'}];
-
-
-    stats.forEach(s => {
-
-        let curV = parseInt(ficha[s.id]) || 0; let maxV = parseInt(ficha[s.id+'Max']) || 1;
-
-        let perc = Math.min(100, (curV / maxV) * 100);
-
-        sCont.innerHTML += `<div class="bar-card"><div class="bar-label"><span>${s.n}</span><span>${curV} / ${maxV}</span></div><div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div></div><div class="bar-btns"><button onclick="modVal('${s.id}',-5)">-5</button><button onclick="modVal('${s.id}',-1)">-1</button><button onclick="modVal('${s.id}',1)">+1</button><button onclick="modVal('${s.id}',5)">+5</button><input type="number" class="max-input" value="${maxV}" onchange="setMax('${s.id}', this.value)"></div></div>`;
-
-    });
-
-
-    renderGeneric('listaAt', ficha.atributos, 'at', (k, v) => `<div class="card-item"><button class="btn-delete" onclick="remover('at','${k}')">X</button><h4 onclick="editar('at','${k}','n','Atributo')">${k}</h4><p onclick="editar('at','${k}','v','Valor')">${v}</p></div>`);
-
-    renderGeneric('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('habilidades',${i})">X</button><h4 onclick="editar('habilidades',${i},'n','Poder')">${it.n}</h4><p onclick="editar('habilidades',${i},'d','Descrição')">${it.d}</p></div>`);
-
-    renderGeneric('listaAr', ficha.armas, 'a', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('armas',${i})">X</button><h4 onclick="editar('armas',${i},'n','Arma')">${it.n}</h4><p onclick="editar('armas',${i},'dan','Dano')">Dano: ${it.dan}</p><p onclick="editar('armas',${i},'d','Efeito')">${it.d}</p></div>`);
-
-    renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">X</button><h4 onclick="editar('inventario',${i},'n','Item')">${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
-
-    renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">X</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
-
-    
-
-    renderGeneric('listaPets', ficha.pets, 'pet', (it, i) => {
-
-        let curV = parseInt(it.v) || 0; let maxV = parseInt(it.vmax) || 1;
-
-        let perc = Math.min(100, (curV / maxV) * 100);
-
-        return `
-
-        <div class="card-item pet-card">
-
-            <button class="btn-delete" onclick="remover('pets',${i})">X</button>
-
-           <div class="pet-meta">
-
-                <img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img">
-
-                <div>
-
-                    <h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4>
-
-                    <span style="font-size:10px; color:var(--pet-gold)">Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span>
-
-                </div>
-
-            </div>
-
-            <div class="pet-bar-label"><span>HP DO PET</span><span>${curV} / ${maxV}</span></div>
-
-            <div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:var(--pet-gold);"></div></div>
-
-            <div class="bar-btns">
-
-                <button onclick="modPetHp(${i},-1)">-1</button><button onclick="modPetHp(${i},1)">+1</button>
-
-                <input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)">
-
-            </div>
-
-            <div class="pet-grid-stats">
-
-                <div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div>
-
-                <div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div>
-
-            </div>
-
-        </div>`});
-
-
-    let totalDef = 0;
-
-    renderGeneric('listaEq', ficha.equipamentos, 'e', (it, i) => {
-
-        totalDef += (parseInt(it.v) || 0);
-
-        return `<div class="card-item"><button class="btn-delete" onclick="remover('equipamentos',${i})">X</button><h4>${it.n}</h4><p>Defesa: +${it.v}</p></div>`;
-
-    });
-
-    document.getElementById('defTotal').innerText = totalDef;
-
-    salvarNoBanco();
-
+    let totalDef = 0;
+    renderGeneric('listaEq', ficha.equipamentos, 'e', (it, i) => {
+        totalDef += (parseInt(it.v) || 0);
+        return `<div class="card-item"><button class="btn-delete" onclick="remover('equipamentos',${i})">X</button><h4>${it.n}</h4><p>Defesa: +${it.v}</p></div>`;
+    });
+    document.getElementById('defTotal').innerText = totalDef;
+    salvarNoBanco();
 }
-
 
 function renderGeneric(id, data, type, temp) {
-
-    const el = document.getElementById(id); el.innerHTML = '';
-
-    if(!data) return;
-
-    if(type === 'at') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
-
-    else data.forEach((item, i) => el.innerHTML += temp(item, i));
-
+    const el = document.getElementById(id); el.innerHTML = '';
+    if(!data) return;
+    if(type === 'at') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
+    else data.forEach((item, i) => el.innerHTML += temp(item, i));
 }
 
-
 function desfazer() { if(undo.length > 0) { redo.push(JSON.stringify(ficha)); ficha = JSON.parse(undo.pop()); renderFicha(); } }
-
-function refazer() { if(redo.length > 0) { undo.push(JSON.stringify(ficha)); ficha = JSON.parse(redo.pop()); renderFicha(); } }
-
+function refazer() { if(redo.length > 0) { undo.push(JSON.stringify(ficha)); undo.push(JSON.stringify(ficha)); ficha = JSON.parse(redo.pop()); renderFicha(); } }
 function exportarFicha() { const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); const a = document.createElement('a'); a.href = data; a.download = (ficha.nome || 'ficha') + ".json"; a.click(); }
-
 function importarFicha() { const input = document.createElement('input'); input.type = 'file'; input.onchange = e => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = ev => { snap(); ficha = JSON.parse(ev.target.result); renderFicha(); }; reader.readAsText(file); }; input.click(); }
-
 </script>
-
 </body>
-
 </html>
-
-
