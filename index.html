@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -162,8 +163,25 @@
     <div class="section" id="sec-2"><div class="add-box"><input id="pdN" placeholder="Nome do Poder"><textarea id="pdD" placeholder="Descrição completa do efeito..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('habilidades',['pdN','pdD'],['n','d'])">ADICIONAR PODER</button></div><div id="listaPd"></div></div>
     <div class="section" id="sec-3"><div class="add-box"><input id="arN" placeholder="Nome da Arma"><input id="arDan" placeholder="Dano (ex: 2d10 + 5)"><textarea id="arD" placeholder="Efeitos especiais..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('armas',['arN','arDan','arD'],['n','dan','d'])">ADICIONAR AO ARSENAL</button></div><div id="listaAr"></div></div>
     <div class="section" id="sec-4"><div style="background:var(--accent-color); color:white; padding:20px; border-radius:15px; text-align:center; margin-bottom:20px; box-shadow:0 10px 20px rgba(0,0,0,0.3);"><div style="font-size:12px; opacity:0.8; text-transform:uppercase;">Defesa Total Estimada</div><div id="defTotal" style="font-size:42px; font-weight:900;">0</div></div><div class="add-box"><input id="eqN" placeholder="Equipamento"><input id="eqV" type="number" placeholder="Defesa"><button class="btn-add-main" onclick="addItem('equipamentos',['eqN','eqV'],['n','v'])">EQUIPAR</button></div><div id="listaEq"></div></div>
-    <div class="section" id="sec-5"><div class="add-box"><div style="display:flex; gap:10px;"><input id="invN" placeholder="Item" style="flex:1"><input id="invQ" placeholder="Qtd" style="width:70px"></div><textarea id="invD" placeholder="Descrição..." rows="2"></textarea><button class="btn-add-main" onclick="addItem('inventario',['invN','invQ','invD'],['n','q','d'])">GUARDAR ITEM</button></div><div id="listaInv"></div></div>
-    <div class="section" id="sec-6"><div class="add-box"><input id="peN" placeholder="Nome da Penitência"><textarea id="peD" placeholder="Descrição..." rows="3"></textarea><button class="btn-add-main" onclick="addItem('penitencias',['peN','peD'],['n','d'])">ADICIONAR PENITÊNCIA</button></div><div id="listaPe"></div></div>
+    <div class="section" id="sec-5">
+    <div class="add-box">
+        <div style="display:flex; gap:10px;">
+            <input id="invN" placeholder="Item" style="flex:1">
+            <input id="invQ" placeholder="Qtd" style="width:70px">
+        </div>
+        <textarea id="invD" placeholder="Descrição..." rows="2"></textarea>
+        <button class="btn-add-main" onclick="addItem('inventario',['invN','invQ','invD'],['n','q','d'])">GUARDAR ITEM</button>
+    </div>
+    <div id="listaInv"></div>
+</div>
+    <div class="section" id="sec-6">
+    <div class="add-box">
+        <input id="peN" placeholder="Nome da Penitência">
+        <textarea id="peD" placeholder="Descrição..." rows="3"></textarea>
+        <button class="btn-add-main" onclick="addItem('penitencias',['peN','peD'],['n','d'])">ADICIONAR PENITÊNCIA</button>
+    </div>
+    <div id="listaPe"></div>
+</div>
     <div class="section" id="sec-7"><h3 style="color:var(--accent-color)">História</h3><textarea id="historia" style="height:200px;" onchange="salvarDiario()"></textarea><h3 style="color:var(--accent-color); margin-top:20px;">Notas</h3><textarea id="anotacoes" style="height:300px;" onchange="salvarDiario()"></textarea></div>
 
     <div class="section" id="sec-8">
@@ -289,20 +307,38 @@ function renderListaMenu() {
 }
 
 function selecionar(i) {
-    cur = i; ficha = JSON.parse(JSON.stringify(db[i]));
+    cur = i; 
+    ficha = JSON.parse(JSON.stringify(db[i]));
+    
+    // SEGURANÇA: Garante que listas novas existam em fichas antigas
+    if(!ficha.inventario) ficha.inventario = [];
+    if(!ficha.penitencias) ficha.penitencias = [];
+    if(!ficha.habilidades) ficha.habilidades = [];
+    if(!ficha.armas) ficha.armas = [];
+    if(!ficha.equipamentos) ficha.equipamentos = [];
     if(!ficha.pets) ficha.pets = [];
+    if(!ficha.atributos) ficha.atributos = {};
+
     document.getElementById('menu-screen').style.display = 'none';
     document.getElementById('btn-menu-global').style.display = 'flex';
     document.getElementById('sheet-content').style.display = 'block';
     renderFicha();
 }
 
+
 function novoPersonagem() {
     const novo = {
         nome: 'Nova Lenda', idade:'', raca:'', classe:'', img:'',
         pv: 20, pvMax: 20, pe: 20, peMax: 20, arc: 0, arcMax: 10, ocu: 0, ocuMax: 10, vin: 0, vinMax: 10, corr: 0, corrMax: 10,
-        atributos: {}, habilidades: [], armas: [], equipamentos: [], inventario: [], penitencias: [],
-        historia: '', anotacoes: '', pets: []
+        atributos: {}, 
+        habilidades: [], 
+        armas: [], 
+        equipamentos: [], 
+        inventario: [],    // Verifique se esta linha existe
+        penitencias: [],   // Verifique se esta linha existe
+        historia: '', 
+        anotacoes: '', 
+        pets: []
     };
     db.push(novo); 
     salvarNoBanco(); 
@@ -387,11 +423,26 @@ function addAtributo() {
     if(!n) return; snap(); ficha.atributos[n] = v; renderFicha();
 }
 
+
 function addItem(key, ids, props) {
     const vals = ids.map(id => document.getElementById(id).value);
-    if(!vals[0]) return; snap();
-    let obj = {}; props.forEach((p, i) => obj[p] = vals[i]);
-    ficha[key].push(obj); renderFicha();
+    
+    // Se o primeiro campo (nome) estiver vazio, não faz nada
+    if(!vals[0]) return; 
+
+    // Garante que a lista existe antes de dar o push
+    if(!ficha[key]) ficha[key] = [];
+
+    snap();
+    let obj = {}; 
+    props.forEach((p, i) => obj[p] = vals[i]);
+    
+    ficha[key].push(obj); 
+    
+    // Limpa os campos de input após adicionar
+    ids.forEach(id => document.getElementById(id).value = '');
+    
+    renderFicha();
 }
 
 function addPetFull() {
