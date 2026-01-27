@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -23,66 +24,56 @@
 
         body { margin:0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg-body); color: var(--text-main); padding-bottom: 90px; transition: 0.3s; }
 
-        /* TELA DE LOGIN */
         #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 110000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; text-align: center; }
         .auth-box { background: var(--bg-card); padding: 30px; border-radius: 20px; border: 1px solid var(--accent-color); width: 100%; max-width: 350px; box-shadow: 0 0 30px rgba(163, 112, 255, 0.2); }
         .auth-input { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--bg-input); border: 1px solid var(--border-color); color: white; border-radius: 8px; box-sizing: border-box; }
         .btn-auth { width: 100%; padding: 12px; background: var(--accent-color); border: none; color: white; border-radius: 8px; font-weight: bold; margin-bottom: 10px; cursor: pointer; }
 
-        /* LOADING */
         #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
         .loader-logo { width: 60px; height: 60px; border: 5px solid #333; border-top: 5px solid var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* SIDEBAR */
         #sidebar { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: var(--bg-header); z-index: 10001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-right: 3px solid var(--accent-color); padding: 25px; box-sizing: border-box; box-shadow: 10px 0 20px rgba(0,0,0,0.5); }
         #sidebar.open { left: 0; }
         .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: none; backdrop-filter: blur(4px); }
         #btn-menu-global { position: fixed; top: 15px; left: 15px; font-size: 22px; background: var(--bg-header); border: 2px solid var(--accent-color); border-radius: 12px; color: var(--accent-color); cursor: pointer; z-index: 9500; width: 48px; height: 48px; display: none; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
-        /* MENU INICIAL */
         #menu-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('https://files.catbox.moe/o5f62o.png') center/cover; z-index: 9000; padding: 20px; box-sizing: border-box; overflow-y: auto; text-align: center; display: none; }
         .char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 30px 0; }
         .char-card { background: rgba(20, 20, 30, 0.9); border: 2px solid var(--border-color); border-radius: 15px; padding: 15px; transition: 0.3s; position: relative; }
         .char-card:active { transform: scale(0.95); border-color: var(--accent-color); }
         .char-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--accent-color); }
 
-        /* CABEÇALHO */
         header { display:flex; gap:15px; padding: 20px; background: var(--bg-header); border-bottom: 3px solid var(--accent-color); }
         #imgChar { width: 110px; height: 150px; object-fit: cover; border-radius: 12px; border: 2px solid var(--accent-color); box-shadow: 0 0 15px rgba(163, 112, 255, 0.3); }
         .header-fields { flex: 1; display: flex; flex-direction: column; gap: 8px; }
         .header-fields input { background: var(--bg-input); border: 1px solid var(--border-color); color: #fff; padding: 8px; border-radius: 6px; font-size: 13px; }
 
-        /* TABS */
         .tabs-wrapper { overflow-x: auto; background: var(--bg-header); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); }
         .tabs { display: flex; white-space: nowrap; padding: 5px; }
         .tab-btn { padding: 12px 20px; background: none; border: none; color: var(--text-dim); font-weight: bold; font-size: 12px; text-transform: uppercase; cursor: pointer; }
         .tab-btn.active { color: var(--accent-color); border-bottom: 3px solid var(--accent-color); }
 
-        /* SEÇÕES */
         .section { display: none; padding: 20px; animation: slideUp 0.3s ease-out; }
         .section.active { display: block; }
         @keyframes slideUp { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        /* STATUS BARS */
         .status-container { display: grid; gap: 15px; }
         .bar-card { background: var(--bg-card); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         .bar-label { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
         .bar-outer { height: 16px; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; margin-bottom: 12px; }
-        .bar-inner { height: 100%; transition: 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .bar-inner { height: 100%; transition: 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
         .bar-btns { display: grid; grid-template-columns: repeat(4, 1fr) 60px; gap: 6px; }
-        .bar-btns button { padding: 10px 0; border: none; border-radius: 6px; background: #2a243d; color: #fff; font-weight: bold; font-size: 12px; }
+        .bar-btns button { padding: 10px 0; border: none; border-radius: 6px; background: #2a243d; color: #fff; font-weight: bold; font-size: 12px; touch-action: manipulation; }
         .bar-btns button:active { background: var(--accent-color); }
         .max-input { background: #000; border: 1px solid var(--border-color); color: var(--accent-color); text-align: center; border-radius: 6px; font-weight: bold; }
 
-        /* LISTAS */
         .add-box { background: var(--bg-card); padding: 15px; border-radius: 12px; border: 1px dashed var(--accent-color); margin-bottom: 20px; }
         .card-item { background: var(--bg-card); padding: 15px; border-radius: 12px; margin-bottom: 12px; border-left: 5px solid var(--accent-color); position: relative; box-shadow: 0 3px 6px rgba(0,0,0,0.2); }
         .card-item h4 { margin: 0 0 5px 0; color: var(--accent-color); font-size: 16px; cursor: pointer; }
         .card-item p { margin: 0; font-size: 13px; color: var(--text-dim); line-height: 1.4; cursor: pointer; }
         .btn-delete { position: absolute; top: 10px; right: 10px; background: rgba(255,0,0,0.1); color: #ff4444; border: 1px solid #ff4444; border-radius: 5px; padding: 4px 8px; font-size: 10px; }
 
-        /* PETS GOLD SYSTEM */
         .pet-card { border-left-color: var(--pet-gold); background: linear-gradient(90deg, rgba(255,215,0,0.05) 0%, var(--bg-card) 100%); border-right: 1px solid rgba(255,215,0,0.2); }
         .pet-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 15px; }
         .pet-img { width: 70px; height: 70px; border-radius: 15px; border: 2px solid var(--pet-gold); object-fit: cover; }
@@ -90,7 +81,6 @@
         .pet-grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
         .pet-stat-box { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #444; font-size: 12px; }
 
-        /* FOOTER */
         .footer { position: fixed; bottom: 0; width: 100%; background: var(--bg-header); padding: 15px; display: flex; gap: 10px; border-top: 2px solid var(--accent-color); box-sizing: border-box; }
         .footer button { flex: 1; padding: 15px; border: none; border-radius: 10px; font-weight: bold; color: #fff; cursor: pointer; }
         .btn-undo { background: #333; }
@@ -222,6 +212,10 @@ let userUID = null;
 let db = [];
 let cur = -1; let ficha = {}; let undo = []; let redo = [];
 let tempPetImg = "";
+
+// Variáveis para repetição automática (Clique Longo)
+let intervalId = null;
+let timeoutId = null;
 
 auth.onAuthStateChanged(user => {
     if (user) {
@@ -369,6 +363,25 @@ function setMax(attr, val) { snap(); ficha[attr+'Max'] = parseInt(val) || 0; ren
 function modPetHp(idx, qtd) { snap(); let p = ficha.pets[idx]; p.v = (parseInt(p.v) || 0) + qtd; renderFicha(); }
 function setPetMaxHp(idx, val) { snap(); ficha.pets[idx].vmax = parseInt(val) || 0; renderFicha(); }
 
+// --- LÓGICA DE CLIQUE LONGO ---
+function startAutoMod(attr, qtd, isPet = false, petIdx = null) {
+    if (isPet) modPetHp(petIdx, qtd);
+    else modVal(attr, qtd);
+
+    timeoutId = setTimeout(() => {
+        intervalId = setInterval(() => {
+            if (isPet) modPetHp(petIdx, qtd);
+            else modVal(attr, qtd);
+        }, 80); 
+    }, 500);
+}
+
+function stopAutoMod() {
+    clearTimeout(timeoutId);
+    clearInterval(intervalId);
+}
+// -----------------------------
+
 function addAtributo() {
     const n = document.getElementById('atN').value, v = document.getElementById('atV').value;
     if(!n) return; snap(); ficha.atributos[n] = v; renderFicha();
@@ -410,7 +423,18 @@ function renderFicha() {
     stats.forEach(s => {
         let curV = parseInt(ficha[s.id]) || 0; let maxV = parseInt(ficha[s.id+'Max']) || 1;
         let perc = Math.min(100, (curV / maxV) * 100);
-        sCont.innerHTML += `<div class="bar-card"><div class="bar-label"><span>${s.n}</span><span>${curV} / ${maxV}</span></div><div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div></div><div class="bar-btns"><button onclick="modVal('${s.id}',-5)">-5</button><button onclick="modVal('${s.id}',-1)">-1</button><button onclick="modVal('${s.id}',1)">+1</button><button onclick="modVal('${s.id}',5)">+5</button><input type="number" class="max-input" value="${maxV}" onchange="setMax('${s.id}', this.value)"></div></div>`;
+        sCont.innerHTML += `<div class="bar-card">
+            <div class="bar-label"><span>${s.n}</span><span>${curV} / ${maxV}</span></div>
+            <div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div></div>
+                      <div class="bar-btns">
+                <button onpointerdown="startAutoMod('${s.id}',-5)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-5</button>
+                <button onpointerdown="startAutoMod('${s.id}',-1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-1</button>
+                <button onpointerdown="startAutoMod('${s.id}',1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+1</button>
+                <button onpointerdown="startAutoMod('${s.id}',5)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+5</button>
+                <input type="number" class="max-input" value="${maxV}" onchange="setMax('${s.id}', this.value)">
+            </div>
+
+        </div>`;
     });
 
     renderGeneric('listaAt', ficha.atributos, 'at', (k, v) => `<div class="card-item"><button class="btn-delete" onclick="remover('at','${k}')">X</button><h4 onclick="editar('at','${k}','n','Atributo')">${k}</h4><p onclick="editar('at','${k}','v','Valor')">${v}</p></div>`);
@@ -422,7 +446,18 @@ function renderFicha() {
     renderGeneric('listaPets', ficha.pets, 'pet', (it, i) => {
         let curV = parseInt(it.v) || 0; let maxV = parseInt(it.vmax) || 1;
         let perc = Math.min(100, (curV / maxV) * 100);
-        return `<div class="card-item pet-card"><button class="btn-delete" onclick="remover('pets',${i})">X</button><div class="pet-meta"><img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img"><div><h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4><span style="font-size:10px; color:var(--pet-gold)">Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span></div></div><div class="pet-bar-label"><span>HP DO PET</span><span>${curV} / ${maxV}</span></div><div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:var(--pet-gold);"></div></div><div class="bar-btns"><button onclick="modPetHp(${i},-1)">-1</button><button onclick="modPetHp(${i},1)">+1</button><input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)"></div><div class="pet-grid-stats"><div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div><div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div></div></div>`});
+        return `<div class="card-item pet-card">
+            <button class="btn-delete" onclick="remover('pets',${i})">X</button>
+            <div class="pet-meta"><img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img"><div><h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4><span style="font-size:10px; color:var(--pet-gold)">Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span></div></div>
+            <div class="pet-bar-label"><span>HP DO PET</span><span>${curV} / ${maxV}</span></div>
+            <div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:var(--pet-gold);"></div></div>
+            <div class="bar-btns">
+                <button onpointerdown="startAutoMod(null,-1, true, ${i})" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-1</button>
+                <button onpointerdown="startAutoMod(null,1, true, ${i})" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+1</button>
+                <input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)">
+            </div>
+            <div class="pet-grid-stats"><div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div><div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div></div>
+        </div>`});
 
     let totalDef = 0;
     renderGeneric('listaEq', ficha.equipamentos, 'e', (it, i) => {
