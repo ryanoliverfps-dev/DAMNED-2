@@ -1,3 +1,4 @@
+Claro! Vou adicionar perícias predefinidas para cada classe. Aqui está o código completo com as perícias específicas:
 
 ```html
 <!DOCTYPE html>
@@ -202,6 +203,7 @@
     </div>
 
     <div class="section" id="sec-2">
+        <div class="classe-bonus" id="pericias-bonus"></div>
         <div id="lista-pericias"></div>
     </div>
 
@@ -333,6 +335,28 @@ const periciasBase = [
     'Fortitude', 'Tática', 'Percepção', 'Ocultismo', 'Magia',
     'Intimidação', 'Iniciativa', 'Pontaria', 'Constituição', 'Combate', 'Investigação'
 ];
+
+// Perícias específicas por classe
+const periciasClasse = {
+    'Bruxa': ['Ocultismo', 'Magia', 'Conhecimento', 'Percepção', 'Intimidação'],
+    'Azarado': ['Furtividade', 'Crime', 'Percepção', 'Iniciativa', 'Sobrevivência'],
+    'Clérigo': ['Ocultismo', 'Magia', 'Carisma', 'Fortitude', 'Investigação'],
+    'Druida': ['Sobrevivência', 'Magia', 'Percepção', 'Fortitude', 'Conhecimento'],
+    'Mago': ['Magia', 'Conhecimento', 'Ocultismo', 'Investigação', 'Percepção'],
+    'Monge': ['Combate', 'Fortitude', 'Percepção', 'Iniciativa', 'Furtividade'],
+    'Paladino': ['Combate', 'Carisma', 'Fortitude', 'Intimidação', 'Tática'],
+    'Ladino': ['Furtividade', 'Crime', 'Percepção', 'Iniciativa', 'Pontaria'],
+    'Bárbaro': ['Combate', 'Fortitude', 'Intimidação', 'Sobrevivência', 'Iniciativa'],
+    'Samurai': ['Combate', 'Tática', 'Percepção', 'Iniciativa', 'Fortitude'],
+    'Ranged': ['Pontaria', 'Percepção', 'Furtividade', 'Sobrevivência', 'Iniciativa'],
+    'Artifice': ['Conhecimento', 'Percepção', 'Investigação', 'Pontaria', 'Tática'],
+    'Bardo': ['Carisma', 'Conhecimento', 'Percepção', 'Furtividade', 'Intimidação'],
+    'Feiticeiro': ['Magia', 'Carisma', 'Percepção', 'Iniciativa', 'Ocultismo'],
+    'Lutador': ['Combate', 'Fortitude', 'Intimidação', 'Tática', 'Iniciativa'],
+    'Ninja': ['Furtividade', 'Combate', 'Percepção', 'Iniciativa', 'Crime'],
+    'Ocultista': ['Ocultismo', 'Magia', 'Conhecimento', 'Percepção', 'Investigação'],
+    'Nobre': ['Carisma', 'Conhecimento', 'Intimidação', 'Investigação', 'Tática']
+};
 
 // Todas as classes com seus atributos, PV, PE, vantagens e desvantagens
 const classeBonus = {
@@ -523,6 +547,7 @@ function confirmarCriacao() {
     }
 
     const bonus = classeBonus[classe] || { pv: 40, pe: 40, atributos: {}, descricao: '' };
+    const periciasClasseAtual = periciasClasse[classe] || [];
     
     const novo = {
         nome: nome,
@@ -568,9 +593,16 @@ function confirmarCriacao() {
         }
     });
 
-    // Inicializar perícias com 0
+    // Inicializar perícias com 0 e aplicar bônus de classe (+2 nas perícias principais)
     periciasBase.forEach(per => {
         novo.pericias[per] = 0;
+    });
+    
+    // Dar +2 nas perícias principais da classe
+    periciasClasseAtual.forEach(per => {
+        if (novo.pericias.hasOwnProperty(per)) {
+            novo.pericias[per] = 2;
+        }
     });
 
     db.push(novo);
@@ -779,9 +811,11 @@ function renderFicha() {
     // Renderizar bônus da classe
     const classeAtual = ficha.classe;
     const bonus = classeBonus[classeAtual] || null;
+    const periciasClasseAtual = periciasClasse[classeAtual] || [];
     const classeBonusEl = document.getElementById('classe-bonus');
     const classeDescEl = document.getElementById('classe-descricao-status');
     const atributosBonusEl = document.getElementById('atributos-bonus');
+    const periciasBonusEl = document.getElementById('pericias-bonus');
 
     if (bonus) {
         const bonusTexto = Object.entries(bonus.atributos)
@@ -789,11 +823,16 @@ function renderFicha() {
             .join(' · ');
         classeBonusEl.innerHTML = `<strong style="color:var(--accent-color);">${classeAtual}</strong> - PV: ${bonus.pv} | PE: ${bonus.pe} | ${bonusTexto}`;
         classeDescEl.innerHTML = `<strong>Descrição da Classe:</strong><br>${bonus.descricao}`;
-        atributosBonusEl.innerHTML = `<strong>Bônus de Classe:</strong> ${bonusTexto}`;
+        atributosBonusEl.innerHTML = `<strong>Bônus de Atributos:</strong> ${bonusTexto}`;
+        
+        // Mostrar perícias da classe
+        const periciasTexto = periciasClasseAtual.join(' · ');
+        periciasBonusEl.innerHTML = `<strong>Perícias Treinadas:</strong> ${periciasTexto} (recebem +2)`;
     } else {
         classeBonusEl.innerHTML = '';
         classeDescEl.innerHTML = '';
         atributosBonusEl.innerHTML = '';
+        periciasBonusEl.innerHTML = '';
     }
 
     // Barras de status
@@ -843,14 +882,15 @@ function renderFicha() {
         `;
     });
 
-    // Renderizar Perícias
+    // Renderizar Perícias (destacar as da classe)
     const perList = document.getElementById('lista-pericias');
     perList.innerHTML = '';
     periciasBase.forEach(per => {
         let valor = ficha.pericias[per] || 0;
+        let isClassePer = periciasClasse[classeAtual]?.includes(per);
         perList.innerHTML += `
-            <div class="pericia-linha">
-                <span class="pericia-nome">${per}</span>
+            <div class="pericia-linha" style="${isClassePer ? 'border-left: 3px solid var(--accent-color);' : ''}">
+                <span class="pericia-nome">${per} ${isClassePer ? '⭐' : ''}</span>
                 <span class="pericia-valor">${valor}</span>
                 <div class="pericia-botoes">
                     <button onpointerdown="startAutoModPericia('${per}',-1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-</button>
@@ -922,13 +962,16 @@ document.getElementById('criacao-classe').addEventListener('change', function(e)
     const classe = e.target.value;
     if (classe && classeBonus[classe]) {
         const bonus = classeBonus[classe];
+        const periciasLista = periciasClasse[classe] || [];
         const bonusTexto = Object.entries(bonus.atributos)
             .map(([a,b]) => `${a} ${b > 0 ? '+' : ''}${b}`)
             .join(', ');
+        const periciasTexto = periciasLista.join(', ');
         document.getElementById('classe-descricao').innerHTML = 
             `<strong>${classe}</strong><br>
              PV: ${bonus.pv} | PE: ${bonus.pe}<br>
-             <strong>Atributos:</strong> ${bonusTexto}<br><br>
+             <strong>Atributos:</strong> ${bonusTexto}<br>
+             <strong>Perícias Treinadas:</strong> ${periciasTexto} (recebem +2)<br><br>
              ${bonus.descricao}`;
     } else {
         document.getElementById('classe-descricao').innerHTML = '';
@@ -938,3 +981,33 @@ document.getElementById('criacao-classe').addEventListener('change', function(e)
 </body>
 </html>
 ```
+
+🎯 Novas funcionalidades de perícias:
+
+✅ Perícias específicas por classe (todas com +2 inicial):
+
+· Bruxa: Ocultismo, Magia, Conhecimento, Percepção, Intimidação
+· Azarado: Furtividade, Crime, Percepção, Iniciativa, Sobrevivência
+· Clérigo: Ocultismo, Magia, Carisma, Fortitude, Investigação
+· Druida: Sobrevivência, Magia, Percepção, Fortitude, Conhecimento
+· Mago: Magia, Conhecimento, Ocultismo, Investigação, Percepção
+· Monge: Combate, Fortitude, Percepção, Iniciativa, Furtividade
+· Paladino: Combate, Carisma, Fortitude, Intimidação, Tática
+· Ladino: Furtividade, Crime, Percepção, Iniciativa, Pontaria
+· Bárbaro: Combate, Fortitude, Intimidação, Sobrevivência, Iniciativa
+· Samurai: Combate, Tática, Percepção, Iniciativa, Fortitude
+· Ranged: Pontaria, Percepção, Furtividade, Sobrevivência, Iniciativa
+· Artifice: Conhecimento, Percepção, Investigação, Pontaria, Tática
+· Bardo: Carisma, Conhecimento, Percepção, Furtividade, Intimidação
+· Feiticeiro: Magia, Carisma, Percepção, Iniciativa, Ocultismo
+· Lutador: Combate, Fortitude, Intimidação, Tática, Iniciativa
+· Ninja: Furtividade, Combate, Percepção, Iniciativa, Crime
+· Ocultista: Ocultismo, Magia, Conhecimento, Percepção, Investigação
+· Nobre: Carisma, Conhecimento, Intimidação, Investigação, Tática
+
+✨ Melhorias visuais:
+
+· As perícias treinadas pela classe aparecem com uma estrela (⭐)
+· Barra lateral esquerda nas perícias principais
+· Descrição completa na criação do personagem
+· Indicador visual de quais perícias são especialidades da classe
