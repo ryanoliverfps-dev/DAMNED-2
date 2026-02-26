@@ -1,6 +1,4 @@
 
-
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -338,117 +336,247 @@ const periciasBase = [
 
 // Perícias específicas por classe
 const periciasClasse = {
-    'Bruxa': ['Ocultismo', 'Magia', 'Conhecimento', 'Percepção', 'Intimidação'],
-    'Azarado': ['Furtividade', 'Crime', 'Percepção', 'Iniciativa', 'Sobrevivência'],
-    'Clérigo': ['Ocultismo', 'Magia', 'Carisma', 'Fortitude', 'Investigação'],
-    'Druida': ['Sobrevivência', 'Magia', 'Percepção', 'Fortitude', 'Conhecimento'],
-    'Mago': ['Magia', 'Conhecimento', 'Ocultismo', 'Investigação', 'Percepção'],
-    'Monge': ['Combate', 'Fortitude', 'Percepção', 'Iniciativa', 'Furtividade'],
+    'Barbaro': ['Combate', 'Fortitude', 'Intimidação', 'Sobrevivência', 'Iniciativa'],
     'Paladino': ['Combate', 'Carisma', 'Fortitude', 'Intimidação', 'Tática'],
-    'Ladino': ['Furtividade', 'Crime', 'Percepção', 'Iniciativa', 'Pontaria'],
-    'Bárbaro': ['Combate', 'Fortitude', 'Intimidação', 'Sobrevivência', 'Iniciativa'],
-    'Samurai': ['Combate', 'Tática', 'Percepção', 'Iniciativa', 'Fortitude'],
-    'Ranged': ['Pontaria', 'Percepção', 'Furtividade', 'Sobrevivência', 'Iniciativa'],
-    'Artifice': ['Conhecimento', 'Percepção', 'Investigação', 'Pontaria', 'Tática'],
-    'Bardo': ['Carisma', 'Conhecimento', 'Percepção', 'Furtividade', 'Intimidação'],
-    'Feiticeiro': ['Magia', 'Carisma', 'Percepção', 'Iniciativa', 'Ocultismo'],
     'Lutador': ['Combate', 'Fortitude', 'Intimidação', 'Tática', 'Iniciativa'],
+    'Samurai': ['Combate', 'Tática', 'Percepção', 'Iniciativa', 'Fortitude'],
+    'Monge': ['Combate', 'Fortitude', 'Percepção', 'Iniciativa', 'Furtividade'],
+    'Ranged': ['Pontaria', 'Percepção', 'Furtividade', 'Sobrevivência', 'Iniciativa'],
+    'Ladino': ['Furtividade', 'Crime', 'Percepção', 'Iniciativa', 'Pontaria'],
     'Ninja': ['Furtividade', 'Combate', 'Percepção', 'Iniciativa', 'Crime'],
     'Ocultista': ['Ocultismo', 'Magia', 'Conhecimento', 'Percepção', 'Investigação'],
-    'Nobre': ['Carisma', 'Conhecimento', 'Intimidação', 'Investigação', 'Tática']
+    'Mago': ['Magia', 'Conhecimento', 'Ocultismo', 'Investigação', 'Percepção'],
+    'Feiticeiro': ['Magia', 'Carisma', 'Percepção', 'Iniciativa', 'Ocultismo'],
+    'Bruxa': ['Ocultismo', 'Magia', 'Conhecimento', 'Percepção', 'Intimidação'],
+    'Clérigo': ['Ocultismo', 'Magia', 'Carisma', 'Fortitude', 'Investigação'],
+    'Druida': ['Sobrevivência', 'Magia', 'Percepção', 'Fortitude', 'Conhecimento'],
+    'Nobre': ['Carisma', 'Conhecimento', 'Intimidação', 'Investigação', 'Tática'],
+    'Artifice': ['Conhecimento', 'Percepção', 'Investigação', 'Pontaria', 'Tática'],
+    'Bardo': ['Carisma', 'Conhecimento', 'Percepção', 'Furtividade', 'Intimidação']
 };
 
 // Todas as classes com seus atributos, PV, PE, vantagens e desvantagens
 const classeBonus = {
-    'Bruxa': { 
-        pv: 30, pe: 70, 
-        atributos: { 'Inteligência': 2, 'Sabedoria': 2, 'Carisma': 1 },
-        descricao: 'Bruxas manipulam forças ancestrais e feitiços naturais. Vantagens: +2 em ocultismo e magia, conexão com espíritos. Desvantagens: Vulneráveis a ferro, -1 em constituição.'
-    },
-    'Azarado': { 
-        pv: 40, pe: 40, 
-        atributos: { 'Destreza': 1, 'Carisma': 1, 'Inteligência': 1 },
-        descricao: 'Azarados são marcados pelo destino, mas sua sorte instável pode beneficiá-los. Vantagens: Podem rerrolar falhas uma vez por sessão. Desvantagens: Eventos aleatórios ruins acontecem com frequência.'
-    },
-    'Clérigo': { 
-        pv: 50, pe: 50, 
-        atributos: { 'Sabedoria': 3, 'Constituição': 1, 'Força': 1 },
-        descricao: 'Clérigos canalizam poder divino para curar e proteger. Vantagens: Cura em dobro, resistência a necromancia. Desvantagens: Limitado por dogmas religiosos.'
-    },
-    'Druida': { 
-        pv: 45, pe: 55, 
-        atributos: { 'Sabedoria': 3, 'Constituição': 2 },
-        descricao: 'Druidas protegem a natureza e se transformam em animais. Vantagens: Formas animais, comunicação com criaturas. Desvantagens: Não usam metal, restrições naturais.'
-    },
-    'Mago': { 
-        pv: 20, pe: 80, 
-        atributos: { 'Inteligência': 4, 'Sabedoria': 1, 'Força': -2 },
-        descricao: 'Magos estudam as artes arcanas em busca de conhecimento. Vantagens: +4 em magia, acesso a todos os feitiços. Desvantagens: Fisicamente frágil, -2 em força.'
-    },
-    'Monge': { 
-        pv: 55, pe: 45, 
-        atributos: { 'Sabedoria': 2, 'Destreza': 2, 'Constituição': 1 },
-        descricao: 'Monges canalizam energia interior para aperfeiçoar corpo e mente. Vantagens: Ataques desarmados poderosos, defesa elevada. Desvantagens: Não usam armaduras.'
+    'Barbaro': { 
+        pv: 100, pe: 20, 
+        atributos: { 'Força': 3, 'Constituição': 2, 'Inteligência': -1 },
+        descricao: '🏹 **Bárbaro** - Guerreiros das terras selvagens que canalizam a fúria interior.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Fúria: Aumenta dano e resistência drasticamente\n' +
+                   '• Instinto de Sobrevivência: Bônus em situações de perigo\n' +
+                   '• Resistência Natural: Redução de dano físico\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• -1 de Inteligência\n' +
+                   '• Dificuldade em controle emocional\n' +
+                   '• Vulnerável a manipulação mental'
     },
     'Paladino': { 
-        pv: 60, pe: 40, 
+        pv: 90, pe: 40, 
         atributos: { 'Força': 2, 'Carisma': 2, 'Constituição': 1 },
-        descricao: 'Paladinos são guerreiros sagrados que juram proteger os inocentes. Vantagens: Aura protetora, cura divina. Desvantagens: Código de conduta rigoroso.'
-    },
-    'Ladino': { 
-        pv: 40, pe: 40, 
-        atributos: { 'Destreza': 3, 'Carisma': 1, 'Inteligência': 1 },
-        descricao: 'Ladinos são especialistas em furtividade e ataques furtivos. Vantagens: +3 em furtividade e crime, ataques furtivos. Desvantagens: Combate direto limitado.'
-    },
-    'Bárbaro': { 
-        pv: 70, pe: 30, 
-        atributos: { 'Força': 3, 'Constituição': 2, 'Inteligência': -1 },
-        descricao: 'Bárbaros são guerreiros furiosos que canalizam sua raiva. Vantagens: Fúria que aumenta dano e resistência. Desvantagens: -1 em inteligência, dificuldade em controle.'
-    },
-    'Samurai': { 
-        pv: 55, pe: 35, 
-        atributos: { 'Destreza': 2, 'Sabedoria': 2, 'Força': 1 },
-        descricao: 'Samurais seguem um código de honra e são mestres da espada. Vantagens: Ataques precisos, foco em combate. Desvantagens: Honra pode ser explorada.'
-    },
-    'Ranged': { 
-        pv: 40, pe: 40, 
-        atributos: { 'Destreza': 3, 'Sabedoria': 2 },
-        descricao: 'Especialistas em combate à distância com arcos e armas de fogo. Vantagens: +3 em pontaria, ataques precisos. Desvantagens: Fraco em combate corpo a corpo.'
-    },
-    'Artifice': { 
-        pv: 40, pe: 60, 
-        atributos: { 'Inteligência': 3, 'Destreza': 2 },
-        descricao: 'Artífices criam itens mágicos e engenhocas. Vantagens: Criação de itens, infusões mágicas. Desvantagens: Dependente de ferramentas.'
-    },
-    'Bardo': { 
-        pv: 35, pe: 65, 
-        atributos: { 'Carisma': 3, 'Destreza': 2 },
-        descricao: 'Bardos inspiram aliados e confundem inimigos com sua arte. Vantagens: Buffs em grupo, versatilidade. Desvantagens: Combate direto limitado.'
-    },
-    'Feiticeiro': { 
-        pv: 30, pe: 70, 
-        atributos: { 'Carisma': 3, 'Constituição': 2, 'Sabedoria': -1 },
-        descricao: 'Feiticeiros possuem magia inata no sangue. Vantagens: Magia intuitiva, metamagia. Desvantagens: -1 em sabedoria, limitado a poucos feitiços.'
+        descricao: '⚔️ **Paladino** - Guerreiros sagrados que juram proteção aos inocentes.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Aura Protetora: Aliados próximos ganham resistência\n' +
+                   '• Cura Divina: Pode curar ferimentos graves\n' +
+                   '• Julgamento: Dano extra contra criaturas das trevas\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Código de conduta rigoroso\n' +
+                   '• Perde poderes se violar o juramento\n' +
+                   '• Intolerante com atos malignos'
     },
     'Lutador': { 
-        pv: 65, pe: 35, 
+        pv: 85, pe: 45, 
         atributos: { 'Força': 2, 'Constituição': 2, 'Destreza': 1 },
-        descricao: 'Lutadores são mestres em combate corpo a corpo sem armas. Vantagens: Combate desarmado, múltiplos ataques. Desvantagens: Alcance limitado.'
+        descricao: '👊 **Lutador** - Mestres do combate corpo a corpo sem armas.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Golpes Poderosos: Ataques desarmados causam dano elevado\n' +
+                   '• Múltiplos Ataques: Pode atacar várias vezes por rodada\n' +
+                   '• Imobilização: Técnicas de submissão\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Alcance limitado\n' +
+                   '• Vulnerável a ataques à distância\n' +
+                   '• Dependente de proximidade'
+    },
+    'Samurai': { 
+        pv: 80, pe: 80, 
+        atributos: { 'Destreza': 2, 'Sabedoria': 2, 'Força': 1 },
+        descricao: '🗡️ **Samurai** - Seguem o bushido e são mestres da espada.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Ataques Precisos: Críticos melhorados\n' +
+                   '• Foco em Combate: Bônus em duelos\n' +
+                   '• Corte Rápido: Ataques de oportunidade\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Código de honra pode ser explorado\n' +
+                   '• Vergonha afeta performance\n' +
+                   '• Obrigado a aceitar desafios'
+    },
+    'Monge': { 
+        pv: 75, pe: 65, 
+        atributos: { 'Sabedoria': 2, 'Destreza': 2, 'Constituição': 1 },
+        descricao: '🧘 **Monge** - Canalizam energia interior (ki) para aperfeiçoar corpo e mente.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Ataques Desarmados Poderosos\n' +
+                   '• Defesa Elevada sem armaduras\n' +
+                   '• Mobilidade Superior\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Não usam armaduras\n' +
+                   '• Dependente de ki\n' +
+                   '• Restrições alimentares/espirituais'
+    },
+    'Ranged': { 
+        pv: 70, pe: 50, 
+        atributos: { 'Destreza': 3, 'Sabedoria': 2 },
+        descricao: '🏹 **Ranged** - Especialistas em combate à distância.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Pontaria Letal: +3 em ataques à distância\n' +
+                   '• Tiros Precisos: Ignora cobertura parcial\n' +
+                   '• Mira Rápida: Múltiplos disparos\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Fraco em combate corpo a corpo\n' +
+                   '• Dependente de munição\n' +
+                   '• Penalidade em espaços confinados'
+    },
+    'Ladino': { 
+        pv: 65, pe: 60, 
+        atributos: { 'Destreza': 3, 'Carisma': 1, 'Inteligência': 1 },
+        descricao: '🗝️ **Ladino** - Especialistas em furtividade e ataques furtivos.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Ataques Furtivos: Dano massivo em alvos desprevenidos\n' +
+                   '• Percepção Aguçada: Dificilmente surpreendido\n' +
+                   '• Habilidades de Crime: Abrir fechaduras, desarmar armadilhas\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Combate direto limitado\n' +
+                   '• Reputação questionável\n' +
+                   '• Depende do elemento surpresa'
     },
     'Ninja': { 
-        pv: 40, pe: 50, 
+        pv: 60, pe: 75, 
         atributos: { 'Destreza': 3, 'Sabedoria': 1, 'Constituição': 1 },
-        descricao: 'Ninjas são assassinos sombrios treinados em subterfúgio. Vantagens: Furtividade extrema, venenos. Desvantagens: Código de honra próprio.'
+        descricao: '🥷 **Ninja** - Assassinos sombrios treinados em subterfúgio.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Furtividade Extrema: Quase invisível quando escondido\n' +
+                   '• Venenos: Especialista em toxinas\n' +
+                   '• Projéteis: Shurikens e ferramentas de ninja\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Código de honra próprio\n' +
+                   '• Vulnerável quando descoberto\n' +
+                   '• Reputação de traidor'
     },
     'Ocultista': { 
-        pv: 30, pe: 70, 
+        pv: 55, pe: 100, 
         atributos: { 'Sabedoria': 3, 'Inteligência': 2, 'Carisma': -1 },
-        descricao: 'Ocultistas estudam conhecimentos proibidos e entidades cósmicas. Vantagens: Magia de sangue, rituais poderosos. Desvantagens: Risco de insanidade, -1 em carisma.'
+        descricao: '🔮 **Ocultista** - Estudam conhecimentos proibidos e entidades cósmicas.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Magia de Sangue: Rituais poderosos\n' +
+                   '• Invocações: Pode chamar criaturas de outras dimensões\n' +
+                   '• Conhecimento Proibido: Informações que outros não têm\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Risco de insanidade\n' +
+                   '• -1 de Carisma\n' +
+                   '• Perseguido por autoridades religiosas'
+    },
+    'Mago': { 
+        pv: 50, pe: 95, 
+        atributos: { 'Inteligência': 4, 'Sabedoria': 1, 'Força': -2 },
+        descricao: '📚 **Mago** - Estudiosos das artes arcanas.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Magia Poderosa: Acesso a todos os feitiços\n' +
+                   '• Conhecimento Enciclopédico\n' +
+                   '• Versatilidade Mágica\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• -2 de Força\n' +
+                   '• Fisicamente frágil\n' +
+                   '• Dependente de grimórios'
+    },
+    'Feiticeiro': { 
+        pv: 60, pe: 85, 
+        atributos: { 'Carisma': 3, 'Constituição': 2, 'Sabedoria': -1 },
+        descricao: '✨ **Feiticeiro** - Magia inata no sangue.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Magia Intuitiva: Conjura sem preparo\n' +
+                   '• Metamagia: Modifica feitiços em tempo real\n' +
+                   '• Linhagem Mágica: Bônus em escola específica\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• -1 de Sabedoria\n' +
+                   '• Limitado a poucos feitiços\n' +
+                   '• Impulsivo'
+    },
+    'Bruxa': { 
+        pv: 60, pe: 80, 
+        atributos: { 'Inteligência': 2, 'Sabedoria': 2, 'Carisma': 1 },
+        descricao: '🧙 **Bruxa** - Manipulam forças ancestrais da natureza.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Conexão com Espíritos: Aliados sobrenaturais\n' +
+                   '• Poções e Feitiços Naturais\n' +
+                   '• Maldições Poderosas\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Vulneráveis a ferro\n' +
+                   '• -1 de Constituição\n' +
+                   '• Caçadas por fanáticos'
+    },
+    'Clérigo': { 
+        pv: 80, pe: 60, 
+        atributos: { 'Sabedoria': 3, 'Constituição': 1, 'Força': 1 },
+        descricao: '⛪ **Clérigo** - Canalizam poder divino.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Cura em dobro\n' +
+                   '• Resistência a Necromancia\n' +
+                   '• Proteção Divina\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Limitado por dogmas religiosos\n' +
+                   '• Deve seguir os preceitos da divindade\n' +
+                   '• Conflito com outras religiões'
+    },
+    'Druida': { 
+        pv: 75, pe: 70, 
+        atributos: { 'Sabedoria': 3, 'Constituição': 2 },
+        descricao: '🌳 **Druida** - Protetores da natureza.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Formas Animais: Transformação em bestas\n' +
+                   '• Comunicação com criaturas\n' +
+                   '• Magia Natural\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Não usam metal\n' +
+                   '• Restrições naturais\n' +
+                   '• Conflito com civilização'
     },
     'Nobre': { 
-        pv: 45, pe: 55, 
+        pv: 70, pe: 60, 
         atributos: { 'Carisma': 4, 'Inteligência': 1 },
-        descricao: 'Nobres usam sua influência e recursos para manipular situações. Vantagens: Riqueza, contatos, liderança. Desvantagens: Inexperiente em combate.'
+        descricao: '👑 **Nobre** - Usam influência e recursos.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Riqueza: Acesso a recursos financeiros\n' +
+                   '• Contatos: Aliados poderosos\n' +
+                   '• Liderança: Comando em grupo\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Inexperiente em combate\n' +
+                   '• Alvo de inveja e conspirações\n' +
+                   '• Obrigações políticas'
+    },
+    'Artifice': { 
+        pv: 70, pe: 65, 
+        atributos: { 'Inteligência': 3, 'Destreza': 2 },
+        descricao: '🔧 **Artífice** - Criadores de itens mágicos.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Criação de Itens: Fabricação de equipamentos\n' +
+                   '• Infusões Mágicas: Itens temporariamente encantados\n' +
+                   '• Engenhocas: Dispositivos úteis\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Dependente de ferramentas\n' +
+                   '• Tempo para criar itens\n' +
+                   '• Materiais caros'
+    },
+    'Bardo': { 
+        pv: 65, pe: 75, 
+        atributos: { 'Carisma': 3, 'Destreza': 2 },
+        descricao: '🎭 **Bardo** - Artistas que inspiram e confundem.\n\n' +
+                   '✨ **Vantagens:**\n' +
+                   '• Inspiração: Buffs em grupo\n' +
+                   '• Versatilidade: Um pouco de tudo\n' +
+                   '• Persuasão: Influencia multidões\n\n' +
+                   '⚠️ **Desvantagens:**\n' +
+                   '• Combate direto limitado\n' +
+                   '• Dependente de plateia\n' +
+                   '• Reputação instável'
     }
 };
 
@@ -546,7 +674,7 @@ function confirmarCriacao() {
         return;
     }
 
-    const bonus = classeBonus[classe] || { pv: 40, pe: 40, atributos: {}, descricao: '' };
+    const bonus = classeBonus[classe] || { pv: 50, pe: 50, atributos: {}, descricao: '' };
     const periciasClasseAtual = periciasClasse[classe] || [];
     
     const novo = {
@@ -822,7 +950,7 @@ function renderFicha() {
             .map(([a,b]) => `${a} ${b > 0 ? '+' : ''}${b}`)
             .join(' · ');
         classeBonusEl.innerHTML = `<strong style="color:var(--accent-color);">${classeAtual}</strong> - PV: ${bonus.pv} | PE: ${bonus.pe} | ${bonusTexto}`;
-        classeDescEl.innerHTML = `<strong>Descrição da Classe:</strong><br>${bonus.descricao}`;
+        classeDescEl.innerHTML = `<strong>Descrição da Classe:</strong><br>${bonus.descricao.replace(/\n/g, '<br>')}`;
         atributosBonusEl.innerHTML = `<strong>Bônus de Atributos:</strong> ${bonusTexto}`;
         
         // Mostrar perícias da classe
@@ -969,10 +1097,10 @@ document.getElementById('criacao-classe').addEventListener('change', function(e)
         const periciasTexto = periciasLista.join(', ');
         document.getElementById('classe-descricao').innerHTML = 
             `<strong>${classe}</strong><br>
-             PV: ${bonus.pv} | PE: ${bonus.pe}<br>
+             <span style="color:var(--hp-color);">PV: ${bonus.pv}</span> | <span style="color:var(--en-color);">PE: ${bonus.pe}</span><br>
              <strong>Atributos:</strong> ${bonusTexto}<br>
              <strong>Perícias Treinadas:</strong> ${periciasTexto} (recebem +2)<br><br>
-             ${bonus.descricao}`;
+             ${bonus.descricao.replace(/\n/g, '<br>')}`;
     } else {
         document.getElementById('classe-descricao').innerHTML = '';
     }
@@ -980,4 +1108,3 @@ document.getElementById('criacao-classe').addEventListener('change', function(e)
 </script>
 </body>
 </html>
-`
