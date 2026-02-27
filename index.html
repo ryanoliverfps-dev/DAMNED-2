@@ -67,8 +67,12 @@
         .status-container { display: grid; gap: 15px; }
         .bar-card { background: var(--bg-card); padding: 15px; border-radius: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         .bar-label { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
-        .bar-outer { height: 16px; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; margin-bottom: 12px; }
-        .bar-inner { height: 100%; transition: 0.2s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+        .bar-outer { height: 16px; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid #333; margin-bottom: 12px; cursor: pointer; position: relative; }
+        .bar-inner { height: 100%; transition: 0.1s ease; pointer-events: none; }
+        .bar-click-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; }
+        .bar-half { flex: 1; height: 100%; }
+        .bar-half:first-child { border-right: 1px solid rgba(255,255,255,0.1); }
+
         .bar-btns { display: grid; grid-template-columns: repeat(4, 1fr) 60px; gap: 6px; }
         .bar-btns button { padding: 10px 0; border: none; border-radius: 6px; background: #2a243d; color: #fff; font-weight: bold; font-size: 12px; touch-action: manipulation; cursor: pointer; }
         .bar-btns button:active { background: var(--accent-color); }
@@ -326,8 +330,8 @@ let undo = [];
 let redo = [];
 let tempPetImg = "";
 
-// Listas predefinidas
-const atributosBase = ['Força', 'Agilidade', 'Destreza', 'Inteligência', 'Sabedoria', 'Carisma', 'Constituição', 'Vigor'];
+// Listas predefinidas - ATRIBUTOS: apenas 5 atributos
+const atributosBase = ['Agilidade', 'Vigor', 'Destreza', 'Força', 'Intelecto'];
 const periciasBase = [
     'Sobrevivência', 'Crime', 'Conhecimento', 'Furtividade', 'Carisma',
     'Fortitude', 'Tática', 'Percepção', 'Ocultismo', 'Magia',
@@ -359,20 +363,20 @@ const periciasClasse = {
 const classeBonus = {
     'Barbaro': { 
         pv: 100, pe: 20, 
-        atributos: { 'Força': 3, 'Constituição': 2, 'Inteligência': -1 },
+        atributos: { 'Força': 3, 'Vigor': 2, 'Intelecto': -1 },
         descricao: '🏹 **Bárbaro** - Guerreiros das terras selvagens que canalizam a fúria interior.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Fúria: Aumenta dano e resistência drasticamente\n' +
                    '• Instinto de Sobrevivência: Bônus em situações de perigo\n' +
                    '• Resistência Natural: Redução de dano físico\n\n' +
                    '⚠️ **Desvantagens:**\n' +
-                   '• -1 de Inteligência\n' +
+                   '• -1 de Intelecto\n' +
                    '• Dificuldade em controle emocional\n' +
                    '• Vulnerável a manipulação mental'
     },
     'Paladino': { 
         pv: 90, pe: 40, 
-        atributos: { 'Força': 2, 'Carisma': 2, 'Constituição': 1 },
+        atributos: { 'Força': 2, 'Vigor': 1, 'Agilidade': 1 },
         descricao: '⚔️ **Paladino** - Guerreiros sagrados que juram proteção aos inocentes.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Aura Protetora: Aliados próximos ganham resistência\n' +
@@ -385,7 +389,7 @@ const classeBonus = {
     },
     'Lutador': { 
         pv: 85, pe: 45, 
-        atributos: { 'Força': 2, 'Constituição': 2, 'Destreza': 1 },
+        atributos: { 'Força': 2, 'Vigor': 2, 'Destreza': 1 },
         descricao: '👊 **Lutador** - Mestres do combate corpo a corpo sem armas.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Golpes Poderosos: Ataques desarmados causam dano elevado\n' +
@@ -398,7 +402,7 @@ const classeBonus = {
     },
     'Samurai': { 
         pv: 80, pe: 80, 
-        atributos: { 'Destreza': 2, 'Sabedoria': 2, 'Força': 1 },
+        atributos: { 'Destreza': 2, 'Agilidade': 2, 'Força': 1 },
         descricao: '🗡️ **Samurai** - Seguem o bushido e são mestres da espada.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Ataques Precisos: Críticos melhorados\n' +
@@ -411,7 +415,7 @@ const classeBonus = {
     },
     'Monge': { 
         pv: 75, pe: 65, 
-        atributos: { 'Sabedoria': 2, 'Destreza': 2, 'Constituição': 1 },
+        atributos: { 'Destreza': 2, 'Agilidade': 2, 'Vigor': 1 },
         descricao: '🧘 **Monge** - Canalizam energia interior (ki) para aperfeiçoar corpo e mente.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Ataques Desarmados Poderosos\n' +
@@ -424,7 +428,7 @@ const classeBonus = {
     },
     'Ranged': { 
         pv: 70, pe: 50, 
-        atributos: { 'Destreza': 3, 'Sabedoria': 2 },
+        atributos: { 'Destreza': 3, 'Agilidade': 2 },
         descricao: '🏹 **Ranged** - Especialistas em combate à distância.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Pontaria Letal: +3 em ataques à distância\n' +
@@ -436,8 +440,8 @@ const classeBonus = {
                    '• Penalidade em espaços confinados'
     },
     'Ladino': { 
-        pv: 65, pe: 60, 
-        atributos: { 'Destreza': 3, 'Carisma': 1, 'Inteligência': 1 },
+        pv: 80, pe: 60, 
+        atributos: { 'Destreza': 3, 'Agilidade': 1, 'Intelecto': 1 },
         descricao: '🗝️ **Ladino** - Especialistas em furtividade e ataques furtivos.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Ataques Furtivos: Dano massivo em alvos desprevenidos\n' +
@@ -450,7 +454,7 @@ const classeBonus = {
     },
     'Ninja': { 
         pv: 60, pe: 75, 
-        atributos: { 'Destreza': 3, 'Sabedoria': 1, 'Constituição': 1 },
+        atributos: { 'Destreza': 3, 'Agilidade': 1, 'Vigor': 1 },
         descricao: '🥷 **Ninja** - Assassinos sombrios treinados em subterfúgio.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Furtividade Extrema: Quase invisível quando escondido\n' +
@@ -463,7 +467,7 @@ const classeBonus = {
     },
     'Ocultista': { 
         pv: 55, pe: 100, 
-        atributos: { 'Sabedoria': 3, 'Inteligência': 2, 'Carisma': -1 },
+        atributos: { 'Intelecto': 3, 'Agilidade': 2, 'Vigor': -1 },
         descricao: '🔮 **Ocultista** - Estudam conhecimentos proibidos e entidades cósmicas.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Magia de Sangue: Rituais poderosos\n' +
@@ -471,12 +475,12 @@ const classeBonus = {
                    '• Conhecimento Proibido: Informações que outros não têm\n\n' +
                    '⚠️ **Desvantagens:**\n' +
                    '• Risco de insanidade\n' +
-                   '• -1 de Carisma\n' +
+                   '• -1 de Vigor\n' +
                    '• Perseguido por autoridades religiosas'
     },
     'Mago': { 
         pv: 50, pe: 95, 
-        atributos: { 'Inteligência': 4, 'Sabedoria': 1, 'Força': -2 },
+        atributos: { 'Intelecto': 4, 'Agilidade': 1, 'Força': -2 },
         descricao: '📚 **Mago** - Estudiosos das artes arcanas.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Magia Poderosa: Acesso a todos os feitiços\n' +
@@ -489,20 +493,20 @@ const classeBonus = {
     },
     'Feiticeiro': { 
         pv: 60, pe: 85, 
-        atributos: { 'Carisma': 3, 'Constituição': 2, 'Sabedoria': -1 },
+        atributos: { 'Intelecto': 3, 'Vigor': 2, 'Agilidade': -1 },
         descricao: '✨ **Feiticeiro** - Magia inata no sangue.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Magia Intuitiva: Conjura sem preparo\n' +
                    '• Metamagia: Modifica feitiços em tempo real\n' +
                    '• Linhagem Mágica: Bônus em escola específica\n\n' +
                    '⚠️ **Desvantagens:**\n' +
-                   '• -1 de Sabedoria\n' +
+                   '• -1 de Agilidade\n' +
                    '• Limitado a poucos feitiços\n' +
                    '• Impulsivo'
     },
     'Bruxa': { 
         pv: 60, pe: 80, 
-        atributos: { 'Inteligência': 2, 'Sabedoria': 2, 'Carisma': 1 },
+        atributos: { 'Intelecto': 2, 'Agilidade': 2, 'Destreza': 1 },
         descricao: '🧙 **Bruxa** - Manipulam forças ancestrais da natureza.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Conexão com Espíritos: Aliados sobrenaturais\n' +
@@ -510,12 +514,12 @@ const classeBonus = {
                    '• Maldições Poderosas\n\n' +
                    '⚠️ **Desvantagens:**\n' +
                    '• Vulneráveis a ferro\n' +
-                   '• -1 de Constituição\n' +
+                   '• -1 de Vigor\n' +
                    '• Caçadas por fanáticos'
     },
     'Clérigo': { 
         pv: 80, pe: 60, 
-        atributos: { 'Sabedoria': 3, 'Constituição': 1, 'Força': 1 },
+        atributos: { 'Vigor': 3, 'Força': 1, 'Intelecto': 1 },
         descricao: '⛪ **Clérigo** - Canalizam poder divino.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Cura em dobro\n' +
@@ -528,7 +532,7 @@ const classeBonus = {
     },
     'Druida': { 
         pv: 75, pe: 70, 
-        atributos: { 'Sabedoria': 3, 'Constituição': 2 },
+        atributos: { 'Vigor': 3, 'Agilidade': 2 },
         descricao: '🌳 **Druida** - Protetores da natureza.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Formas Animais: Transformação em bestas\n' +
@@ -541,7 +545,7 @@ const classeBonus = {
     },
     'Nobre': { 
         pv: 70, pe: 60, 
-        atributos: { 'Carisma': 4, 'Inteligência': 1 },
+        atributos: { 'Intelecto': 4, 'Agilidade': 1 },
         descricao: '👑 **Nobre** - Usam influência e recursos.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Riqueza: Acesso a recursos financeiros\n' +
@@ -554,7 +558,7 @@ const classeBonus = {
     },
     'Artifice': { 
         pv: 70, pe: 65, 
-        atributos: { 'Inteligência': 3, 'Destreza': 2 },
+        atributos: { 'Intelecto': 3, 'Destreza': 2 },
         descricao: '🔧 **Artífice** - Criadores de itens mágicos.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Criação de Itens: Fabricação de equipamentos\n' +
@@ -567,7 +571,7 @@ const classeBonus = {
     },
     'Bardo': { 
         pv: 65, pe: 75, 
-        atributos: { 'Carisma': 3, 'Destreza': 2 },
+        atributos: { 'Agilidade': 3, 'Intelecto': 2 },
         descricao: '🎭 **Bardo** - Artistas que inspiram e confundem.\n\n' +
                    '✨ **Vantagens:**\n' +
                    '• Inspiração: Buffs em grupo\n' +
@@ -592,8 +596,7 @@ window.onload = function() {
 };
 
 // Variáveis para repetição automática (Clique Longo)
-let intervalId = null;
-let timeoutId = null;
+let autoTimers = {};
 
 auth.onAuthStateChanged(user => {
     if (user) {
@@ -830,61 +833,184 @@ function editar(caminho, idx, campo, rotulo) {
     }
 }
 
-function modVal(attr, qtd) { snap(); ficha[attr] = Math.min(ficha[attr+'Max'] || 100, Math.max(0, (parseInt(ficha[attr]) || 0) + qtd)); renderFicha(); }
-function setMax(attr, val) { snap(); ficha[attr+'Max'] = Math.min(100, Math.max(1, parseInt(val) || 1)); renderFicha(); }
-function modVinculo(qtd) { snap(); ficha.vinculo = Math.min(ficha.vinculoMax || 100, Math.max(0, (parseInt(ficha.vinculo) || 0) + qtd)); renderFicha(); }
-function setVinculoMax(val) { snap(); ficha.vinculoMax = Math.min(100, Math.max(1, parseInt(val) || 1)); renderFicha(); }
-function modPetHp(idx, qtd) { snap(); let p = ficha.pets[idx]; p.v = Math.min(p.vmax, Math.max(0, (parseInt(p.v) || 0) + qtd)); renderFicha(); }
-function setPetMaxHp(idx, val) { snap(); ficha.pets[idx].vmax = Math.min(100, Math.max(1, parseInt(val) || 1)); renderFicha(); }
+function modVal(attr, qtd) { 
+    snap(); 
+    // CORREÇÃO: Garantir que qtd seja usado corretamente
+    ficha[attr] = Math.min(ficha[attr+'Max'] || 100, Math.max(0, (parseInt(ficha[attr]) || 0) + parseInt(qtd))); 
+    renderFicha(); 
+}
+
+function setMax(attr, val) { 
+    snap(); 
+    ficha[attr+'Max'] = Math.min(100, Math.max(1, parseInt(val) || 1)); 
+    renderFicha(); 
+}
+
+function modVinculo(qtd) { 
+    snap(); 
+    ficha.vinculo = Math.min(ficha.vinculoMax || 100, Math.max(0, (parseInt(ficha.vinculo) || 0) + parseInt(qtd))); 
+    renderFicha(); 
+}
+
+function setVinculoMax(val) { 
+    snap(); 
+    ficha.vinculoMax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
+    renderFicha(); 
+}
+
+function modPetHp(idx, qtd) { 
+    snap(); 
+    let p = ficha.pets[idx]; 
+    p.v = Math.min(p.vmax, Math.max(0, (parseInt(p.v) || 0) + parseInt(qtd))); 
+    renderFicha(); 
+}
+
+function setPetMaxHp(idx, val) { 
+    snap(); 
+    ficha.pets[idx].vmax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
+    renderFicha(); 
+}
 
 function modAtributo(attr, qtd) {
     snap();
     if(!ficha.atributos[attr]) ficha.atributos[attr] = 0;
-    ficha.atributos[attr] = Math.max(0, (parseInt(ficha.atributos[attr]) || 0) + qtd);
+    ficha.atributos[attr] = Math.max(0, (parseInt(ficha.atributos[attr]) || 0) + parseInt(qtd));
     renderFicha();
 }
 
 function modPericia(per, qtd) {
     snap();
     if(!ficha.pericias[per]) ficha.pericias[per] = 0;
-    ficha.pericias[per] = Math.max(0, (parseInt(ficha.pericias[per]) || 0) + qtd);
+    ficha.pericias[per] = Math.max(0, (parseInt(ficha.pericias[per]) || 0) + parseInt(qtd));
+    renderFicha();
+}
+
+// Função para clicar na barra
+function handleBarClick(attr, event) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const width = rect.width;
+    const percentage = x / width;
+    const maxVal = ficha[attr+'Max'] || 100;
+    const newVal = Math.round(percentage * maxVal);
+    
+    snap();
+    ficha[attr] = Math.min(maxVal, Math.max(0, newVal));
     renderFicha();
 }
 
 // --- LÓGICA DE CLIQUE LONGO ---
 function startAutoMod(attr, qtd, isPet = false, petIdx = null) {
+    const key = attr + (isPet ? '_pet' + petIdx : '');
+    
+    // Para qualquer timer existente
+    if (autoTimers[key]) {
+        clearTimeout(autoTimers[key]);
+        delete autoTimers[key];
+    }
+    if (autoTimers[key + '_interval']) {
+        clearInterval(autoTimers[key + '_interval']);
+        delete autoTimers[key + '_interval'];
+    }
+    
+    // Executa uma vez imediatamente
     if (isPet) modPetHp(petIdx, qtd);
     else modVal(attr, qtd);
 
-    timeoutId = setTimeout(() => {
-        intervalId = setInterval(() => {
+    // Configura o timer para repetição após 500ms
+    autoTimers[key] = setTimeout(() => {
+        const intervalId = setInterval(() => {
             if (isPet) modPetHp(petIdx, qtd);
             else modVal(attr, qtd);
-        }, 80); 
+        }, 100);
+        
+        autoTimers[key + '_interval'] = intervalId;
     }, 500);
 }
 
-function stopAutoMod() {
-    clearTimeout(timeoutId);
-    clearInterval(intervalId);
+function stopAutoMod(attr, isPet = false, petIdx = null) {
+    const key = attr + (isPet ? '_pet' + petIdx : '');
+    
+    if (autoTimers[key]) {
+        clearTimeout(autoTimers[key]);
+        delete autoTimers[key];
+    }
+    if (autoTimers[key + '_interval']) {
+        clearInterval(autoTimers[key + '_interval']);
+        delete autoTimers[key + '_interval'];
+    }
 }
 
 function startAutoModAtributo(attr, qtd) {
+    const key = 'atributo_' + attr;
+    
+    if (autoTimers[key]) {
+        clearTimeout(autoTimers[key]);
+        delete autoTimers[key];
+    }
+    if (autoTimers[key + '_interval']) {
+        clearInterval(autoTimers[key + '_interval']);
+        delete autoTimers[key + '_interval'];
+    }
+    
     modAtributo(attr, qtd);
-    timeoutId = setTimeout(() => {
-        intervalId = setInterval(() => {
+
+    autoTimers[key] = setTimeout(() => {
+        const intervalId = setInterval(() => {
             modAtributo(attr, qtd);
-        }, 80);
+        }, 100);
+        
+        autoTimers[key + '_interval'] = intervalId;
     }, 500);
 }
 
+function stopAutoModAtributo(attr) {
+    const key = 'atributo_' + attr;
+    
+    if (autoTimers[key]) {
+        clearTimeout(autoTimers[key]);
+        delete autoTimers[key];
+    }
+    if (autoTimers[key + '_interval']) {
+        clearInterval(autoTimers[key + '_interval']);
+        delete autoTimers[key + '_interval'];
+    }
+}
+
 function startAutoModPericia(per, qtd) {
+    const key = 'pericia_' + per;
+    
+    if (autoTimers[key]) {
+        clearTimeout(autoTimers[key]);
+        delete autoTimers[key];
+    }
+    if (autoTimers[key + '_interval']) {
+        clearInterval(autoTimers[key + '_interval']);
+        delete autoTimers[key + '_interval'];
+    }
+    
     modPericia(per, qtd);
-    timeoutId = setTimeout(() => {
-        intervalId = setInterval(() => {
+
+    autoTimers[key] = setTimeout(() => {
+        const intervalId = setInterval(() => {
             modPericia(per, qtd);
-        }, 80);
+        }, 100);
+        
+        autoTimers[key + '_interval'] = intervalId;
     }, 500);
+}
+
+function stopAutoModPericia(per) {
+    const key = 'pericia_' + per;
+    
+    if (autoTimers[key]) {
+        clearTimeout(autoTimers[key]);
+        delete autoTimers[key];
+    }
+    if (autoTimers[key + '_interval']) {
+        clearInterval(autoTimers[key + '_interval']);
+        delete autoTimers[key + '_interval'];
+    }
 }
 // -----------------------------
 
@@ -925,9 +1051,27 @@ function addPetFull() {
     renderFicha();
 }
 
-function remover(key, idx) { snap(); if(key === 'at') delete ficha.atributos[idx]; else if(key === 'per') delete ficha.pericias[idx]; else ficha[key].splice(idx, 1); renderFicha(); }
-function salvarHeader() { ficha.nome = document.getElementById('nome').value; ficha.idade = document.getElementById('idade').value; ficha.raca = document.getElementById('raca').value; ficha.classe = document.getElementById('classe').value; salvarNoBanco(); }
-function salvarDiario() { ficha.historia = document.getElementById('historia').value; ficha.anotacoes = document.getElementById('anotacoes').value; salvarNoBanco(); }
+function remover(key, idx) { 
+    snap(); 
+    if(key === 'at') delete ficha.atributos[idx]; 
+    else if(key === 'per') delete ficha.pericias[idx]; 
+    else ficha[key].splice(idx, 1); 
+    renderFicha(); 
+}
+
+function salvarHeader() { 
+    ficha.nome = document.getElementById('nome').value; 
+    ficha.idade = document.getElementById('idade').value; 
+    ficha.raca = document.getElementById('raca').value; 
+    ficha.classe = document.getElementById('classe').value; 
+    salvarNoBanco(); 
+}
+
+function salvarDiario() { 
+    ficha.historia = document.getElementById('historia').value; 
+    ficha.anotacoes = document.getElementById('anotacoes').value; 
+    salvarNoBanco(); 
+}
 
 function renderFicha() {
     document.getElementById('nome').value = ficha.nome || '';
@@ -982,12 +1126,18 @@ function renderFicha() {
         let perc = Math.min(100, (curV / maxV) * 100);
         sCont.innerHTML += `<div class="bar-card">
             <div class="bar-label"><span>${s.n}</span><span>${curV} / ${maxV}</span></div>
-            <div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div></div>
+            <div class="bar-outer" onclick="handleBarClick('${s.id}', event)">
+                <div class="bar-inner" style="width:${perc}%; background:${s.c}; box-shadow: 0 0 10px ${s.c}66;"></div>
+                <div class="bar-click-area">
+                    <div class="bar-half" onclick="event.stopPropagation(); modVal('${s.id}', -1)"></div>
+                    <div class="bar-half" onclick="event.stopPropagation(); modVal('${s.id}', 1)"></div>
+                </div>
+            </div>
             <div class="bar-btns">
-                <button onpointerdown="startAutoMod('${s.id}',-5)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-5</button>
-                <button onpointerdown="startAutoMod('${s.id}',-1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-1</button>
-                <button onpointerdown="startAutoMod('${s.id}',1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+1</button>
-                <button onpointerdown="startAutoMod('${s.id}',5)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+5</button>
+                <button onclick="modVal('${s.id}', -5)">-5</button>
+                <button onclick="modVal('${s.id}', -1)">-1</button>
+                <button onclick="modVal('${s.id}', 1)">+1</button>
+                <button onclick="modVal('${s.id}', 5)">+5</button>
                 <input type="number" class="max-input" value="${maxV}" onchange="setMax('${s.id}', this.value)" max="100">
             </div>
         </div>`;
@@ -1003,8 +1153,8 @@ function renderFicha() {
                 <span class="atributo-nome">${attr}</span>
                 <span class="atributo-valor">${valor}</span>
                 <div class="atributo-botoes">
-                    <button onpointerdown="startAutoModAtributo('${attr}',-1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-</button>
-                    <button onpointerdown="startAutoModAtributo('${attr}',1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+</button>
+                    <button onclick="modAtributo('${attr}', -1)">-</button>
+                    <button onclick="modAtributo('${attr}', 1)">+</button>
                 </div>
             </div>
         `;
@@ -1021,8 +1171,8 @@ function renderFicha() {
                 <span class="pericia-nome">${per} ${isClassePer ? '⭐' : ''}</span>
                 <span class="pericia-valor">${valor}</span>
                 <div class="pericia-botoes">
-                    <button onpointerdown="startAutoModPericia('${per}',-1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-</button>
-                    <button onpointerdown="startAutoModPericia('${per}',1)" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+</button>
+                    <button onclick="modPericia('${per}', -1)">-</button>
+                    <button onclick="modPericia('${per}', 1)">+</button>
                 </div>
             </div>
         `;
@@ -1046,10 +1196,16 @@ function renderFicha() {
             <button class="btn-delete" onclick="remover('pets',${i})">X</button>
             <div class="pet-meta"><img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img"><div><h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4><span style="font-size:10px; color:var(--pet-gold)">Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span></div></div>
             <div class="pet-bar-label"><span>HP DO FAMILIAR</span><span>${curV} / ${maxV}</span></div>
-            <div class="bar-outer"><div class="bar-inner" style="width:${perc}%; background:var(--pet-gold);"></div></div>
+            <div class="bar-outer">
+                <div class="bar-inner" style="width:${perc}%; background:var(--pet-gold);"></div>
+                <div class="bar-click-area">
+                    <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, -1)"></div>
+                    <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, 1)"></div>
+                </div>
+            </div>
             <div class="bar-btns">
-                <button onpointerdown="startAutoMod(null,-1, true, ${i})" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">-1</button>
-                <button onpointerdown="startAutoMod(null,1, true, ${i})" onpointerup="stopAutoMod()" onpointerleave="stopAutoMod()">+1</button>
+                <button onclick="modPetHp(${i}, -1)">-1</button>
+                <button onclick="modPetHp(${i}, 1)">+1</button>
                 <input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)" max="100">
             </div>
             <div class="pet-grid-stats"><div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div><div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div></div>
