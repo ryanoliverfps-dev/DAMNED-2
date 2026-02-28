@@ -1024,22 +1024,68 @@ function carregarFichasOnline() {
     });
 }
 
-function salvarNoBanco() {
-    // Atualiza a lista local para o menu
-    if (cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha));
-    
-    if (userUID) {
-        // Salva a lista completa para o menu
-        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
-        rtdb.ref('users/' + userUID + '/fichas').set(db);
+function carregarFichasOnline() {
+    // Timeout de segurança - se o Firebase demorar mais de 5 segundos, sai do loading
+    const timeoutId = setTimeout(() => {
+        console.log('Timeout ao carregar fichas - usando modo offline');
+        document.getElementById('loading-screen').style.display = 'none';
         
-        // Se houver uma ficha selecionada, salva ela no nó protegido
-        if (cur !== -1) {
-            rtdb.ref('fichas/' + userUID).set(ficha);
+        // Tenta carregar do localStorage como fallback
+        const savedData = localStorage.getItem('RPG_GOLD_V32');
+        if (savedData) {
+            try {
+                db = JSON.parse(savedData);
+                console.log('Dados carregados do localStorage');
+            } catch (e) {
+                console.error('Erro ao carregar localStorage');
+                db = [];
+            }
         }
-    }
+        
+        abrirMenu();
+        mostrarNotificacao('Modo offline - conexão lenta');
+    }, 5000); // 5 segundos de timeout
+    
+    rtdb.ref('users/' + userUID + '/fichas').once('value', (snapshot) => {
+        // Se chegou aqui, cancela o timeout
+        clearTimeout(timeoutId);
+        
+        db = snapshot.val() || [];
+        verificarEAtualizarFichas();
+        
+        // Salva no localStorage como backup
+        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
+        
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            abrirMenu();
+        }, 800);
+    }).catch((error) => {
+        // Se deu erro, cancela o timeout e trata o erro
+        clearTimeout(timeoutId);
+        console.error('Erro ao carregar fichas:', error);
+        
+        document.getElementById('loading-screen').style.display = 'none';
+        
+        // Tenta carregar do localStorage
+        const savedData = localStorage.getItem('RPG_GOLD_V32');
+        if (savedData) {
+            try {
+                db = JSON.parse(savedData);
+                mostrarNotificacao('Carregado do cache local - modo offline');
+            } catch (e) {
+                db = [];
+                mostrarNotificacao('Erro de conexão - sem dados locais');
+            }
+        } else {
+            db = [];
+            mostrarNotificacao('Erro de conexão - iniciando vazio');
+        }
+        
+        abrirMenu();
+    });
 }
-
+   
 function abrirMenu() {
     cur = -1; 
     document.getElementById('theme-screen').style.display = 'none';
@@ -1665,7 +1711,17 @@ style.textContent = `
         to { transform: translateX(100%); opacity: 0; }
     }
 `;
+
 document.head.appendChild(style);
+
+    // Função para debug - mostra erros no console
+window.addEventListener('error', function(e) {
+    console.error('Erro capturado:', e.error);
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('auth-msg').innerHTML = 'Erro: ' + e.error.message;
+});
+    
 </script>
 </body>
 </html>
