@@ -883,10 +883,19 @@ function carregarFichasOnline() {
 }
 
 function salvarNoBanco() {
+    // Atualiza a lista local para o menu
     if (cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha));
+    
     if (userUID) {
+        // Salva a lista completa para o menu (opcional, para controle)
         localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
         rtdb.ref('users/' + userUID + '/fichas').set(db);
+        
+        // AJUSTE PARA A REGRA DE SEGURANÇA:
+        // Se houver uma ficha selecionada, salva ela no nó protegido
+        if (cur !== -1) {
+            rtdb.ref('fichas/' + userUID).set(ficha);
+        }
     }
 }
 
