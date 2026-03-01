@@ -1,12 +1,9 @@
-adicione as novas funcionalidades aqui se n tiver adicionado 
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DAMNED RPG - ONLINE GOLD</title>
+    <title>Herdeiros do Desconhecido - RPG</title>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js"></script>
@@ -21,7 +18,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ffd700;
         }
         
-        /* Tema Claro */
         [data-theme="light"] { 
             --bg-body: #f0f2f5; --bg-header: #ffffff; --bg-card: #ffffff; 
             --bg-input: #e8eaf0; --border-color: #c0c5d0; --accent-color: #5e3c9c; 
@@ -31,7 +27,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #b8860b;
         }
         
-        /* Tema Vampiro */
         [data-theme="vampire"] { 
             --bg-body: #1a0505; --bg-header: #2d0a0a; --bg-card: #3d0f0f; 
             --bg-input: #2d0a0a; --border-color: #8b0000; --accent-color: #ff0000; 
@@ -41,7 +36,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ffd700;
         }
         
-        /* Tema Noturno */
         [data-theme="night"] { 
             --bg-body: #0a0f1a; --bg-header: #121a28; --bg-card: #1a2538; 
             --bg-input: #1f2c40; --border-color: #2a3a55; --accent-color: #4d7cff; 
@@ -51,7 +45,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ffd700;
         }
         
-        /* Tema Fogo */
         [data-theme="fire"] { 
             --bg-body: #1f0f07; --bg-header: #3a1a0a; --bg-card: #4d2612; 
             --bg-input: #662e14; --border-color: #b14d1c; --accent-color: #ff6b2b; 
@@ -61,7 +54,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ffaa00;
         }
         
-        /* Tema Gelo */
         [data-theme="ice"] { 
             --bg-body: #0f1f2f; --bg-header: #1a2f40; --bg-card: #234a63; 
             --bg-input: #2a5570; --border-color: #4fa5d0; --accent-color: #7fd4ff; 
@@ -71,7 +63,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #aaddff;
         }
         
-        /* Tema Natureza */
         [data-theme="nature"] { 
             --bg-body: #0a1f0a; --bg-header: #153015; --bg-card: #1f401f; 
             --bg-input: #2a552a; --border-color: #3d7a3d; --accent-color: #6fbf6f; 
@@ -81,7 +72,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #aaff88;
         }
         
-        /* Tema Sombrio */
         [data-theme="shadow"] { 
             --bg-body: #0f0a1a; --bg-header: #1a122a; --bg-card: #241a3a; 
             --bg-input: #2e224a; --border-color: #4a2e70; --accent-color: #b380ff; 
@@ -91,7 +81,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ddbbff;
         }
         
-        /* Tema Caos */
         [data-theme="chaos"] { 
             --bg-body: #0f0f1f; --bg-header: #1f1f3a; --bg-card: #2a2a4d; 
             --bg-input: #353566; --border-color: #aa55ff; --accent-color: #ff55ff; 
@@ -101,7 +90,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ffaa44;
         }
         
-        /* Tema Sangue */
         [data-theme="blood"] { 
             --bg-body: #1f0a0a; --bg-header: #2f0f0f; --bg-card: #401414; 
             --bg-input: #551a1a; --border-color: #8b1a1a; --accent-color: #e63939; 
@@ -111,7 +99,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ffaa66;
         }
         
-        /* Tema Real */
         [data-theme="royal"] { 
             --bg-body: #1a0f2a; --bg-header: #2a1a3a; --bg-card: #352545; 
             --bg-input: #453055; --border-color: #b8860b; --accent-color: #ffd700; 
@@ -121,7 +108,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
             --pet-gold: #ffd700;
         }
         
-        /* Tema Oceano */
         [data-theme="ocean"] { 
             --bg-body: #0a1f2a; --bg-header: #0f2a3a; --bg-card: #14354a; 
             --bg-input: #1a405a; --border-color: #2a7f9a; --accent-color: #4fc3ff; 
@@ -153,7 +139,6 @@ adicione as novas funcionalidades aqui se n tiver adicionado
         .char-card:active { transform: scale(0.95); border-color: var(--accent-color); }
         .char-card img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--accent-color); }
 
-        /* Tela de seleção de temas */
         #theme-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 100000; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 20px; max-width: 800px; width: 100%; }
         .theme-option { background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 15px; padding: 20px 10px; cursor: pointer; transition: all 0.3s; text-align: center; }
@@ -167,6 +152,8 @@ adicione as novas funcionalidades aqui se n tiver adicionado
         .criacao-box input, .criacao-box select, .criacao-box textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--bg-input); border: 1px solid var(--border-color); color: var(--text-input); border-radius: 8px; box-sizing: border-box; }
         .criacao-box select option { background: var(--bg-card); color: var(--text-main); }
         .classe-descricao { background: var(--bg-input); padding: 15px; border-radius: 8px; margin: 15px 0; font-size: 12px; color: var(--text-dim); border-left: 3px solid var(--accent-color); }
+
+        #reset-password-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 110001; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
 
         header { display:flex; gap:15px; padding: 20px; background: var(--bg-header); border-bottom: 3px solid var(--accent-color); }
         #imgChar { width: 110px; height: 150px; object-fit: cover; border-radius: 12px; border: 2px solid var(--accent-color); box-shadow: 0 0 15px rgba(163, 112, 255, 0.3); }
@@ -232,18 +219,65 @@ adicione as novas funcionalidades aqui se n tiver adicionado
         .menu-buttons button { flex: 1; max-width: 200px; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .btn-theme { background: var(--bg-card); color: var(--text-main); border: 2px solid var(--accent-color) !important; }
         .btn-theme:hover { background: var(--accent-color); color: white; }
+
+        .success-message { color: #44ff44; font-size: 12px; margin-top: 10px; }
+        .error-message { color: #ff4444; font-size: 12px; margin-top: 10px; }
+
+        .update-notice {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 100001;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .update-notice button {
+            background: white;
+            color: var(--accent-color);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .update-notice button:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body data-theme="dark">
 
 <div id="auth-screen">
     <div class="auth-box">
-        <h2 style="color:var(--accent-color); margin-bottom:25px;">DAMNED LOGIN</h2>
+        <h2 style="color:var(--accent-color); margin-bottom:25px;">HERDEIROS DO DESCONHECIDO</h2>
         <input type="email" id="login-email" class="auth-input" placeholder="Seu E-mail">
         <input type="password" id="login-senha" class="auth-input" placeholder="Sua Senha">
         <button class="btn-auth" onclick="fazerLogin()">ACESSAR FICHA</button>
         <button class="btn-auth" style="background:transparent; border:1px solid var(--accent-color);" onclick="criarConta()">CRIAR NOVA CONTA</button>
-        <p id="auth-msg" style="color:#ff4444; font-size:12px; margin-top:10px;"></p>
+        <div class="auth-links">
+            <span class="auth-link" onclick="mostrarResetSenha()">Esqueci minha senha</span>
+        </div>
+        <div id="auth-msg" class="error-message"></div>
+    </div>
+</div>
+
+<div id="reset-password-screen">
+    <div class="auth-box">
+        <h2 style="color:var(--accent-color); margin-bottom:25px;">RECUPERAR SENHA</h2>
+        <p style="color:var(--text-dim); font-size:12px; margin-bottom:15px;">Digite seu e-mail para receber um link de redefinição de senha.</p>
+        <input type="email" id="reset-email" class="auth-input" placeholder="Seu E-mail">
+        <button class="btn-auth" onclick="enviarResetSenha()">ENVIAR LINK</button>
+        <button class="btn-auth" style="background:transparent; border:1px solid var(--accent-color);" onclick="fecharResetSenha()">VOLTAR</button>
+        <div id="reset-msg" class="error-message"></div>
     </div>
 </div>
 
@@ -280,18 +314,18 @@ adicione as novas funcionalidades aqui se n tiver adicionado
 <button id="btn-menu-global" onclick="toggleSidebar()">☰</button>
 
 <div id="sidebar">
-    <h2 style="color: var(--accent-color); margin-bottom:30px;">MENU GOLD</h2>
+    <h2 style="color: var(--accent-color); margin-bottom:30px;">MENU</h2>
     <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="abrirTemas()">🎨 Escolher Tema</div>
     <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="exportarFicha()">📥 Exportar Ficha (.json)</div>
     <div style="padding: 18px 0; border-bottom: 1px solid var(--border-color); cursor: pointer;" onclick="importarFicha()">📤 Importar Ficha</div>
     <div style="padding: 18px 0; color: #ff4444; cursor: pointer; margin-top: 20px;" onclick="abrirMenu()">🚪 Lista de Fichas</div>
     <div style="padding: 18px 0; color: #ff4444; cursor: pointer;" onclick="fazerLogout()">🔌 Sair da Conta</div>
-    <div style="position: absolute; bottom: 20px; font-size: 10px; color: var(--text-dim);">V32.9 ONLINE - DAMNED RPG</div>
+    <div style="position: absolute; bottom: 20px; font-size: 10px; color: var(--text-dim);">Herdeiros do Desconhecido</div>
 </div>
 <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
 
 <div id="menu-screen">
-    <h1 style="color:#fff; margin-top:60px; font-size: 32px; text-shadow: 0 0 15px var(--accent-color);">DAMNED RPG</h1>
+    <h1 style="color:#fff; margin-top:60px; font-size: 32px; text-shadow: 0 0 15px var(--accent-color);">HERDEIROS DO DESCONHECIDO</h1>
     <p id="user-display" style="color: var(--text-dim); margin-bottom: 40px;">Sincronizado</p>
     
     <div class="menu-buttons">
@@ -422,22 +456,12 @@ adicione as novas funcionalidades aqui se n tiver adicionado
                 <input id="petV" placeholder="HP Max" type="number">
                 <input id="petDef" placeholder="DEF">
                 <input id="petAtk" placeholder="ATK">
+                <input id="petVinculo" placeholder="Vínculo Max" type="number" value="100">
             </div>
             <textarea id="petD" placeholder="Habilidades e Notas..." style="margin-top:10px;"></textarea>
             <button class="btn-add-main" style="background:var(--pet-gold); color:#000;" onclick="addPetFull()">VINCULAR FAMILIAR</button>
         </div>
         <div id="listaPets"></div>
-        <div id="vinculo-barra" class="bar-card" style="margin-top:20px;">
-            <div class="bar-label"><span>Vínculo com Familiares</span><span id="vinculo-valor">0 / 10</span></div>
-            <div class="bar-outer"><div id="vinculo-barra-inner" class="bar-inner" style="width:0%; background:var(--vi-color);"></div></div>
-            <div class="bar-btns">
-                <button onclick="modVinculo(-5)">-5</button>
-                <button onclick="modVinculo(-1)">-1</button>
-                <button onclick="modVinculo(1)">+1</button>
-                <button onclick="modVinculo(5)">+5</button>
-                <input type="number" id="vinculo-max" class="max-input" value="10" onchange="setVinculoMax(this.value)">
-            </div>
-        </div>
     </div>
 
     <div class="footer">
@@ -447,6 +471,7 @@ adicione as novas funcionalidades aqui se n tiver adicionado
 </div>
 
 <script>
+// ==================== CONFIGURAÇÃO FIREBASE ====================
 const firebaseConfig = {
   apiKey: "AIzaSyCffwVZ3zoM0GJNIcMdebDPXogfKq_bp-w",
   authDomain: "damned-rpg.firebaseapp.com",
@@ -460,6 +485,8 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const rtdb = firebase.database();
+
+// ==================== VARIÁVEIS GLOBAIS ====================
 let userUID = null;
 let db = [];
 let cur = -1; 
@@ -468,343 +495,199 @@ let undo = [];
 let redo = [];
 let tempPetImg = "";
 
-// Listas predefinidas - ATRIBUTOS: apenas 5 atributos
-const atributosBase = ['Agilidade', 'Vigor', 'Destreza', 'Força', 'Intelecto'];
+// Versão do sistema para controle de atualizações
+const SISTEMA_VERSAO = "3.0";
+
+// ==================== LISTAS ====================
+const atributosBase = ['Destreza', 'Agilidade', 'Força', 'Intelecto', 'Vigor'];
 const periciasBase = [
     'Sobrevivência', 'Crime', 'Conhecimento', 'Furtividade', 'Carisma',
     'Fortitude', 'Tática', 'Percepção', 'Ocultismo', 'Magia',
     'Intimidação', 'Iniciativa', 'Pontaria', 'Constituição', 'Combate', 'Investigação'
 ];
 
-// Perícias específicas por classe
+// Perícias por classe (valores de 1 a 5)
 const periciasClasse = {
-    'Barbaro': ['Combate', 'Fortitude', 'Intimidação', 'Sobrevivência', 'Iniciativa'],
-    'Paladino': ['Combate', 'Carisma', 'Fortitude', 'Intimidação', 'Tática'],
-    'Lutador': ['Combate', 'Fortitude', 'Intimidação', 'Tática', 'Iniciativa'],
-    'Samurai': ['Combate', 'Tática', 'Percepção', 'Iniciativa', 'Fortitude'],
-    'Monge': ['Combate', 'Fortitude', 'Percepção', 'Iniciativa', 'Furtividade'],
-    'Ranged': ['Pontaria', 'Percepção', 'Furtividade', 'Sobrevivência', 'Iniciativa'],
-    'Ladino': ['Furtividade', 'Crime', 'Percepção', 'Iniciativa', 'Pontaria'],
-    'Ninja': ['Furtividade', 'Combate', 'Percepção', 'Iniciativa', 'Crime'],
-    'Ocultista': ['Ocultismo', 'Magia', 'Conhecimento', 'Percepção', 'Investigação'],
-    'Mago': ['Magia', 'Conhecimento', 'Ocultismo', 'Investigação', 'Percepção'],
-    'Feiticeiro': ['Magia', 'Carisma', 'Percepção', 'Iniciativa', 'Ocultismo'],
-    'Bruxa': ['Ocultismo', 'Magia', 'Conhecimento', 'Percepção', 'Intimidação'],
-    'Clérigo': ['Ocultismo', 'Magia', 'Carisma', 'Fortitude', 'Investigação'],
-    'Druida': ['Sobrevivência', 'Magia', 'Percepção', 'Fortitude', 'Conhecimento'],
-    'Nobre': ['Carisma', 'Conhecimento', 'Intimidação', 'Investigação', 'Tática'],
-    'Artifice': ['Conhecimento', 'Percepção', 'Investigação', 'Pontaria', 'Tática'],
-    'Bardo': ['Carisma', 'Conhecimento', 'Percepção', 'Furtividade', 'Intimidação']
+    'Artifice': { 'Conhecimento': 3, 'Investigação': 3, 'Magia': 2 },
+    'Ladino': { 'Crime': 4, 'Furtividade': 3, 'Percepção': 3, 'Iniciativa': 2 },
+    'Nobre': { 'Carisma': 4, 'Tática': 2, 'Conhecimento': 2 },
+    'Investigador': { 'Percepção': 4, 'Investigação': 4, 'Iniciativa': 2 },
+    'Barbaro': { 'Fortitude': 4, 'Constituição': 4, 'Sobrevivência': 2, 'Combate': 3 },
+    'Lutador': { 'Combate': 4, 'Fortitude': 3, 'Iniciativa': 2 },
+    'Samurai': { 'Combate': 4, 'Intimidação': 2, 'Tática': 3 },
+    'Paladino': { 'Combate': 3, 'Carisma': 3, 'Fortitude': 3 },
+    'Ranged': { 'Pontaria': 5, 'Percepção': 2, 'Iniciativa': 2 },
+    'Monge': { 'Fortitude': 3, 'Percepção': 3, 'Combate': 4 },
+    'Ninja': { 'Furtividade': 4, 'Crime': 3, 'Iniciativa': 3, 'Pontaria': 2 },
+    'Agilidade': { 'Iniciativa': 4, 'Percepção': 3, 'Furtividade': 3 },
+    'Mago': { 'Magia': 5, 'Conhecimento': 3, 'Investigação': 2 },
+    'Feiticeiro': { 'Magia': 4, 'Carisma': 3, 'Intimidação': 2 },
+    'Clérigo': { 'Magia': 3, 'Percepção': 2, 'Fortitude': 4 },
+    'Druida': { 'Sobrevivência': 3, 'Percepção': 2, 'Magia': 4 },
+    'Ocultista': { 'Ocultismo': 5, 'Investigação': 2, 'Intimidação': 2 }
 };
 
-// Todas as classes com seus atributos, PV, PE, vantagens e desvantagens
+// Atributos por classe (valores de 1 a 5) - APENAS OS 5 ATRIBUTOS
+const atributosClasse = {
+    'Artifice': { 'Intelecto': 4, 'Destreza': 3 },
+    'Ladino': { 'Destreza': 5, 'Agilidade': 4 },
+    'Nobre': { 'Intelecto': 2 },
+    'Investigador': { 'Intelecto': 4, 'Agilidade': 3 },
+    'Barbaro': { 'Força': 5, 'Vigor': 4 },
+    'Lutador': { 'Força': 4, 'Vigor': 4 },
+    'Samurai': { 'Destreza': 4, 'Força': 3 },
+    'Paladino': { 'Força': 4 },
+    'Ranged': { 'Destreza': 5, 'Agilidade': 2 },
+    'Monge': { 'Destreza': 4, 'Agilidade': 1, 'Vigor': 2 },
+    'Ninja': { 'Destreza': 5, 'Agilidade': 3 },
+    'Agilidade': { 'Agilidade': 5, 'Destreza': 2 },
+    'Mago': { 'Intelecto': 5 },
+    'Feiticeiro': { 'Intelecto': 2 },
+    'Clérigo': { 'Vigor': 4 },
+    'Druida': { 'Vigor': 3, 'Intelecto': 2 },
+    'Ocultista': { 'Intelecto': 4 }
+};
+
+// PV e PE por classe
 const classeBonus = {
-    'Barbaro': { 
-        pv: 100, pe: 20, 
-        atributos: { 'Força': 3, 'Vigor': 2, 'Intelecto': -1 },
-        descricao: '🏹 **Bárbaro** - Guerreiros das terras selvagens que canalizam a fúria interior.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Fúria: Aumenta dano e resistência drasticamente\n' +
-                   '• Instinto de Sobrevivência: Bônus em situações de perigo\n' +
-                   '• Resistência Natural: Redução de dano físico\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• -1 de Intelecto\n' +
-                   '• Dificuldade em controle emocional\n' +
-                   '• Vulnerável a manipulação mental'
-    },
-    'Paladino': { 
-        pv: 90, pe: 40, 
-        atributos: { 'Força': 2, 'Vigor': 1, 'Agilidade': 1 },
-        descricao: '⚔️ **Paladino** - Guerreiros sagrados que juram proteção aos inocentes.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Aura Protetora: Aliados próximos ganham resistência\n' +
-                   '• Cura Divina: Pode curar ferimentos graves\n' +
-                   '• Julgamento: Dano extra contra criaturas das trevas\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Código de conduta rigoroso\n' +
-                   '• Perde poderes se violar o juramento\n' +
-                   '• Intolerante com atos malignos'
-    },
-    'Lutador': { 
-        pv: 85, pe: 45, 
-        atributos: { 'Força': 2, 'Vigor': 2, 'Destreza': 1 },
-        descricao: '👊 **Lutador** - Mestres do combate corpo a corpo sem armas.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Golpes Poderosos: Ataques desarmados causam dano elevado\n' +
-                   '• Múltiplos Ataques: Pode atacar várias vezes por rodada\n' +
-                   '• Imobilização: Técnicas de submissão\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Alcance limitado\n' +
-                   '• Vulnerável a ataques à distância\n' +
-                   '• Dependente de proximidade'
-    },
-    'Samurai': { 
-        pv: 80, pe: 80, 
-        atributos: { 'Destreza': 2, 'Agilidade': 2, 'Força': 1 },
-        descricao: '🗡️ **Samurai** - Seguem o bushido e são mestres da espada.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Ataques Precisos: Críticos melhorados\n' +
-                   '• Foco em Combate: Bônus em duelos\n' +
-                   '• Corte Rápido: Ataques de oportunidade\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Código de honra pode ser explorado\n' +
-                   '• Vergonha afeta performance\n' +
-                   '• Obrigado a aceitar desafios'
-    },
-    'Monge': { 
-        pv: 75, pe: 65, 
-        atributos: { 'Destreza': 2, 'Agilidade': 2, 'Vigor': 1 },
-        descricao: '🧘 **Monge** - Canalizam energia interior (ki) para aperfeiçoar corpo e mente.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Ataques Desarmados Poderosos\n' +
-                   '• Defesa Elevada sem armaduras\n' +
-                   '• Mobilidade Superior\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Não usam armaduras\n' +
-                   '• Dependente de ki\n' +
-                   '• Restrições alimentares/espirituais'
-    },
-    'Ranged': { 
-        pv: 70, pe: 50, 
-        atributos: { 'Destreza': 3, 'Agilidade': 2 },
-        descricao: '🏹 **Ranged** - Especialistas em combate à distância.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Pontaria Letal: +3 em ataques à distância\n' +
-                   '• Tiros Precisos: Ignora cobertura parcial\n' +
-                   '• Mira Rápida: Múltiplos disparos\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Fraco em combate corpo a corpo\n' +
-                   '• Dependente de munição\n' +
-                   '• Penalidade em espaços confinados'
-    },
-    'Ladino': { 
-        pv: 80, pe: 60, 
-        atributos: { 'Destreza': 3, 'Agilidade': 1, 'Intelecto': 1 },
-        descricao: '🗝️ **Ladino** - Especialistas em furtividade e ataques furtivos.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Ataques Furtivos: Dano massivo em alvos desprevenidos\n' +
-                   '• Percepção Aguçada: Dificilmente surpreendido\n' +
-                   '• Habilidades de Crime: Abrir fechaduras, desarmar armadilhas\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Combate direto limitado\n' +
-                   '• Reputação questionável\n' +
-                   '• Depende do elemento surpresa'
-    },
-    'Ninja': { 
-        pv: 60, pe: 75, 
-        atributos: { 'Destreza': 3, 'Agilidade': 1, 'Vigor': 1 },
-        descricao: '🥷 **Ninja** - Assassinos sombrios treinados em subterfúgio.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Furtividade Extrema: Quase invisível quando escondido\n' +
-                   '• Venenos: Especialista em toxinas\n' +
-                   '• Projéteis: Shurikens e ferramentas de ninja\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Código de honra próprio\n' +
-                   '• Vulnerável quando descoberto\n' +
-                   '• Reputação de traidor'
-    },
-    'Ocultista': { 
-        pv: 55, pe: 100, 
-        atributos: { 'Intelecto': 3, 'Agilidade': 2, 'Vigor': -1 },
-        descricao: '🔮 **Ocultista** - Estudam conhecimentos proibidos e entidades cósmicas.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Magia de Sangue: Rituais poderosos\n' +
-                   '• Invocações: Pode chamar criaturas de outras dimensões\n' +
-                   '• Conhecimento Proibido: Informações que outros não têm\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Risco de insanidade\n' +
-                   '• -1 de Vigor\n' +
-                   '• Perseguido por autoridades religiosas'
-    },
-    'Mago': { 
-        pv: 50, pe: 95, 
-        atributos: { 'Intelecto': 4, 'Agilidade': 1, 'Força': -2 },
-        descricao: '📚 **Mago** - Estudiosos das artes arcanas.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Magia Poderosa: Acesso a todos os feitiços\n' +
-                   '• Conhecimento Enciclopédico\n' +
-                   '• Versatilidade Mágica\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• -2 de Força\n' +
-                   '• Fisicamente frágil\n' +
-                   '• Dependente de grimórios'
-    },
-    'Feiticeiro': { 
-        pv: 60, pe: 85, 
-        atributos: { 'Intelecto': 3, 'Vigor': 2, 'Agilidade': -1 },
-        descricao: '✨ **Feiticeiro** - Magia inata no sangue.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Magia Intuitiva: Conjura sem preparo\n' +
-                   '• Metamagia: Modifica feitiços em tempo real\n' +
-                   '• Linhagem Mágica: Bônus em escola específica\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• -1 de Agilidade\n' +
-                   '• Limitado a poucos feitiços\n' +
-                   '• Impulsivo'
-    },
-    'Bruxa': { 
-        pv: 60, pe: 80, 
-        atributos: { 'Intelecto': 2, 'Agilidade': 2, 'Destreza': 1 },
-        descricao: '🧙 **Bruxa** - Manipulam forças ancestrais da natureza.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Conexão com Espíritos: Aliados sobrenaturais\n' +
-                   '• Poções e Feitiços Naturais\n' +
-                   '• Maldições Poderosas\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Vulneráveis a ferro\n' +
-                   '• -1 de Vigor\n' +
-                   '• Caçadas por fanáticos'
-    },
-    'Clérigo': { 
-        pv: 80, pe: 60, 
-        atributos: { 'Vigor': 3, 'Força': 1, 'Intelecto': 1 },
-        descricao: '⛪ **Clérigo** - Canalizam poder divino.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Cura em dobro\n' +
-                   '• Resistência a Necromancia\n' +
-                   '• Proteção Divina\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Limitado por dogmas religiosos\n' +
-                   '• Deve seguir os preceitos da divindade\n' +
-                   '• Conflito com outras religiões'
-    },
-    'Druida': { 
-        pv: 75, pe: 70, 
-        atributos: { 'Vigor': 3, 'Agilidade': 2 },
-        descricao: '🌳 **Druida** - Protetores da natureza.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Formas Animais: Transformação em bestas\n' +
-                   '• Comunicação com criaturas\n' +
-                   '• Magia Natural\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Não usam metal\n' +
-                   '• Restrições naturais\n' +
-                   '• Conflito com civilização'
-    },
-    'Nobre': { 
-        pv: 70, pe: 60, 
-        atributos: { 'Intelecto': 4, 'Agilidade': 1 },
-        descricao: '👑 **Nobre** - Usam influência e recursos.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Riqueza: Acesso a recursos financeiros\n' +
-                   '• Contatos: Aliados poderosos\n' +
-                   '• Liderança: Comando em grupo\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Inexperiente em combate\n' +
-                   '• Alvo de inveja e conspirações\n' +
-                   '• Obrigações políticas'
-    },
-    'Artifice': { 
-        pv: 70, pe: 65, 
-        atributos: { 'Intelecto': 3, 'Destreza': 2 },
-        descricao: '🔧 **Artífice** - Criadores de itens mágicos.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Criação de Itens: Fabricação de equipamentos\n' +
-                   '• Infusões Mágicas: Itens temporariamente encantados\n' +
-                   '• Engenhocas: Dispositivos úteis\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Dependente de ferramentas\n' +
-                   '• Tempo para criar itens\n' +
-                   '• Materiais caros'
-    },
-    'Bardo': { 
-        pv: 65, pe: 75, 
-        atributos: { 'Agilidade': 3, 'Intelecto': 2 },
-        descricao: '🎭 **Bardo** - Artistas que inspiram e confundem.\n\n' +
-                   '✨ **Vantagens:**\n' +
-                   '• Inspiração: Buffs em grupo\n' +
-                   '• Versatilidade: Um pouco de tudo\n' +
-                   '• Persuasão: Influencia multidões\n\n' +
-                   '⚠️ **Desvantagens:**\n' +
-                   '• Combate direto limitado\n' +
-                   '• Dependente de plateia\n' +
-                   '• Reputação instável'
-    }
+    'Artifice': { pv: 70, pe: 65 },
+    'Ladino': { pv: 80, pe: 60 },
+    'Nobre': { pv: 70, pe: 60 },
+    'Investigador': { pv: 65, pe: 70 },
+    'Barbaro': { pv: 100, pe: 20 },
+    'Lutador': { pv: 85, pe: 45 },
+    'Samurai': { pv: 80, pe: 80 },
+    'Paladino': { pv: 90, pe: 40 },
+    'Ranged': { pv: 70, pe: 50 },
+    'Monge': { pv: 75, pe: 65 },
+    'Ninja': { pv: 60, pe: 75 },
+    'Agilidade': { pv: 65, pe: 70 },
+    'Mago': { pv: 50, pe: 95 },
+    'Feiticeiro': { pv: 60, pe: 85 },
+    'Clérigo': { pv: 80, pe: 60 },
+    'Druida': { pv: 75, pe: 70 },
+    'Ocultista': { pv: 55, pe: 100 }
 };
 
-// Lista de temas disponíveis
+// Descrições das classes (resumidas)
+const descricoesClasse = {
+    'Artifice': '🔧 **Artífice** - Criadores de itens mágicos.',
+    'Ladino': '🗝️ **Ladino** - Especialistas em furtividade.',
+    'Nobre': '👑 **Nobre** - Usam influência e recursos.',
+    'Investigador': '🔍 **Investigador** - Mestres da dedução.',
+    'Barbaro': '🏹 **Bárbaro** - Guerreiros da fúria interior.',
+    'Lutador': '👊 **Lutador** - Mestres do combate corporal.',
+    'Samurai': '🗡️ **Samurai** - Seguem o bushido.',
+    'Paladino': '⚔️ **Paladino** - Guerreiros sagrados.',
+    'Ranged': '🏹 **Ranged** - Especialistas em distância.',
+    'Monge': '🧘 **Monge** - Canalizam energia interior.',
+    'Ninja': '🥷 **Ninja** - Assassinos sombrios.',
+    'Agilidade': '💨 **Ágil** - Mestres da velocidade.',
+    'Mago': '📚 **Mago** - Estudiosos das artes arcanas.',
+    'Feiticeiro': '✨ **Feiticeiro** - Magia inata.',
+    'Clérigo': '⛪ **Clérigo** - Canalizam poder divino.',
+    'Druida': '🌳 **Druida** - Protetores da natureza.',
+    'Ocultista': '🔮 **Ocultista** - Conhecimentos proibidos.'
+};
+
+// Lista de temas
 const themes = [
     'dark', 'light', 'vampire', 'night', 'fire', 
     'ice', 'nature', 'shadow', 'chaos', 'blood', 'royal', 'ocean'
 ];
-
 const themeNames = {
-    'dark': '🌑 Escuro',
-    'light': '☀️ Claro',
-    'vampire': '🧛 Vampiro',
-    'night': '🌙 Noturno',
-    'fire': '🔥 Fogo',
-    'ice': '❄️ Gelo',
-    'nature': '🌿 Natureza',
-    'shadow': '👤 Sombrio',
-    'chaos': '🌈 Caos',
-    'blood': '🩸 Sangue',
-    'royal': '👑 Real',
-    'ocean': '🌊 Oceano'
+    'dark': '🌑 Escuro', 'light': '☀️ Claro', 'vampire': '🧛 Vampiro',
+    'night': '🌙 Noturno', 'fire': '🔥 Fogo', 'ice': '❄️ Gelo',
+    'nature': '🌿 Natureza', 'shadow': '👤 Sombrio', 'chaos': '🌈 Caos',
+    'blood': '🩸 Sangue', 'royal': '👑 Real', 'ocean': '🌊 Oceano'
 };
-
 const themeColors = {
-    'dark': ['#0a090d', '#a370ff'],
-    'light': ['#f0f2f5', '#5e3c9c'],
-    'vampire': ['#1a0505', '#ff0000'],
-    'night': ['#0a0f1a', '#4d7cff'],
-    'fire': ['#1f0f07', '#ff6b2b'],
-    'ice': ['#0f1f2f', '#7fd4ff'],
-    'nature': ['#0a1f0a', '#6fbf6f'],
-    'shadow': ['#0f0a1a', '#b380ff'],
-    'chaos': ['#0f0f1f', '#ff55ff'],
-    'blood': ['#1f0a0a', '#e63939'],
-    'royal': ['#1a0f2a', '#ffd700'],
-    'ocean': ['#0a1f2a', '#4fc3ff']
+    'dark': ['#0a090d', '#a370ff'], 'light': ['#f0f2f5', '#5e3c9c'],
+    'vampire': ['#1a0505', '#ff0000'], 'night': ['#0a0f1a', '#4d7cff'],
+    'fire': ['#1f0f07', '#ff6b2b'], 'ice': ['#0f1f2f', '#7fd4ff'],
+    'nature': ['#0a1f0a', '#6fbf6f'], 'shadow': ['#0f0a1a', '#b380ff'],
+    'chaos': ['#0f0f1f', '#ff55ff'], 'blood': ['#1f0a0a', '#e63939'],
+    'royal': ['#1a0f2a', '#ffd700'], 'ocean': ['#0a1f2a', '#4fc3ff']
 };
 
-// Preencher o select de classes automaticamente
-window.onload = function() {
-    const select = document.getElementById('criacao-classe');
-    Object.keys(classeBonus).sort().forEach(classe => {
-        const option = document.createElement('option');
-        option.value = classe;
-        option.textContent = classe;
-        select.appendChild(option);
-    });
+// ==================== FUNÇÕES DE ATUALIZAÇÃO ====================
+function atualizarFichaParaNovoBalanceamento(fichaAntiga) {
+    if (!fichaAntiga) return fichaAntiga;
+    if (fichaAntiga.versao === SISTEMA_VERSAO) return fichaAntiga;
     
-    // Carregar tema salvo
-    const savedTheme = localStorage.getItem('GOLD_THEME');
-    if (savedTheme && themes.includes(savedTheme)) {
-        document.body.setAttribute('data-theme', savedTheme);
+    console.log('Atualizando ficha antiga:', fichaAntiga.nome);
+    
+    const classe = fichaAntiga.classe;
+    if (!classeBonus[classe]) {
+        fichaAntiga.versao = SISTEMA_VERSAO;
+        return fichaAntiga;
     }
     
-    // Renderizar temas
-    renderThemes();
-};
-
-function renderThemes() {
-    const grid = document.getElementById('theme-grid');
-    grid.innerHTML = '';
+    const fichaNova = JSON.parse(JSON.stringify(fichaAntiga));
+    const bonus = classeBonus[classe];
+    const atributosBonus = atributosClasse[classe] || {};
+    const periciasBonus = periciasClasse[classe] || {};
     
-    const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+    fichaNova.pv = bonus.pv;
+    fichaNova.pvMax = bonus.pv;
+    fichaNova.pe = bonus.pe;
+    fichaNova.peMax = bonus.pe;
     
-    themes.forEach(theme => {
-        const colors = themeColors[theme];
-        const option = document.createElement('div');
-        option.className = 'theme-option' + (theme === currentTheme ? ' selected' : '');
-        option.setAttribute('onclick', `selectTheme('${theme}')`);
-        
-        option.innerHTML = `
-            <div class="theme-preview" style="background: linear-gradient(145deg, ${colors[0]}, ${colors[1]});"></div>
-            <div class="theme-name">${themeNames[theme]}</div>
-        `;
-        
-        grid.appendChild(option);
+    if (!fichaNova.atributos) fichaNova.atributos = {};
+    atributosBase.forEach(attr => {
+        fichaNova.atributos[attr] = 0;
     });
+    Object.entries(atributosBonus).forEach(([attr, valor]) => {
+        if (atributosBase.includes(attr)) {
+            fichaNova.atributos[attr] = valor;
+        }
+    });
+    
+    if (!fichaNova.pericias) fichaNova.pericias = {};
+    periciasBase.forEach(per => {
+        fichaNova.pericias[per] = 0;
+    });
+    Object.entries(periciasBonus).forEach(([per, valor]) => {
+        if (periciasBase.includes(per)) {
+            fichaNova.pericias[per] = valor;
+        }
+    });
+    
+    fichaNova.versao = SISTEMA_VERSAO;
+    fichaNova.atualizadaEm = new Date().toISOString();
+    
+    return fichaNova;
 }
 
-function selectTheme(theme) {
-    document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('GOLD_THEME', theme);
-    renderThemes();
+function verificarEAtualizarFichas() {
+    let atualizacoes = 0;
+    db = db.map(ficha => {
+        if (!ficha.versao || ficha.versao !== SISTEMA_VERSAO) {
+            atualizacoes++;
+            return atualizarFichaParaNovoBalanceamento(ficha);
+        }
+        return ficha;
+    });
     
-    // Mostrar notificação
+    if (atualizacoes > 0) {
+        console.log(`${atualizacoes} fichas atualizadas`);
+        salvarNoBanco();
+        const notification = document.createElement('div');
+        notification.className = 'update-notice';
+        notification.innerHTML = `
+            <span>✨ ${atualizacoes} ficha(s) foram atualizadas para o novo balanceamento!</span>
+            <button onclick="this.parentElement.remove()">OK</button>
+        `;
+        document.body.appendChild(notification);
+        setTimeout(() => {
+            if (notification.parentNode) notification.remove();
+        }, 5000);
+    }
+    return atualizacoes;
+}
+
+// ==================== FUNÇÕES DE NOTIFICAÇÃO ====================
+function mostrarNotificacao(mensagem) {
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
@@ -812,37 +695,81 @@ function selectTheme(theme) {
         right: 20px;
         background: var(--accent-color);
         color: white;
-        padding: 10px 20px;
-        border-radius: 8px;
+        padding: 15px 25px;
+        border-radius: 10px;
         z-index: 100001;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         animation: slideIn 0.3s ease;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     `;
-    notification.textContent = `Tema: ${themeNames[theme]}`;
+    notification.textContent = mensagem;
     document.body.appendChild(notification);
-    
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
-    }, 2000);
+    }, 3000);
 }
 
-function abrirTemas() {
-    renderThemes();
-    document.getElementById('theme-screen').style.display = 'flex';
-    document.getElementById('menu-screen').style.display = 'none';
-    document.getElementById('sheet-content').style.display = 'none';
-    document.getElementById('btn-menu-global').style.display = 'none';
+// ==================== FUNÇÕES DE BANCO DE DADOS ====================
+function salvarNoBanco() {
+    if (cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha));
+    if (userUID) {
+        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
+        rtdb.ref('users/' + userUID + '/fichas').set(db);
+    }
 }
 
-function fecharTemas() {
-    document.getElementById('theme-screen').style.display = 'none';
-    abrirMenu();
+function carregarFichasOnline() {
+    const timeoutId = setTimeout(() => {
+        console.log('Timeout ao carregar fichas');
+        document.getElementById('loading-screen').style.display = 'none';
+        const savedData = localStorage.getItem('RPG_GOLD_V32');
+        if (savedData) {
+            try {
+                db = JSON.parse(savedData);
+                verificarEAtualizarFichas();
+            } catch (e) {
+                db = [];
+            }
+        }
+        abrirMenu();
+        mostrarNotificacao('Modo offline - conexão lenta');
+    }, 5000);
+    
+    rtdb.ref('users/' + userUID + '/fichas').once('value', (snapshot) => {
+        clearTimeout(timeoutId);
+        const data = snapshot.val();
+        if (Array.isArray(data)) {
+            db = data;
+        } else if (data && typeof data === 'object') {
+            db = Object.values(data);
+        } else {
+            db = [];
+        }
+        verificarEAtualizarFichas();
+        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            abrirMenu();
+        }, 800);
+    }).catch((error) => {
+        clearTimeout(timeoutId);
+        console.error('Erro ao carregar fichas:', error);
+        document.getElementById('loading-screen').style.display = 'none';
+        const savedData = localStorage.getItem('RPG_GOLD_V32');
+        if (savedData) {
+            try {
+                db = JSON.parse(savedData);
+                verificarEAtualizarFichas();
+                mostrarNotificacao('Carregado do cache local');
+            } catch (e) {
+                db = [];
+            }
+        }
+        abrirMenu();
+    });
 }
 
-// Variáveis para repetição automática (Clique Longo)
-let autoTimers = {};
-
+// ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
 auth.onAuthStateChanged(user => {
     if (user) {
         userUID = user.uid;
@@ -855,6 +782,8 @@ auth.onAuthStateChanged(user => {
         document.getElementById('menu-screen').style.display = 'none';
         document.getElementById('sheet-content').style.display = 'none';
         document.getElementById('btn-menu-global').style.display = 'none';
+        document.getElementById('reset-password-screen').style.display = 'none';
+        document.getElementById('loading-screen').style.display = 'none';
     }
 });
 
@@ -875,22 +804,72 @@ function fazerLogin() {
 
 function fazerLogout() { if(confirm("Deseja sair da conta?")) auth.signOut(); }
 
-function carregarFichasOnline() {
-    rtdb.ref('users/' + userUID + '/fichas').once('value', (snapshot) => {
-        db = snapshot.val() || [];
-        setTimeout(() => {
-            document.getElementById('loading-screen').style.display = 'none';
-            abrirMenu();
-        }, 800);
+function mostrarResetSenha() {
+    document.getElementById('reset-password-screen').style.display = 'flex';
+    document.getElementById('reset-msg').innerHTML = '';
+    document.getElementById('reset-email').value = '';
+}
+
+function fecharResetSenha() {
+    document.getElementById('reset-password-screen').style.display = 'none';
+}
+
+function enviarResetSenha() {
+    const email = document.getElementById('reset-email').value;
+    const msgDiv = document.getElementById('reset-msg');
+    if (!email) {
+        msgDiv.innerHTML = 'Por favor, digite seu e-mail.';
+        return;
+    }
+    auth.sendPasswordResetEmail(email)
+        .then(() => {
+            msgDiv.className = 'success-message';
+            msgDiv.innerHTML = 'E-mail de recuperação enviado!';
+            setTimeout(() => fecharResetSenha(), 3000);
+        })
+        .catch(() => {
+            msgDiv.className = 'error-message';
+            msgDiv.innerHTML = 'Erro ao enviar e-mail.';
+        });
+}
+
+// ==================== FUNÇÕES DE TEMA ====================
+function renderThemes() {
+    const grid = document.getElementById('theme-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+    themes.forEach(theme => {
+        const colors = themeColors[theme];
+        const option = document.createElement('div');
+        option.className = 'theme-option' + (theme === currentTheme ? ' selected' : '');
+        option.setAttribute('onclick', `selectTheme('${theme}')`);
+        option.innerHTML = `
+            <div class="theme-preview" style="background: linear-gradient(145deg, ${colors[0]}, ${colors[1]});"></div>
+            <div class="theme-name">${themeNames[theme]}</div>
+        `;
+        grid.appendChild(option);
     });
 }
 
-function salvarNoBanco() {
-    if (cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha));
-    if (userUID) {
-        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
-        rtdb.ref('users/' + userUID + '/fichas').set(db);
-    }
+function selectTheme(theme) {
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('GOLD_THEME', theme);
+    renderThemes();
+    mostrarNotificacao(`Tema: ${themeNames[theme]}`);
+}
+
+function abrirTemas() {
+    renderThemes();
+    document.getElementById('theme-screen').style.display = 'flex';
+    document.getElementById('menu-screen').style.display = 'none';
+    document.getElementById('sheet-content').style.display = 'none';
+    document.getElementById('btn-menu-global').style.display = 'none';
+}
+
+function fecharTemas() {
+    document.getElementById('theme-screen').style.display = 'none';
+    abrirMenu();
 }
 
 function abrirMenu() {
@@ -900,6 +879,20 @@ function abrirMenu() {
     document.getElementById('btn-menu-global').style.display = 'none';
     document.getElementById('menu-screen').style.display = 'block';
     renderListaMenu();
+}
+
+function renderListaMenu() {
+    const l = document.getElementById('lista-personagens'); 
+    l.innerHTML = '';
+    db.forEach((c, i) => {
+        l.innerHTML += `
+            <div class="char-card" onclick="selecionar(${i})">
+                <img src="${c.img || 'https://via.placeholder.com/150'}">
+                <b style="display:block; margin-bottom:5px;">${c.nome}</b>
+                <span style="font-size:10px; color:var(--text-dim)">${c.classe || 'Sem Classe'}</span>
+                <button onclick="event.stopPropagation(); apagar(${i})" style="position:absolute; top:-10px; right:-10px; background:#ff4444; border:none; color:white; border-radius:50%; width:25px; height:25px;">×</button>
+            </div>`;
+    });
 }
 
 function abrirCriacao() {
@@ -923,10 +916,12 @@ function confirmarCriacao() {
         return;
     }
 
-    const bonus = classeBonus[classe] || { pv: 50, pe: 50, atributos: {}, descricao: '' };
-    const periciasClasseAtual = periciasClasse[classe] || [];
+    const bonus = classeBonus[classe] || { pv: 50, pe: 50 };
+    const atributosBonus = atributosClasse[classe] || {};
+    const periciasBonus = periciasClasse[classe] || {};
     
     const novo = {
+        versao: SISTEMA_VERSAO,
         nome: nome,
         idade: idade,
         raca: '',
@@ -942,8 +937,6 @@ function confirmarCriacao() {
         arcMax: 100,
         ocu: 0,
         ocuMax: 100,
-        vinculo: 0,
-        vinculoMax: 100,
         corr: 0,
         corrMax: 100,
         atributos: {},
@@ -958,54 +951,32 @@ function confirmarCriacao() {
         pets: []
     };
 
-    // Inicializar atributos com valores base (0) e aplicar bônus
     atributosBase.forEach(attr => {
-        novo.atributos[attr] = 0;
-    });
-    
-    // Aplicar bônus da classe
-    Object.entries(bonus.atributos).forEach(([attr, bonus]) => {
-        if (novo.atributos.hasOwnProperty(attr)) {
-            novo.atributos[attr] = bonus;
-        }
+        novo.atributos[attr] = atributosBonus[attr] || 0;
     });
 
-    // Inicializar perícias com 0 e aplicar bônus de classe (+2 nas perícias principais)
     periciasBase.forEach(per => {
-        novo.pericias[per] = 0;
-    });
-    
-    // Dar +2 nas perícias principais da classe
-    periciasClasseAtual.forEach(per => {
-        if (novo.pericias.hasOwnProperty(per)) {
-            novo.pericias[per] = 2;
-        }
+        novo.pericias[per] = periciasBonus[per] || 0;
     });
 
     db.push(novo);
     salvarNoBanco();
     fecharCriacao();
     renderListaMenu();
-}
-
-function renderListaMenu() {
-    const l = document.getElementById('lista-personagens'); l.innerHTML = '';
-    db.forEach((c, i) => {
-        l.innerHTML += `
-            <div class="char-card" onclick="selecionar(${i})">
-                <img src="${c.img || 'https://via.placeholder.com/150'}">
-                <b style="display:block; margin-bottom:5px;">${c.nome}</b>
-                <span style="font-size:10px; color:var(--text-dim)">${c.classe || 'Sem Classe'}</span>
-                <button onclick="event.stopPropagation(); apagar(${i})" style="position:absolute; top:-10px; right:-10px; background:#ff4444; border:none; color:white; border-radius:50%; width:25px; height:25px;">×</button>
-            </div>`;
-    });
+    mostrarNotificacao('Personagem criado!');
 }
 
 function selecionar(i) {
     cur = i; 
     ficha = JSON.parse(JSON.stringify(db[i]));
     
-    // SEGURANÇA: Garante que listas novas existam em fichas antigas
+    if (!ficha.versao || ficha.versao !== SISTEMA_VERSAO) {
+        ficha = atualizarFichaParaNovoBalanceamento(ficha);
+        db[cur] = ficha;
+        salvarNoBanco();
+        mostrarNotificacao('Ficha atualizada!');
+    }
+    
     if(!ficha.inventario) ficha.inventario = [];
     if(!ficha.penitencias) ficha.penitencias = [];
     if(!ficha.habilidades) ficha.habilidades = [];
@@ -1016,8 +987,8 @@ function selecionar(i) {
     if(!ficha.pericias) ficha.pericias = {};
     if(!ficha.sanidade) ficha.sanidade = 50;
     if(!ficha.sanidadeMax) ficha.sanidadeMax = 100;
-    if(!ficha.vinculo) ficha.vinculo = 0;
-    if(!ficha.vinculoMax) ficha.vinculoMax = 100;
+    if(!ficha.corr) ficha.corr = 0;
+    if(!ficha.corrMax) ficha.corrMax = 100;
 
     document.getElementById('menu-screen').style.display = 'none';
     document.getElementById('btn-menu-global').style.display = 'flex';
@@ -1025,26 +996,7 @@ function selecionar(i) {
     renderFicha();
 }
 
-function cycleTheme() {
-    // Mantido para compatibilidade, mas agora a função principal é abrirTemas()
-    abrirTemas();
-}
-
-function toggleSidebar() {
-    const s = document.getElementById('sidebar'), o = document.getElementById('overlay');
-    const open = s.classList.toggle('open');
-    o.style.display = open ? 'block' : 'none';
-}
-
-function switchTab(e, idx) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    e.target.classList.add('active');
-    document.getElementById(`sec-${idx}`).classList.add('active');
-    window.scrollTo(0,0);
-}
-
-function apagar(i) { if(confirm("Deseja apagar esta lenda?")) { db.splice(i, 1); salvarNoBanco(); renderListaMenu(); } }
+function apagar(i) { if(confirm("Deseja apagar esta lenda?")) { db.splice(i, 1); salvarNoBanco(); renderListaMenu(); mostrarNotificacao('Ficha apagada!'); } }
 function snap() { undo.push(JSON.stringify(ficha)); redo = []; if(undo.length > 30) undo.shift(); }
 function triggerImg() { document.getElementById('fileInput').click(); }
 function uploadImagem(e) {
@@ -1076,28 +1028,20 @@ function editar(caminho, idx, campo, rotulo) {
     }
 }
 
-function modVal(attr, qtd) { 
+function modVal(attr, qtd) { snap(); ficha[attr] = Math.min(ficha[attr+'Max'] || 100, Math.max(0, (parseInt(ficha[attr]) || 0) + parseInt(qtd))); renderFicha(); }
+function setMax(attr, val) { snap(); ficha[attr+'Max'] = Math.min(100, Math.max(1, parseInt(val) || 1)); renderFicha(); }
+
+// Funções para vínculo individual dos familiares
+function modPetVinculo(idx, qtd) { 
     snap(); 
-    // CORREÇÃO: Garantir que qtd seja usado corretamente
-    ficha[attr] = Math.min(ficha[attr+'Max'] || 100, Math.max(0, (parseInt(ficha[attr]) || 0) + parseInt(qtd))); 
+    let p = ficha.pets[idx]; 
+    p.vinculo = Math.min(p.vinculoMax || 100, Math.max(0, (parseInt(p.vinculo) || 0) + parseInt(qtd))); 
     renderFicha(); 
 }
 
-function setMax(attr, val) { 
+function setPetVinculoMax(idx, val) { 
     snap(); 
-    ficha[attr+'Max'] = Math.min(100, Math.max(1, parseInt(val) || 1)); 
-    renderFicha(); 
-}
-
-function modVinculo(qtd) { 
-    snap(); 
-    ficha.vinculo = Math.min(ficha.vinculoMax || 100, Math.max(0, (parseInt(ficha.vinculo) || 0) + parseInt(qtd))); 
-    renderFicha(); 
-}
-
-function setVinculoMax(val) { 
-    snap(); 
-    ficha.vinculoMax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
+    ficha.pets[idx].vinculoMax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
     renderFicha(); 
 }
 
@@ -1128,7 +1072,6 @@ function modPericia(per, qtd) {
     renderFicha();
 }
 
-// Função para clicar na barra
 function handleBarClick(attr, event) {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -1136,152 +1079,104 @@ function handleBarClick(attr, event) {
     const percentage = x / width;
     const maxVal = ficha[attr+'Max'] || 100;
     const newVal = Math.round(percentage * maxVal);
-    
     snap();
     ficha[attr] = Math.min(maxVal, Math.max(0, newVal));
     renderFicha();
 }
 
-// --- LÓGICA DE CLIQUE LONGO ---
-function startAutoMod(attr, qtd, isPet = false, petIdx = null) {
-    const key = attr + (isPet ? '_pet' + petIdx : '');
+// Timers para clique longo
+let autoTimers = {};
+function startAutoMod(attr, qtd, isPet = false, petIdx = null, isVinculo = false) {
+    const key = attr + (isPet ? '_pet' + petIdx : '') + (isVinculo ? '_vinculo' : '');
+    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
+    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
     
-    // Para qualquer timer existente
-    if (autoTimers[key]) {
-        clearTimeout(autoTimers[key]);
-        delete autoTimers[key];
-    }
-    if (autoTimers[key + '_interval']) {
-        clearInterval(autoTimers[key + '_interval']);
-        delete autoTimers[key + '_interval'];
-    }
-    
-    // Executa uma vez imediatamente
-    if (isPet) modPetHp(petIdx, qtd);
+    if (isPet && isVinculo) modPetVinculo(petIdx, qtd);
+    else if (isPet) modPetHp(petIdx, qtd);
     else modVal(attr, qtd);
-
-    // Configura o timer para repetição após 500ms
+    
     autoTimers[key] = setTimeout(() => {
         const intervalId = setInterval(() => {
-            if (isPet) modPetHp(petIdx, qtd);
+            if (isPet && isVinculo) modPetVinculo(petIdx, qtd);
+            else if (isPet) modPetHp(petIdx, qtd);
             else modVal(attr, qtd);
         }, 100);
-        
         autoTimers[key + '_interval'] = intervalId;
     }, 500);
 }
 
-function stopAutoMod(attr, isPet = false, petIdx = null) {
-    const key = attr + (isPet ? '_pet' + petIdx : '');
-    
-    if (autoTimers[key]) {
-        clearTimeout(autoTimers[key]);
-        delete autoTimers[key];
-    }
-    if (autoTimers[key + '_interval']) {
-        clearInterval(autoTimers[key + '_interval']);
-        delete autoTimers[key + '_interval'];
-    }
+function stopAutoMod(attr, isPet = false, petIdx = null, isVinculo = false) {
+    const key = attr + (isPet ? '_pet' + petIdx : '') + (isVinculo ? '_vinculo' : '');
+    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
+    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
 }
 
 function startAutoModAtributo(attr, qtd) {
     const key = 'atributo_' + attr;
-    
-    if (autoTimers[key]) {
-        clearTimeout(autoTimers[key]);
-        delete autoTimers[key];
-    }
-    if (autoTimers[key + '_interval']) {
-        clearInterval(autoTimers[key + '_interval']);
-        delete autoTimers[key + '_interval'];
-    }
-    
+    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
+    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
     modAtributo(attr, qtd);
-
     autoTimers[key] = setTimeout(() => {
         const intervalId = setInterval(() => {
             modAtributo(attr, qtd);
         }, 100);
-        
         autoTimers[key + '_interval'] = intervalId;
     }, 500);
 }
-
 function stopAutoModAtributo(attr) {
     const key = 'atributo_' + attr;
-    
-    if (autoTimers[key]) {
-        clearTimeout(autoTimers[key]);
-        delete autoTimers[key];
-    }
-    if (autoTimers[key + '_interval']) {
-        clearInterval(autoTimers[key + '_interval']);
-        delete autoTimers[key + '_interval'];
-    }
+    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
+    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
 }
 
 function startAutoModPericia(per, qtd) {
     const key = 'pericia_' + per;
-    
-    if (autoTimers[key]) {
-        clearTimeout(autoTimers[key]);
-        delete autoTimers[key];
-    }
-    if (autoTimers[key + '_interval']) {
-        clearInterval(autoTimers[key + '_interval']);
-        delete autoTimers[key + '_interval'];
-    }
-    
+    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
+    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
     modPericia(per, qtd);
-
     autoTimers[key] = setTimeout(() => {
         const intervalId = setInterval(() => {
             modPericia(per, qtd);
         }, 100);
-        
         autoTimers[key + '_interval'] = intervalId;
     }, 500);
 }
-
 function stopAutoModPericia(per) {
     const key = 'pericia_' + per;
-    
-    if (autoTimers[key]) {
-        clearTimeout(autoTimers[key]);
-        delete autoTimers[key];
-    }
-    if (autoTimers[key + '_interval']) {
-        clearInterval(autoTimers[key + '_interval']);
-        delete autoTimers[key + '_interval'];
-    }
+    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
+    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
 }
-// -----------------------------
 
 function addItem(key, ids, props) {
     const vals = ids.map(id => document.getElementById(id).value);
-    
     if(!vals[0]) return; 
-
     if(!ficha[key]) ficha[key] = [];
-
     snap();
     let obj = {}; 
     props.forEach((p, i) => obj[p] = vals[i]);
-    
     ficha[key].push(obj); 
-    
     ids.forEach(id => document.getElementById(id).value = '');
-    
     renderFicha();
+    mostrarNotificacao('Item adicionado!');
 }
 
 function addPetFull() {
-    const n = document.getElementById('petN').value; if(!n) return;
+    const n = document.getElementById('petN').value; 
+    if(!n) return;
     snap();
     let max = document.getElementById('petV').value || 10;
+    let vinculoMax = document.getElementById('petVinculo').value || 100;
     ficha.pets.push({
-        n: n, img: tempPetImg, v: max, vmax: max, lvl: document.getElementById('petLvl').value || '1',
-        def: document.getElementById('petDef').value, atk: document.getElementById('petAtk').value, d: document.getElementById('petD').value
+        n: n, 
+        img: tempPetImg, 
+        v: max, 
+        vmax: max, 
+        vinculo: Math.floor(vinculoMax / 2),
+        vinculoMax: vinculoMax,
+        lvl: document.getElementById('petLvl').value || '1',
+        def: document.getElementById('petDef').value, 
+        atk: document.getElementById('petAtk').value, 
+        d: document.getElementById('petD').value
     });
     tempPetImg = ""; 
     document.getElementById('petPreview').style.display = 'none';
@@ -1290,8 +1185,10 @@ function addPetFull() {
     document.getElementById('petLvl').value = '';
     document.getElementById('petDef').value = '';
     document.getElementById('petAtk').value = '';
+    document.getElementById('petVinculo').value = '100';
     document.getElementById('petD').value = '';
     renderFicha();
+    mostrarNotificacao('Familiar vinculado!');
 }
 
 function remover(key, idx) { 
@@ -1300,6 +1197,7 @@ function remover(key, idx) {
     else if(key === 'per') delete ficha.pericias[idx]; 
     else ficha[key].splice(idx, 1); 
     renderFicha(); 
+    mostrarNotificacao('Item removido!');
 }
 
 function salvarHeader() { 
@@ -1308,12 +1206,14 @@ function salvarHeader() {
     ficha.raca = document.getElementById('raca').value; 
     ficha.classe = document.getElementById('classe').value; 
     salvarNoBanco(); 
+    mostrarNotificacao('Alterações salvas!');
 }
 
 function salvarDiario() { 
     ficha.historia = document.getElementById('historia').value; 
     ficha.anotacoes = document.getElementById('anotacoes').value; 
     salvarNoBanco(); 
+    mostrarNotificacao('Diário salvo!');
 }
 
 function renderFicha() {
@@ -1323,26 +1223,28 @@ function renderFicha() {
     document.getElementById('classe').value = ficha.classe || '';
     document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/110x150';
 
-    // Renderizar bônus da classe
     const classeAtual = ficha.classe;
     const bonus = classeBonus[classeAtual] || null;
-    const periciasClasseAtual = periciasClasse[classeAtual] || [];
+    const atributosBonus = atributosClasse[classeAtual] || {};
+    const periciasBonus = periciasClasse[classeAtual] || {};
     const classeBonusEl = document.getElementById('classe-bonus');
     const classeDescEl = document.getElementById('classe-descricao-status');
     const atributosBonusEl = document.getElementById('atributos-bonus');
     const periciasBonusEl = document.getElementById('pericias-bonus');
 
     if (bonus) {
-        const bonusTexto = Object.entries(bonus.atributos)
-            .map(([a,b]) => `${a} ${b > 0 ? '+' : ''}${b}`)
+        const atributosTexto = Object.entries(atributosBonus)
+            .filter(([a]) => atributosBase.includes(a))
+            .map(([a,b]) => `${a} ${b}`)
             .join(' · ');
-        classeBonusEl.innerHTML = `<strong style="color:var(--accent-color);">${classeAtual}</strong> - PV: ${bonus.pv} | PE: ${bonus.pe} | ${bonusTexto}`;
-        classeDescEl.innerHTML = `<strong>Descrição da Classe:</strong><br>${bonus.descricao.replace(/\n/g, '<br>')}`;
-        atributosBonusEl.innerHTML = `<strong>Bônus de Atributos:</strong> ${bonusTexto}`;
+        classeBonusEl.innerHTML = `<strong style="color:var(--accent-color);">${classeAtual}</strong> - PV: ${bonus.pv} | PE: ${bonus.pe}`;
+        classeDescEl.innerHTML = `<strong>Descrição da Classe:</strong><br>${descricoesClasse[classeAtual] || ''}`;
+        atributosBonusEl.innerHTML = `<strong>Bônus de Atributos:</strong> ${atributosTexto || 'Nenhum'}`;
         
-        // Mostrar perícias da classe
-        const periciasTexto = periciasClasseAtual.join(' · ');
-        periciasBonusEl.innerHTML = `<strong>Perícias Treinadas:</strong> ${periciasTexto} (recebem +2)`;
+        const periciasTexto = Object.entries(periciasBonus)
+            .map(([p,v]) => `${p} ${v}`)
+            .join(' · ');
+        periciasBonusEl.innerHTML = `<strong>Perícias Treinadas:</strong> ${periciasTexto}`;
     } else {
         classeBonusEl.innerHTML = '';
         classeDescEl.innerHTML = '';
@@ -1359,7 +1261,6 @@ function renderFicha() {
         {id:'sanidade', n:'Sanidade', c:'var(--oc-color)'},
         {id:'arc', n:'Nível Arcano', c:'var(--ar-color)'},
         {id:'ocu', n:'Ocultismo', c:'var(--oc-color)'},
-        {id:'vinculo', n:'Vínculo', c:'var(--vi-color)'},
         {id:'corr', n:'Corrupção', c:'var(--co-color)'}
     ];
 
@@ -1386,7 +1287,7 @@ function renderFicha() {
         </div>`;
     });
 
-    // Renderizar Atributos
+    // Atributos
     const atList = document.getElementById('lista-atributos');
     atList.innerHTML = '';
     atributosBase.forEach(attr => {
@@ -1396,64 +1297,108 @@ function renderFicha() {
                 <span class="atributo-nome">${attr}</span>
                 <span class="atributo-valor">${valor}</span>
                 <div class="atributo-botoes">
-                    <button onclick="modAtributo('${attr}', -1)">-</button>
-                    <button onclick="modAtributo('${attr}', 1)">+</button>
+                    <button onmousedown="startAutoModAtributo('${attr}', -1)" onmouseup="stopAutoModAtributo('${attr}')" onmouseleave="stopAutoModAtributo('${attr}')">-</button>
+                    <button onmousedown="startAutoModAtributo('${attr}', 1)" onmouseup="stopAutoModAtributo('${attr}')" onmouseleave="stopAutoModAtributo('${attr}')">+</button>
                 </div>
             </div>
         `;
     });
 
-    // Renderizar Perícias (destacar as da classe)
+    // Perícias
     const perList = document.getElementById('lista-pericias');
     perList.innerHTML = '';
     periciasBase.forEach(per => {
         let valor = ficha.pericias[per] || 0;
-        let isClassePer = periciasClasse[classeAtual]?.includes(per);
+        let isClassePer = periciasBonus.hasOwnProperty(per);
         perList.innerHTML += `
             <div class="pericia-linha" style="${isClassePer ? 'border-left: 3px solid var(--accent-color);' : ''}">
                 <span class="pericia-nome">${per} ${isClassePer ? '⭐' : ''}</span>
                 <span class="pericia-valor">${valor}</span>
                 <div class="pericia-botoes">
-                    <button onclick="modPericia('${per}', -1)">-</button>
-                    <button onclick="modPericia('${per}', 1)">+</button>
+                    <button onmousedown="startAutoModPericia('${per}', -1)" onmouseup="stopAutoModPericia('${per}')" onmouseleave="stopAutoModPericia('${per}')">-</button>
+                    <button onmousedown="startAutoModPericia('${per}', 1)" onmouseup="stopAutoModPericia('${per}')" onmouseleave="stopAutoModPericia('${per}')">+</button>
                 </div>
             </div>
         `;
     });
 
-    // Atualizar barra de vínculo
-    document.getElementById('vinculo-valor').innerText = `${ficha.vinculo || 0} / ${ficha.vinculoMax || 100}`;
-    document.getElementById('vinculo-barra-inner').style.width = `${Math.min(100, ((ficha.vinculo || 0) / (ficha.vinculoMax || 100)) * 100)}%`;
-    document.getElementById('vinculo-max').value = ficha.vinculoMax || 100;
-    document.getElementById('vinculo-max').max = 100;
-
-    renderGeneric('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('habilidades',${i})">X</button><h4 onclick="editar('habilidades',${i},'n','Poder')">${it.n}</h4><p onclick="editar('habilidades',${i},'d','Descrição')">${it.d}</p></div>`);
-    renderGeneric('listaAr', ficha.armas, 'a', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('armas',${i})">X</button><h4 onclick="editar('armas',${i},'n','Arma')">${it.n}</h4><p onclick="editar('armas',${i},'dan','Dano')">Dano: ${it.dan}</p><p onclick="editar('armas',${i},'d','Efeito')">${it.d}</p></div>`);
-    renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">X</button><h4 onclick="editar('inventario',${i},'n','Item')">${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
-    renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">X</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
-    
-    renderGeneric('listaPets', ficha.pets, 'pet', (it, i) => {
-        let curV = parseInt(it.v) || 0; let maxV = parseInt(it.vmax) || 10;
-        let perc = Math.min(100, (curV / maxV) * 100);
-        return `<div class="card-item pet-card">
+    // Renderizar Familiares (com vínculo individual)
+    const petList = document.getElementById('listaPets');
+    petList.innerHTML = '';
+    ficha.pets.forEach((it, i) => {
+        let curV = parseInt(it.v) || 0; 
+        let maxV = parseInt(it.vmax) || 10;
+        let percV = Math.min(100, (curV / maxV) * 100);
+        
+        let curVinculo = parseInt(it.vinculo) || 0;
+        let maxVinculo = parseInt(it.vinculoMax) || 100;
+        let percVinculo = Math.min(100, (curVinculo / maxVinculo) * 100);
+        
+        petList.innerHTML += `<div class="card-item pet-card">
             <button class="btn-delete" onclick="remover('pets',${i})">X</button>
-            <div class="pet-meta"><img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img"><div><h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4><span style="font-size:10px; color:var(--pet-gold)">Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span></div></div>
+            <div class="pet-meta">
+                <img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img">
+                <div>
+                    <h4 onclick="editar('pets',${i},'n','Nome')">${it.n}</h4>
+                    <span style="font-size:10px; color:var(--pet-gold)">Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span>
+                </div>
+            </div>
+            
             <div class="pet-bar-label"><span>HP DO FAMILIAR</span><span>${curV} / ${maxV}</span></div>
             <div class="bar-outer">
-                <div class="bar-inner" style="width:${perc}%; background:var(--pet-gold);"></div>
+                <div class="bar-inner" style="width:${percV}%; background:var(--hp-color);"></div>
                 <div class="bar-click-area">
                     <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, -1)"></div>
                     <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, 1)"></div>
                 </div>
             </div>
-            <div class="bar-btns">
+            <div class="bar-btns" style="margin-bottom: 10px;">
+                <button onclick="modPetHp(${i}, -5)">-5</button>
                 <button onclick="modPetHp(${i}, -1)">-1</button>
                 <button onclick="modPetHp(${i}, 1)">+1</button>
+                <button onclick="modPetHp(${i}, 5)">+5</button>
                 <input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)" max="100">
             </div>
-            <div class="pet-grid-stats"><div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div><div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div></div>
+            
+            <div class="pet-bar-label"><span>🔮 VÍNCULO</span><span>${curVinculo} / ${maxVinculo}</span></div>
+            <div class="bar-outer">
+                <div class="bar-inner" style="width:${percVinculo}%; background:var(--vi-color);"></div>
+                <div class="bar-click-area">
+                    <div class="bar-half" onclick="event.stopPropagation(); modPetVinculo(${i}, -1)"></div>
+                    <div class="bar-half" onclick="event.stopPropagation(); modPetVinculo(${i}, 1)"></div>
+                </div>
+            </div>
+            <div class="bar-btns" style="margin-bottom: 10px;">
+                <button onmousedown="startAutoMod(null,-5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-5</button>
+                <button onmousedown="startAutoMod(null,-1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-1</button>
+                <button onmousedown="startAutoMod(null,1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+1</button>
+                <button onmousedown="startAutoMod(null,5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+5</button>
+                <input type="number" class="max-input" value="${maxVinculo}" onchange="setPetVinculoMax(${i}, this.value)" max="100">
+            </div>
+            
+            <div class="pet-grid-stats">
+                <div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def}</div>
+                <div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk}</div>
+            </div>
             <p style="margin-top:8px; font-size:11px;" onclick="editar('pets',${i},'d','Descrição')">${it.d || ''}</p>
-        </div>`});
+        </div>`;
+    });
+
+    // Listas genéricas
+    function renderGeneric(id, data, type, temp) {
+        const el = document.getElementById(id); 
+        if (!el) return;
+        el.innerHTML = '';
+        if(!data) return;
+        if(type === 'at') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
+        else if(type === 'per') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
+        else data.forEach((item, i) => el.innerHTML += temp(item, i));
+    }
+
+    renderGeneric('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('habilidades',${i})">X</button><h4 onclick="editar('habilidades',${i},'n','Poder')">${it.n}</h4><p onclick="editar('habilidades',${i},'d','Descrição')">${it.d}</p></div>`);
+    renderGeneric('listaAr', ficha.armas, 'a', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('armas',${i})">X</button><h4 onclick="editar('armas',${i},'n','Arma')">${it.n}</h4><p onclick="editar('armas',${i},'dan','Dano')">Dano: ${it.dan}</p><p onclick="editar('armas',${i},'d','Efeito')">${it.d}</p></div>`);
+    renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">X</button><h4 onclick="editar('inventario',${i},'n','Item')">${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
+    renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">X</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
 
     let totalDef = 0;
     renderGeneric('listaEq', ficha.equipamentos, 'e', (it, i) => {
@@ -1462,50 +1407,73 @@ function renderFicha() {
     });
     document.getElementById('defTotal').innerText = totalDef;
     
-    // Atualizar campos de texto
     document.getElementById('historia').value = ficha.historia || '';
     document.getElementById('anotacoes').value = ficha.anotacoes || '';
     
     salvarNoBanco();
 }
 
-function renderGeneric(id, data, type, temp) {
-    const el = document.getElementById(id); 
-    if (!el) return;
-    el.innerHTML = '';
-    if(!data) return;
-    if(type === 'at') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
-    else if(type === 'per') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
-    else data.forEach((item, i) => el.innerHTML += temp(item, i));
-}
-
 function desfazer() { if(undo.length > 0) { redo.push(JSON.stringify(ficha)); ficha = JSON.parse(undo.pop()); renderFicha(); } }
 function refazer() { if(redo.length > 0) { undo.push(JSON.stringify(ficha)); ficha = JSON.parse(redo.pop()); renderFicha(); } }
-function exportarFicha() { const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); const a = document.createElement('a'); a.href = data; a.download = (ficha.nome || 'ficha') + ".json"; a.click(); }
-function importarFicha() { const input = document.createElement('input'); input.type = 'file'; input.onchange = e => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = ev => { snap(); ficha = JSON.parse(ev.target.result); renderFicha(); }; reader.readAsText(file); }; input.click(); }
+function exportarFicha() { const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); const a = document.createElement('a'); a.href = data; a.download = (ficha.nome || 'ficha') + ".json"; a.click(); mostrarNotificacao('Ficha exportada!'); }
+function importarFicha() { const input = document.createElement('input'); input.type = 'file'; input.onchange = e => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = ev => { snap(); ficha = JSON.parse(ev.target.result); renderFicha(); mostrarNotificacao('Ficha importada!'); }; reader.readAsText(file); }; input.click(); }
 
-// Atualizar descrição da classe na criação
+window.onload = function() {
+    const select = document.getElementById('criacao-classe');
+    if (select) {
+        Object.keys(classeBonus).sort().forEach(classe => {
+            const option = document.createElement('option');
+            option.value = classe;
+            option.textContent = classe;
+            select.appendChild(option);
+        });
+    }
+    
+    const savedTheme = localStorage.getItem('GOLD_THEME');
+    if (savedTheme && themes.includes(savedTheme)) {
+        document.body.setAttribute('data-theme', savedTheme);
+    }
+    renderThemes();
+};
+
 document.getElementById('criacao-classe').addEventListener('change', function(e) {
     const classe = e.target.value;
     if (classe && classeBonus[classe]) {
         const bonus = classeBonus[classe];
-        const periciasLista = periciasClasse[classe] || [];
-        const bonusTexto = Object.entries(bonus.atributos)
-            .map(([a,b]) => `${a} ${b > 0 ? '+' : ''}${b}`)
+        const atributosBonus = atributosClasse[classe] || {};
+        const periciasBonus = periciasClasse[classe] || {};
+        const bonusTexto = Object.entries(atributosBonus)
+            .filter(([a]) => atributosBase.includes(a))
+            .map(([a,b]) => `${a} ${b}`)
             .join(', ');
-        const periciasTexto = periciasLista.join(', ');
+        const periciasTexto = Object.entries(periciasBonus)
+            .map(([p,v]) => `${p} ${v}`)
+            .join(', ');
         document.getElementById('classe-descricao').innerHTML = 
             `<strong>${classe}</strong><br>
              <span style="color:var(--hp-color);">PV: ${bonus.pv}</span> | <span style="color:var(--en-color);">PE: ${bonus.pe}</span><br>
-             <strong>Atributos:</strong> ${bonusTexto}<br>
-             <strong>Perícias Treinadas:</strong> ${periciasTexto} (recebem +2)<br><br>
-             ${bonus.descricao.replace(/\n/g, '<br>')}`;
+             <strong>Atributos:</strong> ${bonusTexto || 'Nenhum'}<br>
+             <strong>Perícias:</strong> ${periciasTexto}<br><br>
+             ${descricoesClasse[classe] || ''}`;
     } else {
         document.getElementById('classe-descricao').innerHTML = '';
     }
 });
 
-// Adicionar animações CSS para notificação
+function toggleSidebar() {
+    const s = document.getElementById('sidebar'), o = document.getElementById('overlay');
+    const open = s.classList.toggle('open');
+    o.style.display = open ? 'block' : 'none';
+}
+
+function switchTab(e, idx) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    e.target.classList.add('active');
+    document.getElementById(`sec-${idx}`).classList.add('active');
+    window.scrollTo(0,0);
+}
+
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
