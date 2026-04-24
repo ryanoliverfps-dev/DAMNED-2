@@ -1139,10 +1139,7 @@
         <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="uploadImagem(event)">
         <div class="header-fields">
             <input id="nome" placeholder="📝 Nome do Personagem" onchange="salvarHeader()">
-            <div style="display:flex; gap:5px;">
-                <input id="idade" placeholder="🎂 Idade" style="width:40%" onchange="salvarHeader()">
-                <input id="raca" placeholder="🧬 Raça" style="flex:1" onchange="salvarHeader()">
-            </div>
+            <input id="idade" placeholder="🎂 Idade" onchange="salvarHeader()">
             <input id="classe" placeholder="⚔️ Classe / Ocupação" onchange="salvarHeader()">
         </div>
     </header>
@@ -1472,7 +1469,7 @@ function verificarEAtualizarFichas() {
         const notification = document.createElement('div');
         notification.className = 'update-notice';
         notification.innerHTML = `
-            <span>✨ ${atualizacoes} ficha(s) foram atualizadas para o novo balanceamento!</span>
+            <span>✨ ${atualizacoes} ficha(s) foram atualizadas para o novo balanceamento! Seus dados foram preservados!</span>
             <button onclick="this.parentElement.remove()">OK</button>
         `;
         document.body.appendChild(notification);
@@ -1777,7 +1774,7 @@ function selecionar(i) {
         ficha = atualizarFichaParaNovoBalanceamento(ficha);
         db[cur] = ficha;
         salvarNoBanco();
-        mostrarNotificacao('Pergaminho atualizado!');
+        mostrarNotificacao('Pergaminho atualizado! Seus dados foram preservados.');
     }
     
     if(!ficha.inventario) ficha.inventario = [];
@@ -2006,7 +2003,6 @@ function remover(key, idx) {
 function salvarHeader() { 
     ficha.nome = document.getElementById('nome').value; 
     ficha.idade = document.getElementById('idade').value; 
-    ficha.raca = document.getElementById('raca').value; 
     ficha.classe = document.getElementById('classe').value; 
     salvarNoBanco(); 
     mostrarNotificacao('Alterações salvas no pergaminho!');
@@ -2022,7 +2018,6 @@ function salvarDiario() {
 function renderFicha() {
     document.getElementById('nome').value = ficha.nome || '';
     document.getElementById('idade').value = ficha.idade || '';
-    document.getElementById('raca').value = ficha.raca || '';
     document.getElementById('classe').value = ficha.classe || '';
     document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/120x160';
 
@@ -2035,7 +2030,7 @@ function renderFicha() {
     const atributosBonusEl = document.getElementById('atributos-bonus');
     const periciasBonusEl = document.getElementById('pericias-bonus');
 
-    if (bonus) {
+    if (bonus && classeAtual) {
         const atributosTexto = Object.entries(atributosBonus)
             .filter(([a]) => atributosBase.includes(a))
             .map(([a,b]) => `${a} ${b}`)
@@ -2128,64 +2123,66 @@ function renderFicha() {
     // Renderizar Familiares (com vínculo individual)
     const petList = document.getElementById('listaPets');
     petList.innerHTML = '';
-    ficha.pets.forEach((it, i) => {
-        let curV = parseInt(it.v) || 0; 
-        let maxV = parseInt(it.vmax) || 10;
-        let percV = Math.min(100, (curV / maxV) * 100);
-        
-        let curVinculo = parseInt(it.vinculo) || 0;
-        let maxVinculo = parseInt(it.vinculoMax) || 100;
-        let percVinculo = Math.min(100, (curVinculo / maxVinculo) * 100);
-        
-        petList.innerHTML += `<div class="card-item pet-card">
-            <button class="btn-delete" onclick="remover('pets',${i})">✖</button>
-            <div class="pet-meta">
-                <img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img">
-                <div>
-                    <h4 onclick="editar('pets',${i},'n','Nome')">🐉 ${it.n}</h4>
-                    <span style="font-size:10px; color:var(--pet-gold)">📊 Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span>
-                </div>
-            </div>
+    if (ficha.pets) {
+        ficha.pets.forEach((it, i) => {
+            let curV = parseInt(it.v) || 0; 
+            let maxV = parseInt(it.vmax) || 10;
+            let percV = Math.min(100, (curV / maxV) * 100);
             
-            <div class="pet-bar-label"><span>❤️ HP DO FAMILIAR</span><span>${curV} / ${maxV}</span></div>
-            <div class="bar-outer">
-                <div class="bar-inner" style="width:${percV}%; background:var(--hp-color);"></div>
-                <div class="bar-click-area">
-                    <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, -1)"></div>
-                    <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, 1)"></div>
-                </div>
-            </div>
-            <div class="bar-btns" style="margin-bottom: 10px;">
-                <button onclick="modPetHp(${i}, -5)">-5</button>
-                <button onclick="modPetHp(${i}, -1)">-1</button>
-                <button onclick="modPetHp(${i}, 1)">+1</button>
-                <button onclick="modPetHp(${i}, 5)">+5</button>
-                <input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)" max="100">
-            </div>
+            let curVinculo = parseInt(it.vinculo) || 0;
+            let maxVinculo = parseInt(it.vinculoMax) || 100;
+            let percVinculo = Math.min(100, (curVinculo / maxVinculo) * 100);
             
-            <div class="pet-bar-label"><span>🔗 VÍNCULO</span><span>${curVinculo} / ${maxVinculo}</span></div>
-            <div class="bar-outer">
-                <div class="bar-inner" style="width:${percVinculo}%; background:var(--vi-color);"></div>
-                <div class="bar-click-area">
-                    <div class="bar-half" onclick="event.stopPropagation(); modPetVinculo(${i}, -1)"></div>
-                    <div class="bar-half" onclick="event.stopPropagation(); modPetVinculo(${i}, 1)"></div>
+            petList.innerHTML += `<div class="card-item pet-card">
+                <button class="btn-delete" onclick="remover('pets',${i})">✖</button>
+                <div class="pet-meta">
+                    <img src="${it.img || 'https://via.placeholder.com/70'}" class="pet-img">
+                    <div>
+                        <h4 onclick="editar('pets',${i},'n','Nome')">🐉 ${it.n}</h4>
+                        <span style="font-size:10px; color:var(--pet-gold)">📊 Nível: <b onclick="editar('pets',${i},'lvl','Nível')">${it.lvl}</b></span>
+                    </div>
                 </div>
-            </div>
-            <div class="bar-btns" style="margin-bottom: 10px;">
-                <button onmousedown="startAutoMod(null,-5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-5</button>
-                <button onmousedown="startAutoMod(null,-1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-1</button>
-                <button onmousedown="startAutoMod(null,1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+1</button>
-                <button onmousedown="startAutoMod(null,5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+5</button>
-                <input type="number" class="max-input" value="${maxVinculo}" onchange="setPetVinculoMax(${i}, this.value)" max="100">
-            </div>
-            
-            <div class="pet-grid-stats">
-                <div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def || '0'}</div>
-                <div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk || '0'}</div>
-            </div>
-            <p style="margin-top:8px; font-size:11px;" onclick="editar('pets',${i},'d','Descrição')">${it.d || ''}</p>
-        </div>`;
-    });
+                
+                <div class="pet-bar-label"><span>❤️ HP DO FAMILIAR</span><span>${curV} / ${maxV}</span></div>
+                <div class="bar-outer">
+                    <div class="bar-inner" style="width:${percV}%; background:var(--hp-color);"></div>
+                    <div class="bar-click-area">
+                        <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, -1)"></div>
+                        <div class="bar-half" onclick="event.stopPropagation(); modPetHp(${i}, 1)"></div>
+                    </div>
+                </div>
+                <div class="bar-btns" style="margin-bottom: 10px;">
+                    <button onclick="modPetHp(${i}, -5)">-5</button>
+                    <button onclick="modPetHp(${i}, -1)">-1</button>
+                    <button onclick="modPetHp(${i}, 1)">+1</button>
+                    <button onclick="modPetHp(${i}, 5)">+5</button>
+                    <input type="number" class="max-input" value="${maxV}" onchange="setPetMaxHp(${i}, this.value)" max="100">
+                </div>
+                
+                <div class="pet-bar-label"><span>🔗 VÍNCULO</span><span>${curVinculo} / ${maxVinculo}</span></div>
+                <div class="bar-outer">
+                    <div class="bar-inner" style="width:${percVinculo}%; background:var(--vi-color);"></div>
+                    <div class="bar-click-area">
+                        <div class="bar-half" onclick="event.stopPropagation(); modPetVinculo(${i}, -1)"></div>
+                        <div class="bar-half" onclick="event.stopPropagation(); modPetVinculo(${i}, 1)"></div>
+                    </div>
+                </div>
+                <div class="bar-btns" style="margin-bottom: 10px;">
+                    <button onmousedown="startAutoMod(null,-5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-5</button>
+                    <button onmousedown="startAutoMod(null,-1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-1</button>
+                    <button onmousedown="startAutoMod(null,1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+1</button>
+                    <button onmousedown="startAutoMod(null,5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+5</button>
+                    <input type="number" class="max-input" value="${maxVinculo}" onchange="setPetVinculoMax(${i}, this.value)" max="100">
+                </div>
+                
+                <div class="pet-grid-stats">
+                    <div class="pet-stat-box" onclick="editar('pets',${i},'def','DEF')">🛡️ DEF: ${it.def || '0'}</div>
+                    <div class="pet-stat-box" onclick="editar('pets',${i},'atk','ATK')">⚔️ ATK: ${it.atk || '0'}</div>
+                </div>
+                <p style="margin-top:8px; font-size:11px;" onclick="editar('pets',${i},'d','Descrição')">${it.d || ''}</p>
+            </div>`;
+        });
+    }
 
     // Listas genéricas
     function renderGeneric(id, data, type, temp) {
