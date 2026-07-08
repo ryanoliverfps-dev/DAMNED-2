@@ -157,265 +157,147 @@
         }
 
         #auth-screen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: var(--bg-body); 
-            z-index: 110000; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            box-sizing: border-box; 
-            text-align: center; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--bg-body); z-index: 110000; display: flex; 
+            flex-direction: column; justify-content: center; align-items: center; 
+            padding: 20px; box-sizing: border-box; text-align: center; 
         }
         
         .auth-box { 
             background: linear-gradient(145deg, var(--bg-card), var(--bg-header));
-            padding: 40px; 
-            border: 3px solid var(--accent-color); 
-            border-radius: 0px;
-            width: 100%; 
-            max-width: 400px; 
-            box-shadow: 0 0 40px rgba(212, 163, 115, 0.3);
+            padding: 40px; border: 3px solid var(--accent-color); border-radius: 0px;
+            width: 100%; max-width: 400px; box-shadow: 0 0 40px rgba(212, 163, 115, 0.3);
             position: relative;
         }
         
         .auth-box::before {
-            content: "⚔️";
-            position: absolute;
-            top: -20px;
-            left: 20px;
-            font-size: 30px;
-            background: var(--bg-header);
-            padding: 0 15px;
+            content: "⚔️"; position: absolute; top: -20px; left: 20px;
+            font-size: 30px; background: var(--bg-header); padding: 0 15px;
             color: var(--accent-color);
         }
         
         .auth-box::after {
-            content: "🛡️";
-            position: absolute;
-            top: -20px;
-            right: 20px;
-            font-size: 30px;
-            background: var(--bg-header);
-            padding: 0 15px;
+            content: "🛡️"; position: absolute; top: -20px; right: 20px;
+            font-size: 30px; background: var(--bg-header); padding: 0 15px;
             color: var(--accent-color);
         }
         
         .auth-input { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 15px; 
-            background: var(--bg-input); 
-            border: 2px solid var(--border-color); 
-            color: var(--text-input); 
-            border-radius: 0px;
-            box-sizing: border-box; 
+            width: 100%; padding: 12px; margin-bottom: 15px; 
+            background: var(--bg-input); border: 2px solid var(--border-color); 
+            color: var(--text-input); border-radius: 0px; box-sizing: border-box; 
             font-family: 'Cinzel', serif;
         }
         
         .btn-auth { 
-            width: 100%; 
-            padding: 12px; 
+            width: 100%; padding: 12px; 
             background: linear-gradient(180deg, #6b4c3a 0%, #4a2e1c 100%);
-            border: 2px solid var(--border-color); 
-            color: white; 
-            border-radius: 0px;
-            font-weight: bold; 
-            margin-bottom: 10px; 
-            cursor: pointer;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            border: 2px solid var(--border-color); color: white; border-radius: 0px;
+            font-weight: bold; margin-bottom: 10px; cursor: pointer;
+            font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 2px;
             transition: all 0.2s;
         }
         
         .btn-auth:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             border-color: var(--accent-color);
         }
 
         #loading-screen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.9); 
-            display: none; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 99999; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); display: none; flex-direction: column; 
+            justify-content: center; align-items: center; z-index: 99999; 
         }
         
         .loader-logo { 
-            width: 80px; 
-            height: 80px; 
-            border: 4px solid #333; 
-            border-top: 4px solid var(--accent-color); 
-            border-radius: 50%; 
-            animation: spin 1s linear infinite; 
-            font-size: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 80px; height: 80px; border: 4px solid #333; 
+            border-top: 4px solid var(--accent-color); border-radius: 50%; 
+            animation: spin 1s linear infinite; font-size: 40px;
+            display: flex; align-items: center; justify-content: center;
         }
         
         @keyframes spin { 
-            0% { transform: rotate(0deg); } 
-            100% { transform: rotate(360deg); } 
+            0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } 
         }
 
         #sidebar { 
-            position: fixed; 
-            top: 0; 
-            left: -300px; 
-            width: 300px; 
-            height: 100%; 
+            position: fixed; top: 0; left: -300px; width: 300px; height: 100%; 
             background: linear-gradient(135deg, var(--bg-header), #1a0f0a);
-            z-index: 10001; 
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            border-right: 4px solid var(--accent-color); 
-            padding: 25px; 
-            box-sizing: border-box; 
-            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            z-index: 10001; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            border-right: 4px solid var(--accent-color); padding: 25px; 
+            box-sizing: border-box; box-shadow: 10px 0 30px rgba(0,0,0,0.5);
             font-family: 'Cinzel', serif;
         }
         
         #sidebar.open { left: 0; }
         
         .sidebar-overlay { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.8); 
-            z-index: 10000; 
-            display: none; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.8); z-index: 10000; display: none; 
             backdrop-filter: blur(3px); 
         }
         
         #btn-menu-global { 
-            position: fixed; 
-            top: 15px; 
-            left: 15px; 
-            font-size: 28px; 
-            background: var(--bg-header); 
-            border: 2px solid var(--accent-color); 
-            border-radius: 0px;
-            color: var(--accent-color); 
-            cursor: pointer; 
-            z-index: 9500; 
-            width: 55px; 
-            height: 55px; 
-            display: none; 
-            align-items: center; 
-            justify-content: center; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            font-family: serif;
+            position: fixed; top: 15px; left: 15px; font-size: 28px; 
+            background: var(--bg-header); border: 2px solid var(--accent-color); 
+            border-radius: 0px; color: var(--accent-color); cursor: pointer; 
+            z-index: 9500; width: 55px; height: 55px; display: none; 
+            align-items: center; justify-content: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-family: serif;
         }
         
         #btn-menu-global:hover {
-            transform: scale(1.05);
-            background: var(--accent-color);
+            transform: scale(1.05); background: var(--accent-color);
             color: var(--bg-header);
         }
 
         #menu-screen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)); 
-            z-index: 9000; 
-            padding: 20px; 
-            box-sizing: border-box; 
-            overflow-y: auto; 
-            text-align: center; 
-            display: none; 
+            z-index: 9000; padding: 20px; box-sizing: border-box; overflow-y: auto; 
+            text-align: center; display: none; 
         }
         
         .char-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
-            gap: 25px; 
-            padding: 30px 0;
-            max-width: 1000px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+            gap: 25px; padding: 30px 0; max-width: 1000px; margin: 0 auto;
         }
         
         .char-card { 
             background: linear-gradient(145deg, rgba(61,38,24,0.95), rgba(42,26,16,0.98));
-            border: 2px solid var(--border-color); 
-            border-radius: 0px;
-            padding: 15px; 
-            transition: 0.3s; 
-            position: relative;
-            cursor: pointer;
+            border: 2px solid var(--border-color); border-radius: 0px;
+            padding: 15px; transition: 0.3s; position: relative; cursor: pointer;
         }
         
         .char-card:hover { 
-            transform: translateY(-5px); 
-            border-color: var(--accent-color); 
+            transform: translateY(-5px); border-color: var(--accent-color); 
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
         
         .char-card img { 
-            width: 100%; 
-            height: 150px; 
-            object-fit: cover; 
-            margin-bottom: 10px; 
+            width: 100%; height: 150px; object-fit: cover; margin-bottom: 10px; 
             border: 2px solid var(--accent-color);
         }
 
         #theme-screen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: var(--bg-body); 
-            z-index: 100000; 
-            display: none; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            box-sizing: border-box; 
-            overflow-y: auto; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--bg-body); z-index: 100000; display: none; 
+            flex-direction: column; justify-content: center; align-items: center; 
+            padding: 20px; box-sizing: border-box; overflow-y: auto; 
         }
         
         .theme-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
-            gap: 15px; 
-            padding: 20px; 
-            max-width: 800px; 
-            width: 100%; 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+            gap: 15px; padding: 20px; max-width: 800px; width: 100%; 
         }
         
         .theme-option { 
-            background: var(--bg-card); 
-            border: 2px solid var(--border-color); 
-            border-radius: 0px;
-            padding: 20px 10px; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            text-align: center; 
+            background: var(--bg-card); border: 2px solid var(--border-color); 
+            border-radius: 0px; padding: 20px 10px; cursor: pointer; 
+            transition: all 0.3s; text-align: center; 
         }
         
-        .theme-option:hover { 
-            transform: scale(1.05); 
-            border-color: var(--accent-color); 
-        }
+        .theme-option:hover { transform: scale(1.05); border-color: var(--accent-color); }
         
         .theme-option.selected { 
             border-color: var(--accent-color); 
@@ -424,182 +306,113 @@
         }
         
         .theme-preview { 
-            width: 100%; 
-            height: 80px; 
-            border-radius: 0px;
-            margin-bottom: 10px; 
+            width: 100%; height: 80px; border-radius: 0px; margin-bottom: 10px; 
             border: 1px solid var(--border-color); 
         }
         
-        .theme-name { 
-            font-size: 14px; 
-            font-weight: bold; 
-            color: var(--accent-color); 
-        }
+        .theme-name { font-size: 14px; font-weight: bold; color: var(--accent-color); }
 
         #criacao-personagem { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.95); 
-            z-index: 100000; 
-            display: none; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            box-sizing: border-box; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.95); z-index: 100000; display: none; 
+            flex-direction: column; justify-content: center; align-items: center; 
+            padding: 20px; box-sizing: border-box; 
         }
         
         .criacao-box { 
             background: linear-gradient(145deg, var(--bg-card), var(--bg-header));
-            padding: 30px; 
-            border: 3px solid var(--accent-color); 
-            border-radius: 0px;
-            width: 100%; 
-            max-width: 500px; 
-            max-height: 85vh; 
-            overflow-y: auto; 
+            padding: 30px; border: 3px solid var(--accent-color); border-radius: 0px;
+            width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; 
         }
         
         .criacao-box input, .criacao-box select, .criacao-box textarea { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 15px; 
-            background: var(--bg-input); 
-            border: 2px solid var(--border-color); 
-            color: var(--text-input); 
-            border-radius: 0px;
-            box-sizing: border-box; 
+            width: 100%; padding: 12px; margin-bottom: 15px; 
+            background: var(--bg-input); border: 2px solid var(--border-color); 
+            color: var(--text-input); border-radius: 0px; box-sizing: border-box; 
             font-family: 'Cinzel', serif;
         }
         
-        .criacao-box select option { 
-            background: var(--bg-card); 
-            color: var(--text-main); 
-        }
+        .criacao-box select option { background: var(--bg-card); color: var(--text-main); }
         
-        .classe-descricao { 
-            background: var(--bg-input); 
-            padding: 15px; 
-            border-radius: 0px;
-            margin: 15px 0; 
-            font-size: 12px; 
-            color: var(--text-dim); 
+        .raca-descricao, .classe-descricao { 
+            background: var(--bg-input); padding: 15px; border-radius: 0px;
+            margin: 15px 0; font-size: 12px; color: var(--text-dim); 
             border-left: 4px solid var(--accent-color); 
         }
 
+        .raca-hybrid-section {
+            background: var(--bg-card); padding: 15px; border: 2px dashed var(--accent-color);
+            margin: 15px 0; border-radius: 0px;
+        }
+        
+        .raca-hybrid-section h4 {
+            color: var(--accent-color); margin-top: 0; font-size: 14px;
+        }
+        
+        .raca-pura-badge {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000; padding: 3px 10px; font-size: 10px; 
+            font-weight: bold; display: inline-block; margin-left: 10px;
+            border-radius: 0px;
+        }
+
         #reset-password-screen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: var(--bg-body); 
-            z-index: 110001; 
-            display: none; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
-            box-sizing: border-box; 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: var(--bg-body); z-index: 110001; display: none; 
+            flex-direction: column; justify-content: center; align-items: center; 
+            padding: 20px; box-sizing: border-box; 
         }
 
         header {
-            display: flex;
-            gap: 20px;
-            padding: 25px;
+            display: flex; gap: 20px; padding: 25px;
             background: linear-gradient(135deg, var(--bg-header), var(--bg-card));
-            border-bottom: 4px solid var(--accent-color);
-            position: relative;
+            border-bottom: 4px solid var(--accent-color); position: relative;
             flex-wrap: wrap;
         }
         
         header::after {
-            content: "⚔️ ⚔️ ⚔️";
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-header);
-            padding: 0 20px;
-            font-size: 12px;
-            color: var(--accent-color);
-            white-space: nowrap;
-            letter-spacing: 5px;
+            content: "⚔️ ⚔️ ⚔️"; position: absolute; bottom: -12px;
+            left: 50%; transform: translateX(-50%); background: var(--bg-header);
+            padding: 0 20px; font-size: 12px; color: var(--accent-color);
+            white-space: nowrap; letter-spacing: 5px;
         }
         
         #imgChar { 
-            width: 120px; 
-            height: 160px; 
-            object-fit: cover; 
-            border: 3px solid var(--accent-color); 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 120px; height: 160px; object-fit: cover; 
+            border: 3px solid var(--accent-color); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             cursor: pointer;
         }
         
-        .header-fields { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 10px; 
-        }
+        .header-fields { flex: 1; display: flex; flex-direction: column; gap: 10px; }
         
         .header-fields input { 
-            background: var(--bg-input); 
-            border: 2px solid var(--border-color); 
-            color: var(--text-input); 
-            padding: 10px; 
-            border-radius: 0px;
-            font-size: 14px; 
-            font-family: 'Cinzel', serif;
+            background: var(--bg-input); border: 2px solid var(--border-color); 
+            color: var(--text-input); padding: 10px; border-radius: 0px;
+            font-size: 14px; font-family: 'Cinzel', serif;
         }
 
         .tabs-wrapper { 
-            overflow-x: auto; 
-            background: var(--bg-header); 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            border-bottom: 2px solid var(--accent-color); 
+            overflow-x: auto; background: var(--bg-header); position: sticky; 
+            top: 0; z-index: 100; border-bottom: 2px solid var(--accent-color); 
         }
         
-        .tabs { 
-            display: flex; 
-            white-space: nowrap; 
-            padding: 5px; 
-        }
+        .tabs { display: flex; white-space: nowrap; padding: 5px; }
         
         .tab-btn { 
             padding: 12px 25px; 
             background: linear-gradient(180deg, var(--bg-card), var(--bg-header));
-            border: 1px solid var(--border-color); 
-            border-bottom: none;
-            color: var(--text-dim); 
-            font-weight: bold; 
-            font-size: 12px; 
-            text-transform: uppercase; 
-            cursor: pointer; 
-            font-family: 'Cinzel', serif;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-            margin-right: 3px;
+            border: 1px solid var(--border-color); border-bottom: none;
+            color: var(--text-dim); font-weight: bold; font-size: 12px; 
+            text-transform: uppercase; cursor: pointer; font-family: 'Cinzel', serif;
+            letter-spacing: 1px; transition: all 0.2s; margin-right: 3px;
         }
         
         .tab-btn.active { 
-            color: var(--accent-color); 
-            border-top: 3px solid var(--accent-color);
+            color: var(--accent-color); border-top: 3px solid var(--accent-color);
             background: var(--bg-card);
         }
 
-        .section { 
-            display: none; 
-            padding: 20px; 
-            animation: slideUp 0.3s ease-out; 
-        }
-        
+        .section { display: none; padding: 20px; animation: slideUp 0.3s ease-out; }
         .section.active { display: block; }
         
         @keyframes slideUp { 
@@ -607,133 +420,71 @@
             to { transform: translateY(0); opacity: 1; } 
         }
 
-        .status-container { 
-            display: grid; 
-            gap: 15px; 
-        }
+        .status-container { display: grid; gap: 15px; }
         
         .bar-card { 
             background: linear-gradient(145deg, rgba(61,38,24,0.9), rgba(74,46,28,0.95));
-            padding: 15px; 
-            border-left: 5px solid var(--accent-color); 
+            padding: 15px; border-left: 5px solid var(--accent-color); 
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
         
         .bar-label { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 10px; 
-            font-weight: bold; 
-            font-size: 14px; 
+            display: flex; justify-content: space-between; margin-bottom: 10px; 
+            font-weight: bold; font-size: 14px; 
         }
         
         .bar-outer { 
-            height: 20px; 
-            background: #2a1a10; 
-            border-radius: 0px;
-            overflow: hidden; 
-            border: 1px solid var(--border-color); 
-            margin-bottom: 12px; 
-            cursor: pointer; 
-            position: relative; 
+            height: 20px; background: #2a1a10; border-radius: 0px;
+            overflow: hidden; border: 1px solid var(--border-color); 
+            margin-bottom: 12px; cursor: pointer; position: relative; 
         }
         
-        .bar-inner { 
-            height: 100%; 
-            transition: 0.1s ease; 
-            pointer-events: none; 
-        }
+        .bar-inner { height: 100%; transition: 0.1s ease; pointer-events: none; }
         
         .bar-click-area { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             display: flex; 
         }
         
-        .bar-half { 
-            flex: 1; 
-            height: 100%; 
-        }
-        
-        .bar-half:first-child { 
-            border-right: 1px solid rgba(255,255,255,0.2); 
-        }
+        .bar-half { flex: 1; height: 100%; }
+        .bar-half:first-child { border-right: 1px solid rgba(255,255,255,0.2); }
 
-        .bar-btns { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr) 70px; 
-            gap: 6px; 
-        }
+        .bar-btns { display: grid; grid-template-columns: repeat(4, 1fr) 70px; gap: 6px; }
         
         .bar-btns button { 
-            padding: 10px 0; 
-            border: none; 
-            border-radius: 0px;
-            background: #2a243d; 
-            color: #fff; 
-            font-weight: bold; 
-            font-size: 12px; 
-            touch-action: manipulation; 
-            cursor: pointer;
-            font-family: 'Cinzel', serif;
+            padding: 10px 0; border: none; border-radius: 0px;
+            background: #2a243d; color: #fff; font-weight: bold; font-size: 12px; 
+            touch-action: manipulation; cursor: pointer; font-family: 'Cinzel', serif;
         }
         
-        .bar-btns button:active { 
-            background: var(--accent-color); 
-        }
+        .bar-btns button:active { background: var(--accent-color); }
         
         .max-input { 
-            background: #000; 
-            border: 1px solid var(--border-color); 
-            color: var(--accent-color); 
-            text-align: center; 
-            border-radius: 0px;
-            font-weight: bold; 
-            font-family: 'Cinzel', serif;
+            background: #000; border: 1px solid var(--border-color); 
+            color: var(--accent-color); text-align: center; border-radius: 0px;
+            font-weight: bold; font-family: 'Cinzel', serif;
         }
 
         .atributo-linha, .pericia-linha { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+            display: flex; justify-content: space-between; align-items: center; 
             background: linear-gradient(145deg, rgba(61,38,24,0.8), rgba(74,46,28,0.9));
-            padding: 12px; 
-            margin-bottom: 8px; 
-            border-left: 4px solid var(--accent-color);
+            padding: 12px; margin-bottom: 8px; border-left: 4px solid var(--accent-color);
         }
         
         .atributo-nome, .pericia-nome { 
-            font-weight: bold; 
-            color: var(--accent-color); 
-            min-width: 120px; 
+            font-weight: bold; color: var(--accent-color); min-width: 120px; 
         }
         
         .atributo-valor, .pericia-valor { 
-            font-size: 20px; 
-            font-weight: bold; 
-            min-width: 50px; 
-            text-align: center; 
+            font-size: 20px; font-weight: bold; min-width: 50px; text-align: center; 
         }
         
-        .atributo-botoes, .pericia-botoes { 
-            display: flex; 
-            gap: 8px; 
-        }
+        .atributo-botoes, .pericia-botoes { display: flex; gap: 8px; }
         
         .atributo-botoes button, .pericia-botoes button { 
-            width: 40px; 
-            height: 40px; 
-            border: none; 
-            background: var(--bg-input); 
-            color: var(--text-main); 
-            font-size: 18px; 
-            font-weight: bold; 
-            border-radius: 0px;
-            cursor: pointer; 
-            border: 1px solid var(--border-color);
+            width: 40px; height: 40px; border: none; background: var(--bg-input); 
+            color: var(--text-main); font-size: 18px; font-weight: bold; 
+            border-radius: 0px; cursor: pointer; border: 1px solid var(--border-color);
             font-family: 'Cinzel', serif;
         }
         
@@ -741,69 +492,39 @@
             background: var(--accent-color); 
         }
 
-        .classe-bonus { 
+        .raca-bonus, .classe-bonus { 
             background: linear-gradient(90deg, var(--accent-color)22, transparent); 
-            padding: 15px; 
-            margin-bottom: 20px; 
-            border-left: 5px solid var(--accent-color); 
+            padding: 15px; margin-bottom: 20px; border-left: 5px solid var(--accent-color); 
         }
         
-        .classe-desc-box { 
-            background: var(--bg-input); 
-            padding: 15px; 
-            margin-top: 20px; 
+        .raca-desc-box, .classe-desc-box { 
+            background: var(--bg-input); padding: 15px; margin-top: 20px; 
             border-left: 4px solid var(--accent-color);
         }
 
         .add-box { 
-            background: var(--bg-card); 
-            padding: 15px; 
-            border: 2px dashed var(--accent-color); 
-            margin-bottom: 20px; 
+            background: var(--bg-card); padding: 15px; 
+            border: 2px dashed var(--accent-color); margin-bottom: 20px; 
         }
         
         .card-item { 
             background: linear-gradient(145deg, rgba(61,38,24,0.9), rgba(74,46,28,0.95));
-            padding: 15px; 
-            margin-bottom: 12px; 
-            border-left: 5px solid var(--accent-color); 
-            position: relative; 
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2); 
+            padding: 15px; margin-bottom: 12px; border-left: 5px solid var(--accent-color); 
+            position: relative; box-shadow: 0 3px 6px rgba(0,0,0,0.2); 
         }
         
-        .card-item h4 { 
-            margin: 0 0 5px 0; 
-            color: var(--accent-color); 
-            font-size: 16px; 
-            cursor: pointer; 
-        }
-        
-        .card-item p { 
-            margin: 0; 
-            font-size: 13px; 
-            color: var(--text-dim); 
-            line-height: 1.4; 
-            cursor: pointer; 
-        }
+        .card-item h4 { margin: 0 0 5px 0; color: var(--accent-color); font-size: 16px; cursor: pointer; }
+        .card-item p { margin: 0; font-size: 13px; color: var(--text-dim); line-height: 1.4; cursor: pointer; }
         
         .btn-delete { 
-            position: absolute; 
-            top: 10px; 
-            right: 10px; 
-            background: rgba(255,0,0,0.2); 
-            color: #ff6666; 
-            border: 1px solid #ff6666; 
-            border-radius: 0px;
-            padding: 4px 10px; 
-            font-size: 10px; 
-            cursor: pointer;
+            position: absolute; top: 10px; right: 10px; 
+            background: rgba(255,0,0,0.2); color: #ff6666; 
+            border: 1px solid #ff6666; border-radius: 0px;
+            padding: 4px 10px; font-size: 10px; cursor: pointer;
             font-family: 'Cinzel', serif;
         }
         
-        .btn-delete:hover {
-            background: #ff4444;
-            color: white;
-        }
+        .btn-delete:hover { background: #ff4444; color: white; }
 
         .pet-card { 
             border-left-color: var(--pet-gold); 
@@ -811,196 +532,103 @@
             border-right: 1px solid rgba(255,215,0,0.2); 
         }
         
-        .pet-meta { 
-            display: flex; 
-            gap: 15px; 
-            align-items: center; 
-            margin-bottom: 15px; 
-        }
+        .pet-meta { display: flex; gap: 15px; align-items: center; margin-bottom: 15px; }
         
-        .pet-img { 
-            width: 70px; 
-            height: 70px; 
-            border: 2px solid var(--pet-gold); 
-            object-fit: cover; 
-        }
+        .pet-img { width: 70px; height: 70px; border: 2px solid var(--pet-gold); object-fit: cover; }
         
         .pet-bar-label { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 5px; 
-            font-size: 11px; 
-            font-weight: bold; 
-            color: var(--pet-gold); 
+            display: flex; justify-content: space-between; margin-bottom: 5px; 
+            font-size: 11px; font-weight: bold; color: var(--pet-gold); 
         }
         
-        .pet-grid-stats { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 8px; 
-            margin-top: 15px; 
-        }
+        .pet-grid-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
         
         .pet-stat-box { 
-            background: rgba(0,0,0,0.3); 
-            padding: 10px; 
-            text-align: center; 
-            border: 1px solid var(--border-color); 
-            font-size: 12px; 
-            cursor: pointer;
+            background: rgba(0,0,0,0.3); padding: 10px; text-align: center; 
+            border: 1px solid var(--border-color); font-size: 12px; cursor: pointer;
         }
         
-        .pet-stat-box:hover {
-            background: rgba(212,163,115,0.2);
-        }
+        .pet-stat-box:hover { background: rgba(212,163,115,0.2); }
 
         .footer { 
-            position: fixed; 
-            bottom: 0; 
-            width: 100%; 
-            background: var(--bg-header); 
-            padding: 15px; 
-            display: flex; 
-            gap: 10px; 
-            border-top: 3px solid var(--accent-color); 
-            box-sizing: border-box; 
+            position: fixed; bottom: 0; width: 100%; background: var(--bg-header); 
+            padding: 15px; display: flex; gap: 10px; 
+            border-top: 3px solid var(--accent-color); box-sizing: border-box; 
         }
         
         .footer button { 
-            flex: 1; 
-            padding: 15px; 
-            border: 2px solid var(--border-color);
-            border-radius: 0px;
-            font-weight: bold; 
-            color: #fff; 
-            cursor: pointer;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            flex: 1; padding: 15px; border: 2px solid var(--border-color);
+            border-radius: 0px; font-weight: bold; color: #fff; cursor: pointer;
+            font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 2px;
             transition: all 0.2s;
         }
         
-        .btn-undo { 
-            background: linear-gradient(180deg, #4a3a2a, #2a1a10);
-        }
-        
-        .btn-redo { 
-            background: linear-gradient(180deg, #4a3a2a, #2a1a10);
-        }
+        .btn-undo { background: linear-gradient(180deg, #4a3a2a, #2a1a10); }
+        .btn-redo { background: linear-gradient(180deg, #4a3a2a, #2a1a10); }
         
         .footer button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             border-color: var(--accent-color);
         }
 
         .btn-add-main { 
-            width: 100%; 
-            padding: 12px; 
+            width: 100%; padding: 12px; 
             background: linear-gradient(180deg, #6b4c3a, #4a2e1c);
-            color: #fff; 
-            border: 2px solid var(--border-color);
-            border-radius: 0px;
-            font-weight: bold; 
-            margin-top: 10px; 
-            cursor: pointer;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: #fff; border: 2px solid var(--border-color);
+            border-radius: 0px; font-weight: bold; margin-top: 10px; cursor: pointer;
+            font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 1px;
         }
         
         .btn-add-main:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         textarea, input, select { 
-            background: var(--bg-input); 
-            border: 2px solid var(--border-color); 
-            color: var(--text-input); 
-            border-radius: 0px;
-            box-sizing: border-box; 
+            background: var(--bg-input); border: 2px solid var(--border-color); 
+            color: var(--text-input); border-radius: 0px; box-sizing: border-box; 
             font-family: 'Cinzel', serif;
         }
         
         textarea:focus, input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent-color);
+            outline: none; border-color: var(--accent-color);
             box-shadow: 0 0 10px rgba(212,163,115,0.3);
         }
         
         .menu-buttons { 
-            display: flex; 
-            gap: 15px; 
-            justify-content: center; 
-            margin-bottom: 30px; 
-            flex-wrap: wrap;
+            display: flex; gap: 15px; justify-content: center; 
+            margin-bottom: 30px; flex-wrap: wrap;
         }
         
         .menu-buttons button { 
-            flex: 1; 
-            max-width: 220px; 
-            padding: 15px; 
-            border: 2px solid var(--border-color);
-            border-radius: 0px;
-            font-weight: bold; 
-            cursor: pointer; 
-            transition: 0.3s;
-            font-family: 'Cinzel', serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            flex: 1; max-width: 220px; padding: 15px; 
+            border: 2px solid var(--border-color); border-radius: 0px;
+            font-weight: bold; cursor: pointer; transition: 0.3s;
+            font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 2px;
         }
         
         .btn-theme { 
-            background: var(--bg-card); 
-            color: var(--text-main); 
+            background: var(--bg-card); color: var(--text-main); 
             border: 2px solid var(--accent-color) !important; 
         }
         
-        .btn-theme:hover { 
-            background: var(--accent-color); 
-            color: black; 
-        }
+        .btn-theme:hover { background: var(--accent-color); color: black; }
 
-        .success-message { 
-            color: #44ff44; 
-            font-size: 12px; 
-            margin-top: 10px; 
-        }
-        
-        .error-message { 
-            color: #ff4444; 
-            font-size: 12px; 
-            margin-top: 10px; 
-        }
+        .success-message { color: #44ff44; font-size: 12px; margin-top: 10px; }
+        .error-message { color: #ff4444; font-size: 12px; margin-top: 10px; }
 
         .update-notice {
-            position: fixed;
-            top: 20px;
-            right: 20px;
+            position: fixed; top: 20px; right: 20px;
             background: linear-gradient(135deg, var(--accent-color), #8b5e3c);
-            color: white;
-            padding: 15px 25px;
-            border: 2px solid #ffd700;
-            border-radius: 0px;
-            z-index: 100001;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            animation: slideIn 0.3s ease;
-            font-family: 'Cinzel', serif;
+            color: white; padding: 15px 25px; border: 2px solid #ffd700;
+            border-radius: 0px; z-index: 100001; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            display: flex; gap: 15px; align-items: center;
+            animation: slideIn 0.3s ease; font-family: 'Cinzel', serif;
         }
         
         .update-notice button {
-            background: white;
-            color: var(--accent-color);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 0px;
-            cursor: pointer;
-            font-weight: bold;
-            font-family: 'Cinzel', serif;
+            background: white; color: var(--accent-color); border: none;
+            padding: 8px 20px; border-radius: 0px; cursor: pointer;
+            font-weight: bold; font-family: 'Cinzel', serif;
         }
         
         @keyframes slideIn {
@@ -1014,36 +642,16 @@
         }
         
         .auth-link {
-            color: var(--accent-color);
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 12px;
-            display: inline-block;
-            margin-top: 10px;
+            color: var(--accent-color); cursor: pointer; text-decoration: underline;
+            font-size: 12px; display: inline-block; margin-top: 10px;
         }
         
-        .auth-link:hover {
-            color: var(--text-main);
-        }
+        .auth-link:hover { color: var(--text-main); }
         
-        ::-webkit-scrollbar {
-            width: 10px;
-            background: var(--bg-body);
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--bg-header);
-            border-left: 1px solid var(--border-color);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 0px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--border-color);
-        }
+        ::-webkit-scrollbar { width: 10px; background: var(--bg-body); }
+        ::-webkit-scrollbar-track { background: var(--bg-header); border-left: 1px solid var(--border-color); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 0px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--border-color); }
     </style>
 </head>
 <body data-theme="dark">
@@ -1090,12 +698,30 @@
         <h2 style="color:var(--accent-color); margin-bottom:20px; text-align:center;">⚔️ FORJAR HERÓI ⚔️</h2>
         <input type="text" id="criacao-nome" placeholder="📝 Nome do Personagem">
         <input type="number" id="criacao-idade" placeholder="🎂 Idade">
-        <select id="criacao-classe">
+        
+        <label style="color:var(--accent-color); font-weight:bold; display:block; margin-top:10px;">🧬 Raça Principal</label>
+        <select id="criacao-raca" onchange="atualizarDescricaoRaca()">
+            <option value="">Selecione uma Raça</option>
+        </select>
+        <div id="raca-descricao" class="raca-descricao"></div>
+        
+        <div id="raca-hybrid-section" class="raca-hybrid-section" style="display:none;">
+            <h4>🧬 Raça Secundária (Híbrido)</h4>
+            <select id="criacao-raca2" onchange="atualizarDescricaoRacaHibrida()">
+                <option value="">Nenhuma (Raça Pura)</option>
+            </select>
+            <div id="raca2-descricao" class="raca-descricao" style="margin-top:10px;"></div>
+            <div id="hibrido-calculo" style="font-size:11px; color:var(--accent-color); margin-top:10px;"></div>
+        </div>
+        
+        <label style="color:var(--accent-color); font-weight:bold; display:block; margin-top:15px;">⚔️ Classe</label>
+        <select id="criacao-classe" onchange="atualizarDescricaoClasse()">
             <option value="">Selecione uma Classe</option>
         </select>
         <div id="classe-descricao" class="classe-descricao"></div>
+        
         <textarea id="criacao-historia" placeholder="📖 História do Personagem..." rows="4"></textarea>
-        <textarea id="criacao-traumas" placeholder="⚠️ Traumas e Marés..." rows="3"></textarea>
+        <textarea id="criacao-traumas" placeholder="⚠️ Traumas e Marcas..." rows="3"></textarea>
         <div style="display:flex; gap:10px;">
             <button class="btn-auth" style="flex:1;" onclick="confirmarCriacao()">⚔️ FORJAR</button>
             <button class="btn-auth" style="flex:1; background:transparent;" onclick="fecharCriacao()">❌ CANCELAR</button>
@@ -1140,7 +766,8 @@
         <div class="header-fields">
             <input id="nome" placeholder="📝 Nome do Personagem" onchange="salvarHeader()">
             <input id="idade" placeholder="🎂 Idade" onchange="salvarHeader()">
-            <input id="classe" placeholder="⚔️ Classe / Ocupação" onchange="salvarHeader()">
+            <input id="raca" placeholder="🧬 Raça" onchange="salvarHeader()" readonly style="background:var(--bg-card); cursor:not-allowed;">
+            <input id="classe" placeholder="⚔️ Classe / Ocupação" onchange="salvarHeader()" readonly style="background:var(--bg-card); cursor:not-allowed;">
         </div>
     </header>
 
@@ -1160,18 +787,22 @@
     </div>
 
     <div class="section active" id="sec-0">
+        <div id="raca-bonus" class="raca-bonus"></div>
         <div id="classe-bonus" class="classe-bonus"></div>
         <div id="status-bars-container" class="status-container"></div>
+        <div id="raca-descricao-status" class="raca-desc-box"></div>
         <div id="classe-descricao-status" class="classe-desc-box"></div>
     </div>
 
     <div class="section" id="sec-1">
-        <div class="classe-bonus" id="atributos-bonus"></div>
+        <div class="raca-bonus" id="atributos-raca-bonus"></div>
+        <div class="classe-bonus" id="atributos-classe-bonus"></div>
         <div id="lista-atributos"></div>
     </div>
 
     <div class="section" id="sec-2">
-        <div class="classe-bonus" id="pericias-bonus"></div>
+        <div class="raca-bonus" id="pericias-raca-bonus"></div>
+        <div class="classe-bonus" id="pericias-classe-bonus"></div>
         <div id="lista-pericias"></div>
     </div>
 
@@ -1289,213 +920,269 @@ let undo = [];
 let redo = [];
 let tempPetImg = "";
 
-// Versão do sistema para controle de atualizações
-const SISTEMA_VERSAO = "3.0";
+const SISTEMA_VERSAO = "5.0";
 
-// ==================== LISTAS ====================
-const atributosBase = ['Destreza', 'Agilidade', 'Força', 'Intelecto', 'Vigor'];
+// ==================== LISTAS DE RAÇAS ====================
+const racas = {
+    "Filhos da Decadência": {
+        bonus: { "Ocultismo": 5, "Vontade": 5, "Conhecimento Arcano": 5 },
+        descricao: "Raça extremamente rara, odiada por muitos e temida por todos. Habitam os antigos cemitérios das guerras. Caminham entre a vida e a morte, resistentes à corrupção.",
+        pura: false
+    },
+    "Carmesim": {
+        bonus: { "Ocultismo": 5, "Combate": 5, "Intelecto": 5 },
+        descricao: "Conhecidos como a própria vontade do sangue. Guerreiros cruéis, sanguinários e impiedosos. Podem realizar Pactos de Sangue.",
+        pura: true
+    },
+    "Bobo da Corte": {
+        bonus: { "Ocultismo": 5, "Intelecto": 5, "Magia Arcana": 5 },
+        descricao: "Primeiros seres capazes de utilizar rituais sem temer a perda da sanidade. Quanto mais próximos da loucura, mais poderosos se tornam.",
+        pura: true
+    },
+    "Palhaço": {
+        bonus: { "Combate": 5, "Intelecto": 5, "Ocultismo": 6 },
+        descricao: "Manipulam o Lodo da Existência, força ligada às criaturas do Lugar Nenhum. Levam caos por onde passam.",
+        pura: false
+    },
+    "Slime Inteligente": {
+        bonus: { "Resistência": 6, "Carisma": 5, "Agilidade": 5 },
+        descricao: "Criaturas naturalmente lentas e pacíficas. Habilidade racial: Absorver e Aprender - copia técnicas após observação.",
+        pura: true
+    },
+    "Orque": {
+        bonus: { "Combate": 5, "Defesa Corporal": 5 },
+        descricao: "Força colossal e lealdade inabalável. Mantêm guerra milenar contra os Oni.",
+        pura: false
+    },
+    "Drogoninano": {
+        bonus: { "Força": 3, "Resistência": 5, "Magias Elementais": 5 },
+        descricao: "Descendentes dos verdadeiros dragões. Escolhem um elemento ao nascer e são resistentes a ele.",
+        pura: false
+    },
+    "Elfo da Lua": {
+        bonus: { "Agilidade": 5, "Furtividade": 5, "Vontade": 5 },
+        descricao: "Ágeis, silenciosos e letais. Considerados os melhores assassinos entre as linhagens élficas.",
+        pura: false
+    },
+    "Elfo do Sol": {
+        bonus: { "Conhecimento": 5, "Magias Primordiais": 5, "Vontade": 5 },
+        descricao: "Orgulhosos e sábios, dedicam suas vidas ao conhecimento e ao domínio das artes primordiais.",
+        pura: false
+    },
+    "Elfo da Mata": {
+        bonus: { "Constituição": 5, "Magias de Cura": 5 },
+        descricao: "Gentis e protetores da natureza, com profunda conexão com as florestas.",
+        pura: false
+    },
+    "Ahnão": {
+        bonus: { "Intelecto": 5, "Força": 5 },
+        descricao: "Ferreiros lendários, conhecidos por sua força e genialidade na criação de armas.",
+        pura: false
+    },
+    "Vampiro": {
+        bonus: { "Vontade": 5, "Agilidade": 5, "Enganação": 5 },
+        descricao: "Carregam a Marca da Lua de Sangue. Extremamente arrogantes e ricos. Fraqueza: magias solares e de fogo.",
+        pura: false
+    },
+    "Oni": {
+        bonus: { "Combate": 5, "Intimidação": 5, "Resistência": 6, "Força": 3 },
+        descricao: "Guerreiros arrogantes e explosivos. Especialistas em armas pesadas. Desvantagem: -5 em Carisma.",
+        pura: true
+    },
+    "Meio Tengu": {
+        bonus: { "Agilidade": 5, "Sabedoria": 5, "Combate": 5 },
+        descricao: "Descendentes dos lendários Tengu. Mestres no uso de espadas e armas leves.",
+        pura: true
+    },
+    "Meio Kitsune": {
+        bonus: { "Carisma": 5, "Ilusão": 5, "Agilidade": 5 },
+        descricao: "Descendentes das raposas espirituais. Mestres da ilusão e manipulação. Habilidade: criar pequenas ilusões.",
+        pura: true
+    },
+    "Meio Dragão Espiritual": {
+        bonus: { "Magia Espiritual": 5, "Resistência": 5, "Vontade": 5 },
+        descricao: "Filhos dos Dragões Espirituais. Enxergam espíritos naturalmente.",
+        pura: true
+    },
+    "Filhos da Verdade": {
+        bonus: { "Percepção": 5, "Vontade": 5, "Conhecimento": 5 },
+        descricao: "Criados pela essência da Verdade. Incapazes de mentir sem consequências. Detectam mentiras.",
+        pura: false
+    },
+    "Caído do Panteão": {
+        bonus: { "Magia Divina": 5, "Vontade": 5, "Presença": 5 },
+        descricao: "Antigos deuses ou descendentes que perderam posição no Panteão. Habilidade divina uma vez por descanso.",
+        pura: false
+    },
+    "Máscara": {
+        bonus: { "Furtividade": 5, "Enganação": 5, "Ocultismo": 5 },
+        descricao: "Escondem identidade atrás de máscaras amaldiçoadas que concedem poderes diferentes.",
+        pura: false
+    },
+    "Meio Demônio": {
+        bonus: { "Força": 5, "Ocultismo": 5, "Intimidação": 5 },
+        descricao: "Filhos de humanos com demônios. Desvantagem: dano aumentado de Magias Sagradas.",
+        pura: true
+    },
+    "Meio Anjo": {
+        bonus: { "Magia Sagrada": 5, "Vontade": 5, "Carisma": 5 },
+        descricao: "Descendentes dos anjos. Desvantagem: dano aumentado de Magias Profanas.",
+        pura: true
+    },
+    "Bestas-Feras": {
+        bonus: { "Agilidade": 5, "Percepção": 5, "Sobrevivência": 5 },
+        descricao: "Mistura de características humanas e animais. Sentidos aguçados (olfato, audição, visão superiores).",
+        pura: false
+    },
+    "Humano": {
+        bonus: { "Adaptabilidade": 3 },
+        descricao: "Incivelmente adaptáveis. Escolha três atributos para receber +3. Habilidade: repetir um teste falho por descanso.",
+        pura: false
+    }
+};
+
+// ==================== LISTA DE CLASSES ====================
+const classes = {
+    "Paladino": {
+        pv: 90, pe: 40,
+        atributos: { "Força": 3 },
+        pericias: { "Combate": 3, "Carisma": 3, "Fortitude": 3 },
+        descricao: "Guerreiros moldados pelo deus que seguem. Cada divindade concede habilidades diferentes."
+    },
+    "Guerreiro": {
+        pv: 85, pe: 45,
+        atributos: { "Força": 4, "Vigor": 4 },
+        pericias: { "Combate": 4, "Fortitude": 4 },
+        descricao: "Lutam por sua própria vontade. Especialistas em armas e combate corpo a corpo."
+    },
+    "Ladino": {
+        pv: 80, pe: 60,
+        atributos: { "Destreza": 5, "Agilidade": 4 },
+        pericias: { "Crime": 4, "Furtividade": 3, "Percepção": 3, "Iniciativa": 2 },
+        descricao: "Especialistas em furtividade, roubo, armadilhas e assassinatos rápidos."
+    },
+    "Fazendeiro": {
+        pv: 75, pe: 50,
+        atributos: { "Vigor": 3 },
+        pericias: { "Sobrevivência": 4, "Conhecimento": 2 },
+        descricao: "Classe simples mas conhece a natureza como ninguém. Excelente sobrevivente."
+    },
+    "Bardo": {
+        pv: 70, pe: 65,
+        atributos: { "Carisma": 4, "Intelecto": 2 },
+        pericias: { "Carisma": 5, "Conhecimento": 2 },
+        descricao: "Usa músicas, histórias e poemas para fortalecer aliados e enfraquecer inimigos."
+    },
+    "Clérigo": {
+        pv: 80, pe: 60,
+        atributos: { "Vigor": 4 },
+        pericias: { "Magia": 3, "Percepção": 2, "Fortitude": 4 },
+        descricao: "Sacerdotes dedicados aos deuses. Especialistas em bênçãos e milagres."
+    },
+    "Curandeiro": {
+        pv: 65, pe: 75,
+        atributos: { "Intelecto": 3, "Vigor": 2 },
+        pericias: { "Conhecimento": 3, "Sobrevivência": 3 },
+        descricao: "Especialista em medicina, ervas, poções e tratamento de doenças. Melhor cura do jogo."
+    },
+    "Bárbaro": {
+        pv: 100, pe: 20,
+        atributos: { "Força": 5, "Vigor": 4 },
+        pericias: { "Fortitude": 4, "Constituição": 4, "Sobrevivência": 2, "Combate": 3 },
+        descricao: "Luta usando força bruta e fúria. Quanto mais tempo em combate, mais perigoso."
+    },
+    "Bruxo": {
+        pv: 60, pe: 85,
+        atributos: { "Intelecto": 4 },
+        pericias: { "Ocultismo": 5, "Magia": 3, "Intimidação": 2 },
+        descricao: "Obtém poderes realizando pactos com entidades misteriosas. Seus poderes sempre possuem um preço."
+    },
+    "Feiticeiro": {
+        pv: 60, pe: 85,
+        atributos: { "Intelecto": 2 },
+        pericias: { "Magia": 4, "Carisma": 3, "Intimidação": 2 },
+        descricao: "Nasce com magia em seu próprio sangue. Alto poder mágico e conjuração rápida."
+    },
+    "Ocultista": {
+        pv: 55, pe: 100,
+        atributos: { "Intelecto": 4 },
+        pericias: { "Ocultismo": 5, "Investigação": 2, "Intimidação": 2 },
+        descricao: "Busca conhecimento proibido através de rituais, espíritos e símbolos antigos."
+    },
+    "Mago": {
+        pv: 50, pe: 95,
+        atributos: { "Intelecto": 5 },
+        pericias: { "Magia": 5, "Conhecimento": 3, "Investigação": 2 },
+        descricao: "Aprende magia através de estudos, livros e pesquisas. Grande variedade de feitiços."
+    },
+    "Samurai": {
+        pv: 80, pe: 80,
+        atributos: { "Destreza": 4, "Força": 3 },
+        pericias: { "Combate": 4, "Intimidação": 2, "Tática": 3 },
+        descricao: "Guerreiro disciplinado que segue rígido código de honra. Especialista em katana e duelos."
+    },
+    "Monge": {
+        pv: 75, pe: 65,
+        atributos: { "Destreza": 4, "Agilidade": 1, "Vigor": 2 },
+        pericias: { "Fortitude": 3, "Percepção": 3, "Combate": 4 },
+        descricao: "Treina corpo, mente e espírito para alcançar a perfeição em combate."
+    }
+};
+
+const atributosBase = ['Força', 'Agilidade', 'Intelecto', 'Vigor', 'Carisma', 'Conhecimento Mágico'];
 const periciasBase = [
-    'Sobrevivência', 'Crime', 'Conhecimento', 'Furtividade', 'Carisma',
-    'Fortitude', 'Tática', 'Percepção', 'Ocultismo', 'Magia',
-    'Intimidação', 'Iniciativa', 'Pontaria', 'Constituição', 'Combate', 'Investigação'
+    'Acrobacias', 'Diplomacia', 'Investigação', 'Combate', 'Crime', 
+    'Furtividade', 'Magia Arcana', 'Magia Sagrada', 'Magia Profana', 
+    'Magia Antiga', 'Ocultismo', 'Fortitude', 'Adestramento', 'Pontaria',
+    'Vontade', 'Conhecimento Arcano', 'Defesa Corporal', 'Magias Elementais',
+    'Conhecimento', 'Magias Primordiais', 'Constituição', 'Magias de Cura',
+    'Enganação', 'Intimidação', 'Resistência', 'Sabedoria', 'Ilusão',
+    'Magia Espiritual', 'Percepção', 'Magia Divina', 'Presença', 'Sobrevivência'
 ];
 
-// Perícias por classe (valores de 1 a 5)
-const periciasClasse = {
-    'Artifice': { 'Conhecimento': 3, 'Investigação': 3, 'Magia': 2 },
-    'Ladino': { 'Crime': 4, 'Furtividade': 3, 'Percepção': 3, 'Iniciativa': 2 },
-    'Nobre': { 'Carisma': 4, 'Tática': 2, 'Conhecimento': 2 },
-    'Investigador': { 'Percepção': 4, 'Investigação': 4, 'Iniciativa': 2 },
-    'Barbaro': { 'Fortitude': 4, 'Constituição': 4, 'Sobrevivência': 2, 'Combate': 3 },
-    'Lutador': { 'Combate': 4, 'Fortitude': 3, 'Iniciativa': 2 },
-    'Samurai': { 'Combate': 4, 'Intimidação': 2, 'Tática': 3 },
-    'Paladino': { 'Combate': 3, 'Carisma': 3, 'Fortitude': 3 },
-    'Ranged': { 'Pontaria': 5, 'Percepção': 2, 'Iniciativa': 2 },
-    'Monge': { 'Fortitude': 3, 'Percepção': 3, 'Combate': 4 },
-    'Ninja': { 'Furtividade': 4, 'Crime': 3, 'Iniciativa': 3, 'Pontaria': 2 },
-    'Agilidade': { 'Iniciativa': 4, 'Percepção': 3, 'Furtividade': 3 },
-    'Mago': { 'Magia': 5, 'Conhecimento': 3, 'Investigação': 2 },
-    'Feiticeiro': { 'Magia': 4, 'Carisma': 3, 'Intimidação': 2 },
-    'Clérigo': { 'Magia': 3, 'Percepção': 2, 'Fortitude': 4 },
-    'Druida': { 'Sobrevivência': 3, 'Percepção': 2, 'Magia': 4 },
-    'Ocultista': { 'Ocultismo': 5, 'Investigação': 2, 'Intimidação': 2 }
-};
-
-// Atributos por classe (valores de 1 a 5) - APENAS OS 5 ATRIBUTOS
-const atributosClasse = {
-    'Artifice': { 'Intelecto': 4, 'Destreza': 3 },
-    'Ladino': { 'Destreza': 5, 'Agilidade': 4 },
-    'Nobre': { 'Intelecto': 2 },
-    'Investigador': { 'Intelecto': 4, 'Agilidade': 3 },
-    'Barbaro': { 'Força': 5, 'Vigor': 4 },
-    'Lutador': { 'Força': 4, 'Vigor': 4 },
-    'Samurai': { 'Destreza': 4, 'Força': 3 },
-    'Paladino': { 'Força': 4 },
-    'Ranged': { 'Destreza': 5, 'Agilidade': 2 },
-    'Monge': { 'Destreza': 4, 'Agilidade': 1, 'Vigor': 2 },
-    'Ninja': { 'Destreza': 5, 'Agilidade': 3 },
-    'Agilidade': { 'Agilidade': 5, 'Destreza': 2 },
-    'Mago': { 'Intelecto': 5 },
-    'Feiticeiro': { 'Intelecto': 2 },
-    'Clérigo': { 'Vigor': 4 },
-    'Druida': { 'Vigor': 3, 'Intelecto': 2 },
-    'Ocultista': { 'Intelecto': 4 }
-};
-
-// PV e PE por classe
-const classeBonus = {
-    'Artifice': { pv: 70, pe: 65 },
-    'Ladino': { pv: 80, pe: 60 },
-    'Nobre': { pv: 70, pe: 60 },
-    'Investigador': { pv: 65, pe: 70 },
-    'Barbaro': { pv: 100, pe: 20 },
-    'Lutador': { pv: 85, pe: 45 },
-    'Samurai': { pv: 80, pe: 80 },
-    'Paladino': { pv: 90, pe: 40 },
-    'Ranged': { pv: 70, pe: 50 },
-    'Monge': { pv: 75, pe: 65 },
-    'Ninja': { pv: 60, pe: 75 },
-    'Agilidade': { pv: 65, pe: 70 },
-    'Mago': { pv: 50, pe: 95 },
-    'Feiticeiro': { pv: 60, pe: 85 },
-    'Clérigo': { pv: 80, pe: 60 },
-    'Druida': { pv: 75, pe: 70 },
-    'Ocultista': { pv: 55, pe: 100 }
-};
-
-// Descrições das classes (resumidas)
-const descricoesClasse = {
-    'Artifice': '🔧 **Artífice** - Criadores de itens mágicos e engenhocas.',
-    'Ladino': '🗝️ **Ladino** - Especialistas em furtividade e esquivas.',
-    'Nobre': '👑 **Nobre** - Usam influência e recursos.',
-    'Investigador': '🔍 **Investigador** - Mestres da dedução.',
-    'Barbaro': '🏹 **Bárbaro** - Guerreiros da fúria interior.',
-    'Lutador': '👊 **Lutador** - Mestres do combate corporal.',
-    'Samurai': '🗡️ **Samurai** - Seguem o bushido.',
-    'Paladino': '⚔️ **Paladino** - Guerreiros sagrados.',
-    'Ranged': '🏹 **Ranged** - Especialistas em distância.',
-    'Monge': '🧘 **Monge** - Canalizam energia interior.',
-    'Ninja': '🥷 **Ninja** - Assassinos sombrios.',
-    'Agilidade': '💨 **Ágil** - Mestres da velocidade.',
-    'Mago': '📚 **Mago** - Estudiosos das artes arcanas.',
-    'Feiticeiro': '✨ **Feiticeiro** - Magia inata.',
-    'Clérigo': '⛪ **Clérigo** - Canalizam poder divino.',
-    'Druida': '🌳 **Druida** - Protetores da natureza.',
-    'Ocultista': '🔮 **Ocultista** - Conhecimentos proibidos.'
-};
-
-// Lista de temas
-const themes = [
-    'dark', 'light', 'vampire', 'night', 'fire', 
-    'ice', 'nature', 'shadow', 'chaos', 'blood', 'royal', 'ocean'
-];
-const themeNames = {
-    'dark': '🌑 Escuro', 'light': '☀️ Claro', 'vampire': '🧛 Vampiro',
-    'night': '🌙 Noturno', 'fire': '🔥 Fogo', 'ice': '❄️ Gelo',
-    'nature': '🌿 Natureza', 'shadow': '👤 Sombrio', 'chaos': '🌈 Caos',
-    'blood': '🩸 Sangue', 'royal': '👑 Real', 'ocean': '🌊 Oceano'
-};
-const themeColors = {
-    'dark': ['#0a090d', '#a370ff'], 'light': ['#f0f2f5', '#5e3c9c'],
-    'vampire': ['#1a0505', '#ff0000'], 'night': ['#0a0f1a', '#4d7cff'],
-    'fire': ['#1f0f07', '#ff6b2b'], 'ice': ['#0f1f2f', '#7fd4ff'],
-    'nature': ['#0a1f0a', '#6fbf6f'], 'shadow': ['#0f0a1a', '#b380ff'],
-    'chaos': ['#0f0f1f', '#ff55ff'], 'blood': ['#1f0a0a', '#e63939'],
-    'royal': ['#1a0f2a', '#ffd700'], 'ocean': ['#0a1f2a', '#4fc3ff']
-};
-
-// ==================== FUNÇÕES DE ATUALIZAÇÃO ====================
-function atualizarFichaParaNovoBalanceamento(fichaAntiga) {
-    if (!fichaAntiga) return fichaAntiga;
-    if (fichaAntiga.versao === SISTEMA_VERSAO) return fichaAntiga;
+// ==================== FUNÇÕES DE CÁLCULO DE RAÇA HÍBRIDA ====================
+function calcularBonusHibrido(raca1, raca2) {
+    if (!raca1 || !raca2 || raca1 === raca2) return null;
+    if (!racas[raca1] || !racas[raca2]) return null;
     
-    console.log('Atualizando ficha antiga:', fichaAntiga.nome);
+    const bonus1 = racas[raca1].bonus;
+    const bonus2 = racas[raca2].bonus;
     
-    const classe = fichaAntiga.classe;
-    if (!classeBonus[classe]) {
-        fichaAntiga.versao = SISTEMA_VERSAO;
-        return fichaAntiga;
-    }
+    const todasChaves = new Set([...Object.keys(bonus1), ...Object.keys(bonus2)]);
+    const bonusFinal = {};
     
-    const fichaNova = JSON.parse(JSON.stringify(fichaAntiga));
-    const bonus = classeBonus[classe];
-    const atributosBonus = atributosClasse[classe] || {};
-    const periciasBonus = periciasClasse[classe] || {};
-    
-    fichaNova.pv = bonus.pv;
-    fichaNova.pvMax = bonus.pv;
-    fichaNova.pe = bonus.pe;
-    fichaNova.peMax = bonus.pe;
-    
-    if (!fichaNova.atributos) fichaNova.atributos = {};
-    atributosBase.forEach(attr => {
-        fichaNova.atributos[attr] = 0;
-    });
-    Object.entries(atributosBonus).forEach(([attr, valor]) => {
-        if (atributosBase.includes(attr)) {
-            fichaNova.atributos[attr] = valor;
+    todasChaves.forEach(chave => {
+        const v1 = bonus1[chave] || 0;
+        const v2 = bonus2[chave] || 0;
+        
+        if (v1 > 0 && v2 > 0) {
+            bonusFinal[chave] = Math.round((v1 + v2) / 2);
+        } else {
+            bonusFinal[chave] = v1 || v2;
         }
     });
     
-    if (!fichaNova.pericias) fichaNova.pericias = {};
-    periciasBase.forEach(per => {
-        fichaNova.pericias[per] = 0;
-    });
-    Object.entries(periciasBonus).forEach(([per, valor]) => {
-        if (periciasBase.includes(per)) {
-            fichaNova.pericias[per] = valor;
-        }
-    });
-    
-    fichaNova.versao = SISTEMA_VERSAO;
-    fichaNova.atualizadaEm = new Date().toISOString();
-    
-    return fichaNova;
+    return bonusFinal;
 }
 
-function verificarEAtualizarFichas() {
-    let atualizacoes = 0;
-    db = db.map(ficha => {
-        if (!ficha.versao || ficha.versao !== SISTEMA_VERSAO) {
-            atualizacoes++;
-            return atualizarFichaParaNovoBalanceamento(ficha);
-        }
-        return ficha;
-    });
+function getDescricaoHibrida(raca1, raca2) {
+    if (!raca1 || !raca2) return '';
+    const bonus = calcularBonusHibrido(raca1, raca2);
+    if (!bonus) return '';
     
-    if (atualizacoes > 0) {
-        console.log(`${atualizacoes} fichas atualizadas`);
-        salvarNoBanco();
-        const notification = document.createElement('div');
-        notification.className = 'update-notice';
-        notification.innerHTML = `
-            <span>✨ ${atualizacoes} ficha(s) foram atualizadas para o novo balanceamento! Seus dados foram preservados!</span>
-            <button onclick="this.parentElement.remove()">OK</button>
-        `;
-        document.body.appendChild(notification);
-        setTimeout(() => {
-            if (notification.parentNode) notification.remove();
-        }, 5000);
-    }
-    return atualizacoes;
+    const bonusTexto = Object.entries(bonus).map(([k,v]) => `${k}: +${v}`).join(', ');
+    return `🧬 Híbrido ${raca1} + ${raca2}<br><strong>Bônus Combinados:</strong> ${bonusTexto}<br><span style="font-size:10px; color:var(--text-dim);">Atributos repetidos foram somados e divididos por 2</span>`;
 }
 
-// ==================== FUNÇÕES DE NOTIFICAÇÃO ====================
+// ==================== NOTIFICAÇÃO ====================
 function mostrarNotificacao(mensagem) {
     const notification = document.createElement('div');
     notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
+        position: fixed; top: 20px; right: 20px;
         background: linear-gradient(135deg, var(--accent-color), #8b5e3c);
-        color: white;
-        padding: 15px 25px;
-        border: 2px solid #ffd700;
-        border-radius: 0px;
-        z-index: 100001;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        animation: slideIn 0.3s ease;
-        font-family: 'Cinzel', serif;
+        color: white; padding: 15px 25px; border: 2px solid #ffd700;
+        border-radius: 0px; z-index: 100001; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s ease; font-family: 'Cinzel', serif;
     `;
     notification.textContent = mensagem;
     document.body.appendChild(notification);
@@ -1505,27 +1192,40 @@ function mostrarNotificacao(mensagem) {
     }, 3000);
 }
 
-// ==================== FUNÇÕES DE BANCO DE DADOS ====================
+// ==================== BANCO DE DADOS ====================
 function salvarNoBanco() {
     if (cur !== -1) db[cur] = JSON.parse(JSON.stringify(ficha));
     if (userUID) {
-        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
+        localStorage.setItem('RPG_HD_V50', JSON.stringify(db));
         rtdb.ref('users/' + userUID + '/fichas').set(db);
+    }
+}
+
+function limparBancoDadosAntigo() {
+    const chavesAntigas = ['RPG_GOLD_V32', 'RPG_HD_V40'];
+    chavesAntigas.forEach(chave => localStorage.removeItem(chave));
+    
+    if (userUID) {
+        rtdb.ref('users/' + userUID + '/fichas').set(null)
+            .then(() => {
+                console.log('Banco de dados antigo limpo com sucesso');
+                db = [];
+                localStorage.setItem('RPG_HD_V50', JSON.stringify(db));
+            })
+            .catch(error => {
+                console.error('Erro ao limpar banco:', error);
+            });
     }
 }
 
 function carregarFichasOnline() {
     const timeoutId = setTimeout(() => {
-        console.log('Timeout ao carregar fichas');
         document.getElementById('loading-screen').style.display = 'none';
-        const savedData = localStorage.getItem('RPG_GOLD_V32');
+        const savedData = localStorage.getItem('RPG_HD_V50');
         if (savedData) {
-            try {
-                db = JSON.parse(savedData);
-                verificarEAtualizarFichas();
-            } catch (e) {
-                db = [];
-            }
+            try { db = JSON.parse(savedData); } catch (e) { db = []; }
+        } else {
+            db = [];
         }
         abrirMenu();
         mostrarNotificacao('Modo offline - usando pergaminhos locais');
@@ -1534,38 +1234,37 @@ function carregarFichasOnline() {
     rtdb.ref('users/' + userUID + '/fichas').once('value', (snapshot) => {
         clearTimeout(timeoutId);
         const data = snapshot.val();
-        if (Array.isArray(data)) {
+        
+        if (!data || (Array.isArray(data) && data.length === 0)) {
+            db = [];
+            limparBancoDadosAntigo();
+            localStorage.setItem('RPG_HD_V50', JSON.stringify(db));
+            mostrarNotificacao('🔄 Novo sistema detectado! Banco de dados limpo para a versão 5.0');
+        } else if (Array.isArray(data)) {
             db = data;
-        } else if (data && typeof data === 'object') {
+        } else if (typeof data === 'object') {
             db = Object.values(data);
         } else {
             db = [];
         }
-        verificarEAtualizarFichas();
-        localStorage.setItem('RPG_GOLD_V32', JSON.stringify(db));
+        
+        localStorage.setItem('RPG_HD_V50', JSON.stringify(db));
         setTimeout(() => {
             document.getElementById('loading-screen').style.display = 'none';
             abrirMenu();
         }, 800);
     }).catch((error) => {
         clearTimeout(timeoutId);
-        console.error('Erro ao carregar fichas:', error);
         document.getElementById('loading-screen').style.display = 'none';
-        const savedData = localStorage.getItem('RPG_GOLD_V32');
+        const savedData = localStorage.getItem('RPG_HD_V50');
         if (savedData) {
-            try {
-                db = JSON.parse(savedData);
-                verificarEAtualizarFichas();
-                mostrarNotificacao('Carregado do pergaminho local');
-            } catch (e) {
-                db = [];
-            }
+            try { db = JSON.parse(savedData); } catch (e) { db = []; }
         }
         abrirMenu();
     });
 }
 
-// ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
+// ==================== AUTENTICAÇÃO ====================
 auth.onAuthStateChanged(user => {
     if (user) {
         userUID = user.uid;
@@ -1588,6 +1287,9 @@ function criarConta() {
     const senha = document.getElementById('login-senha').value;
     if(!email || !senha) return alert("Preencha todos os campos!");
     auth.createUserWithEmailAndPassword(email, senha)
+        .then(() => {
+            limparBancoDadosAntigo();
+        })
         .catch(error => document.getElementById('auth-msg').innerText = error.message);
 }
 
@@ -1603,7 +1305,6 @@ function fazerLogout() { if(confirm("Deseja sair da taverna?")) auth.signOut(); 
 function mostrarResetSenha() {
     document.getElementById('reset-password-screen').style.display = 'flex';
     document.getElementById('reset-msg').innerHTML = '';
-    document.getElementById('reset-email').value = '';
 }
 
 function fecharResetSenha() {
@@ -1613,10 +1314,7 @@ function fecharResetSenha() {
 function enviarResetSenha() {
     const email = document.getElementById('reset-email').value;
     const msgDiv = document.getElementById('reset-msg');
-    if (!email) {
-        msgDiv.innerHTML = 'Por favor, digite seu e-mail.';
-        return;
-    }
+    if (!email) { msgDiv.innerHTML = 'Por favor, digite seu e-mail.'; return; }
     auth.sendPasswordResetEmail(email)
         .then(() => {
             msgDiv.className = 'success-message';
@@ -1629,7 +1327,23 @@ function enviarResetSenha() {
         });
 }
 
-// ==================== FUNÇÕES DE TEMA ====================
+// ==================== TEMAS ====================
+const themes = ['dark', 'light', 'vampire', 'night', 'fire', 'ice', 'nature', 'shadow', 'chaos', 'blood', 'royal', 'ocean'];
+const themeNames = {
+    'dark': '🌑 Escuro', 'light': '☀️ Claro', 'vampire': '🧛 Vampiro',
+    'night': '🌙 Noturno', 'fire': '🔥 Fogo', 'ice': '❄️ Gelo',
+    'nature': '🌿 Natureza', 'shadow': '👤 Sombrio', 'chaos': '🌈 Caos',
+    'blood': '🩸 Sangue', 'royal': '👑 Real', 'ocean': '🌊 Oceano'
+};
+const themeColors = {
+    'dark': ['#0a090d', '#a370ff'], 'light': ['#f0f2f5', '#5e3c9c'],
+    'vampire': ['#1a0505', '#ff0000'], 'night': ['#0a0f1a', '#4d7cff'],
+    'fire': ['#1f0f07', '#ff6b2b'], 'ice': ['#0f1f2f', '#7fd4ff'],
+    'nature': ['#0a1f0a', '#6fbf6f'], 'shadow': ['#0f0a1a', '#b380ff'],
+    'chaos': ['#0f0f1f', '#ff55ff'], 'blood': ['#1f0a0a', '#e63939'],
+    'royal': ['#1a0f2a', '#ffd700'], 'ocean': ['#0a1f2a', '#4fc3ff']
+};
+
 function renderThemes() {
     const grid = document.getElementById('theme-grid');
     if (!grid) return;
@@ -1650,7 +1364,7 @@ function renderThemes() {
 
 function selectTheme(theme) {
     document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('GOLD_THEME', theme);
+    localStorage.setItem('HD_THEME', theme);
     renderThemes();
     mostrarNotificacao(`Tema: ${themeNames[theme]} aplicado ao pergaminho!`);
 }
@@ -1668,6 +1382,7 @@ function fecharTemas() {
     abrirMenu();
 }
 
+// ==================== MENU PRINCIPAL ====================
 function abrirMenu() {
     cur = -1; 
     document.getElementById('theme-screen').style.display = 'none';
@@ -1685,52 +1400,204 @@ function renderListaMenu() {
         return;
     }
     db.forEach((c, i) => {
+        let racaDisplay = c.raca || '?';
+        if (c.raca2) racaDisplay += ' + ' + c.raca2;
+        
         l.innerHTML += `
             <div class="char-card" onclick="selecionar(${i})">
                 <img src="${c.img || 'https://via.placeholder.com/150x150'}">
                 <b style="display:block; margin-bottom:5px;">⚔️ ${c.nome || 'Sem Nome'}</b>
-                <span style="font-size:11px; color:var(--text-dim)">${c.classe || 'Aventureiro'}</span>
+                <span style="font-size:11px; color:var(--text-dim)">${racaDisplay} - ${c.classe || 'Aventureiro'}</span>
                 <button onclick="event.stopPropagation(); apagar(${i})" style="position:absolute; top:-10px; right:-10px; background:#8b0000; border:2px solid var(--border-color); color:white; border-radius:0px; width:28px; height:28px; cursor:pointer;">✖</button>
             </div>`;
     });
 }
 
+// ==================== CRIAÇÃO DE PERSONAGEM ====================
 function abrirCriacao() {
     document.getElementById('criacao-personagem').style.display = 'flex';
+    document.getElementById('raca-descricao').innerHTML = '';
+    document.getElementById('raca2-descricao').innerHTML = '';
     document.getElementById('classe-descricao').innerHTML = '';
+    document.getElementById('hibrido-calculo').innerHTML = '';
+    document.getElementById('raca-hybrid-section').style.display = 'none';
+    preencherSelectRacas();
+    preencherSelectClasses();
 }
 
 function fecharCriacao() {
     document.getElementById('criacao-personagem').style.display = 'none';
 }
 
+function preencherSelectRacas() {
+    const select = document.getElementById('criacao-raca');
+    select.innerHTML = '<option value="">Selecione uma Raça</option>';
+    Object.keys(racas).sort().forEach(raca => {
+        const option = document.createElement('option');
+        option.value = raca;
+        option.textContent = raca + (racas[raca].pura ? ' [PURA]' : '');
+        select.appendChild(option);
+    });
+}
+
+function preencherSelectRacasHibridas(racaPrincipal) {
+    const select = document.getElementById('criacao-raca2');
+    select.innerHTML = '<option value="">Nenhuma (Raça Pura)</option>';
+    
+    if (racas[racaPrincipal]?.pura) {
+        select.innerHTML += '<option value="" disabled>Raças puras não podem ser híbridas</option>';
+        select.disabled = true;
+        return;
+    }
+    
+    select.disabled = false;
+    Object.keys(racas).sort().forEach(raca => {
+        if (raca !== racaPrincipal && !racas[raca].pura) {
+            const option = document.createElement('option');
+            option.value = raca;
+            option.textContent = raca;
+            select.appendChild(option);
+        }
+    });
+}
+
+function preencherSelectClasses() {
+    const select = document.getElementById('criacao-classe');
+    select.innerHTML = '<option value="">Selecione uma Classe</option>';
+    Object.keys(classes).sort().forEach(classe => {
+        const option = document.createElement('option');
+        option.value = classe;
+        option.textContent = classe;
+        select.appendChild(option);
+    });
+}
+
+function atualizarDescricaoRaca() {
+    const raca = document.getElementById('criacao-raca').value;
+    const hybridSection = document.getElementById('raca-hybrid-section');
+    
+    if (raca && racas[raca]) {
+        const bonus = racas[raca].bonus;
+        const bonusTexto = Object.entries(bonus).map(([k,v]) => `${k}: +${v}`).join(', ');
+        const isPura = racas[raca].pura;
+        
+        document.getElementById('raca-descricao').innerHTML = 
+            `<strong>🧬 ${raca}</strong> ${isPura ? '<span class="raca-pura-badge">PURA</span>' : ''}<br>
+             <strong>Bônus:</strong> ${bonusTexto}<br>
+             <span style="color:var(--text-dim);">${racas[raca].descricao}</span>`;
+        
+        if (isPura) {
+            hybridSection.style.display = 'block';
+            document.getElementById('criacao-raca2').innerHTML = 
+                '<option value="">Nenhuma (Raça Pura)</option><option value="" disabled>⚠️ Raças puras não podem ser híbridas</option>';
+            document.getElementById('criacao-raca2').disabled = true;
+            document.getElementById('raca2-descricao').innerHTML = 
+                '<span style="color:#ffd700;">⚠️ Esta é uma raça pura. Não pode ser combinada com outras raças.</span>';
+            document.getElementById('hibrido-calculo').innerHTML = '';
+        } else {
+            hybridSection.style.display = 'block';
+            preencherSelectRacasHibridas(raca);
+            document.getElementById('criacao-raca2').disabled = false;
+            document.getElementById('raca2-descricao').innerHTML = '';
+            document.getElementById('hibrido-calculo').innerHTML = '';
+        }
+    } else {
+        document.getElementById('raca-descricao').innerHTML = '';
+        hybridSection.style.display = 'none';
+    }
+}
+
+function atualizarDescricaoRacaHibrida() {
+    const raca1 = document.getElementById('criacao-raca').value;
+    const raca2 = document.getElementById('criacao-raca2').value;
+    
+    if (raca1 && raca2 && racas[raca2]) {
+        const bonus = racas[raca2].bonus;
+        const bonusTexto = Object.entries(bonus).map(([k,v]) => `${k}: +${v}`).join(', ');
+        
+        document.getElementById('raca2-descricao').innerHTML = 
+            `<strong>🧬 ${raca2}</strong><br>
+             <strong>Bônus:</strong> ${bonusTexto}<br>
+             <span style="color:var(--text-dim);">${racas[raca2].descricao}</span>`;
+        
+        const bonusFinal = calcularBonusHibrido(raca1, raca2);
+        if (bonusFinal) {
+            const bonusFinalTexto = Object.entries(bonusFinal).map(([k,v]) => `${k}: +${v}`).join(', ');
+            document.getElementById('hibrido-calculo').innerHTML = 
+                `<strong>🔮 Bônus Híbrido Final:</strong> ${bonusFinalTexto}<br>
+                 <span style="font-size:10px;">Atributos repetidos: (${raca1} + ${raca2}) ÷ 2</span>`;
+        }
+    } else {
+        document.getElementById('raca2-descricao').innerHTML = '';
+        document.getElementById('hibrido-calculo').innerHTML = '';
+    }
+}
+
+function atualizarDescricaoClasse() {
+    const classe = document.getElementById('criacao-classe').value;
+    if (classe && classes[classe]) {
+        const c = classes[classe];
+        const attrTexto = Object.entries(c.atributos).map(([k,v]) => `${k}: +${v}`).join(', ');
+        const perTexto = Object.entries(c.pericias).map(([k,v]) => `${k}: +${v}`).join(', ');
+        document.getElementById('classe-descricao').innerHTML = 
+            `<strong>⚔️ ${classe} ⚔️</strong><br>
+             <span style="color:var(--hp-color);">❤️ PV: ${c.pv}</span> | <span style="color:var(--en-color);">🔮 PE: ${c.pe}</span><br>
+             <strong>Atributos:</strong> ${attrTexto}<br>
+             <strong>Perícias:</strong> ${perTexto}<br>
+             <span style="color:var(--text-dim);">${c.descricao}</span>`;
+    } else {
+        document.getElementById('classe-descricao').innerHTML = '';
+    }
+}
+
 function confirmarCriacao() {
     const nome = document.getElementById('criacao-nome').value;
     const idade = document.getElementById('criacao-idade').value;
+    const raca = document.getElementById('criacao-raca').value;
+    const raca2 = document.getElementById('criacao-raca2').value;
     const classe = document.getElementById('criacao-classe').value;
     const historia = document.getElementById('criacao-historia').value;
     const traumas = document.getElementById('criacao-traumas').value;
 
-    if (!nome || !classe) {
-        alert('Preencha pelo menos nome e classe!');
+    if (!nome || !raca || !classe) {
+        alert('Preencha pelo menos nome, raça e classe!');
         return;
     }
 
-    const bonus = classeBonus[classe] || { pv: 50, pe: 50 };
-    const atributosBonus = atributosClasse[classe] || {};
-    const periciasBonus = periciasClasse[classe] || {};
+    if (racas[raca]?.pura && raca2) {
+        alert('⚠️ Raças puras não podem ser híbridas! Escolha "Nenhuma" na raça secundária.');
+        return;
+    }
+
+    let bonusRaca = {};
+    let racaFinal = raca;
+    
+    if (raca2 && !racas[raca]?.pura) {
+        bonusRaca = calcularBonusHibrido(raca, raca2) || {};
+        racaFinal = raca + ' + ' + raca2;
+    } else {
+        bonusRaca = { ...racas[raca]?.bonus } || {};
+    }
+
+    const bonusClasse = classes[classe];
+    const pvMax = bonusClasse?.pv || 50;
+    const peMax = bonusClasse?.pe || 50;
+    const atributosClasseBonus = bonusClasse?.atributos || {};
+    const periciasClasseBonus = bonusClasse?.pericias || {};
     
     const novo = {
         versao: SISTEMA_VERSAO,
         nome: nome,
         idade: idade,
-        raca: '',
+        raca: raca,
+        raca2: raca2 || null,
+        racaDisplay: racaFinal,
         classe: classe,
         img: '',
-        pv: bonus.pv,
-        pvMax: bonus.pv,
-        pe: bonus.pe,
-        peMax: bonus.pe,
+        pv: pvMax,
+        pvMax: pvMax,
+        pe: peMax,
+        peMax: peMax,
         sanidade: 50,
         sanidadeMax: 100,
         arc: 0,
@@ -1751,12 +1618,27 @@ function confirmarCriacao() {
         pets: []
     };
 
+    Object.entries(bonusRaca).forEach(([attr, valor]) => {
+        if (periciasBase.includes(attr)) {
+            novo.pericias[attr] = valor;
+        } else if (atributosBase.includes(attr)) {
+            novo.atributos[attr] = valor;
+        }
+    });
+
+    Object.entries(atributosClasseBonus).forEach(([attr, valor]) => {
+        novo.atributos[attr] = (novo.atributos[attr] || 0) + valor;
+    });
+    Object.entries(periciasClasseBonus).forEach(([per, valor]) => {
+        novo.pericias[per] = (novo.pericias[per] || 0) + valor;
+    });
+
     atributosBase.forEach(attr => {
-        novo.atributos[attr] = atributosBonus[attr] || 0;
+        if (!(attr in novo.atributos)) novo.atributos[attr] = 0;
     });
 
     periciasBase.forEach(per => {
-        novo.pericias[per] = periciasBonus[per] || 0;
+        if (!(per in novo.pericias)) novo.pericias[per] = 0;
     });
 
     db.push(novo);
@@ -1766,16 +1648,10 @@ function confirmarCriacao() {
     mostrarNotificacao(`⚔️ ${nome} foi forjado(a) nos pergaminhos!`);
 }
 
+// ==================== SELEÇÃO E MANIPULAÇÃO DE FICHA ====================
 function selecionar(i) {
     cur = i; 
     ficha = JSON.parse(JSON.stringify(db[i]));
-    
-    if (!ficha.versao || ficha.versao !== SISTEMA_VERSAO) {
-        ficha = atualizarFichaParaNovoBalanceamento(ficha);
-        db[cur] = ficha;
-        salvarNoBanco();
-        mostrarNotificacao('Pergaminho atualizado! Seus dados foram preservados.');
-    }
     
     if(!ficha.inventario) ficha.inventario = [];
     if(!ficha.penitencias) ficha.penitencias = [];
@@ -1789,6 +1665,10 @@ function selecionar(i) {
     if(!ficha.sanidadeMax) ficha.sanidadeMax = 100;
     if(!ficha.corr) ficha.corr = 0;
     if(!ficha.corrMax) ficha.corrMax = 100;
+    if(!ficha.raca2) ficha.raca2 = null;
+    if(!ficha.racaDisplay) {
+        ficha.racaDisplay = ficha.raca2 ? ficha.raca + ' + ' + ficha.raca2 : ficha.raca;
+    }
 
     document.getElementById('menu-screen').style.display = 'none';
     document.getElementById('btn-menu-global').style.display = 'flex';
@@ -1796,65 +1676,83 @@ function selecionar(i) {
     renderFicha();
 }
 
-function apagar(i) { if(confirm(`Deseja apagar ${db[i].nome} dos pergaminhos?`)) { db.splice(i, 1); salvarNoBanco(); renderListaMenu(); mostrarNotificacao('Herói removido dos pergaminhos!'); } }
-function snap() { undo.push(JSON.stringify(ficha)); redo = []; if(undo.length > 30) undo.shift(); }
+function apagar(i) { 
+    if(confirm(`Deseja apagar ${db[i].nome} dos pergaminhos?`)) { 
+        db.splice(i, 1); 
+        salvarNoBanco(); 
+        renderListaMenu(); 
+        mostrarNotificacao('Herói removido dos pergaminhos!'); 
+    } 
+}
+
+function snap() { 
+    undo.push(JSON.stringify(ficha)); 
+    redo = []; 
+    if(undo.length > 30) undo.shift(); 
+}
+
 function triggerImg() { document.getElementById('fileInput').click(); }
+
 function uploadImagem(e) {
     const reader = new FileReader();
     reader.onload = (ev) => { snap(); ficha.img = ev.target.result; renderFicha(); };
     reader.readAsDataURL(e.target.files[0]);
 }
+
 function previewPet(e) {
     const reader = new FileReader();
-    reader.onload = (ev) => { tempPetImg = ev.target.result; document.getElementById('petPreview').src = tempPetImg; document.getElementById('petPreview').style.display = 'block'; };
+    reader.onload = (ev) => { 
+        tempPetImg = ev.target.result; 
+        document.getElementById('petPreview').src = tempPetImg; 
+        document.getElementById('petPreview').style.display = 'block'; 
+    };
     reader.readAsDataURL(e.target.files[0]);
 }
 
 function editar(caminho, idx, campo, rotulo) {
-    let atual = (caminho === 'at') ? ((campo === 'n') ? idx : ficha.atributos[idx]) : 
-                 (caminho === 'per') ? ((campo === 'n') ? idx : ficha.pericias[idx]) :
-                 ficha[caminho][idx][campo];
+    let atual;
+    if (caminho === 'at') {
+        atual = (campo === 'n') ? idx : ficha.atributos[idx];
+    } else if (caminho === 'per') {
+        atual = (campo === 'n') ? idx : ficha.pericias[idx];
+    } else {
+        atual = ficha[caminho][idx][campo];
+    }
     let novo = prompt(`Editar ${rotulo}:`, atual);
     if(novo !== null) {
         snap();
         if(caminho === 'at') {
-            if(campo === 'n') { let val = ficha.atributos[idx]; delete ficha.atributos[idx]; ficha.atributos[novo] = val; }
-            else ficha.atributos[idx] = parseInt(novo) || 0;
+            if(campo === 'n') { 
+                let val = ficha.atributos[idx]; 
+                delete ficha.atributos[idx]; 
+                ficha.atributos[novo] = val; 
+            } else { 
+                ficha.atributos[idx] = parseInt(novo) || 0; 
+            }
         } else if(caminho === 'per') {
-            if(campo === 'n') { let val = ficha.pericias[idx]; delete ficha.pericias[idx]; ficha.pericias[novo] = val; }
-            else ficha.pericias[idx] = parseInt(novo) || 0;
-        } else { ficha[caminho][idx][campo] = novo; }
+            if(campo === 'n') { 
+                let val = ficha.pericias[idx]; 
+                delete ficha.pericias[idx]; 
+                ficha.pericias[novo] = val; 
+            } else { 
+                ficha.pericias[idx] = parseInt(novo) || 0; 
+            }
+        } else { 
+            ficha[caminho][idx][campo] = novo; 
+        }
         renderFicha();
     }
 }
 
-function modVal(attr, qtd) { snap(); ficha[attr] = Math.min(ficha[attr+'Max'] || 100, Math.max(0, (parseInt(ficha[attr]) || 0) + parseInt(qtd))); renderFicha(); }
-function setMax(attr, val) { snap(); ficha[attr+'Max'] = Math.min(100, Math.max(1, parseInt(val) || 1)); renderFicha(); }
-
-// Funções para vínculo individual dos familiares
-function modPetVinculo(idx, qtd) { 
+function modVal(attr, qtd) { 
     snap(); 
-    let p = ficha.pets[idx]; 
-    p.vinculo = Math.min(p.vinculoMax || 100, Math.max(0, (parseInt(p.vinculo) || 0) + parseInt(qtd))); 
+    ficha[attr] = Math.min(ficha[attr+'Max'] || 100, Math.max(0, (parseInt(ficha[attr]) || 0) + parseInt(qtd))); 
     renderFicha(); 
 }
 
-function setPetVinculoMax(idx, val) { 
+function setMax(attr, val) { 
     snap(); 
-    ficha.pets[idx].vinculoMax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
-    renderFicha(); 
-}
-
-function modPetHp(idx, qtd) { 
-    snap(); 
-    let p = ficha.pets[idx]; 
-    p.v = Math.min(p.vmax, Math.max(0, (parseInt(p.v) || 0) + parseInt(qtd))); 
-    renderFicha(); 
-}
-
-function setPetMaxHp(idx, val) { 
-    snap(); 
-    ficha.pets[idx].vmax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
+    ficha[attr+'Max'] = Math.min(100, Math.max(1, parseInt(val) || 1)); 
     renderFicha(); 
 }
 
@@ -1872,6 +1770,32 @@ function modPericia(per, qtd) {
     renderFicha();
 }
 
+function modPetHp(idx, qtd) { 
+    snap(); 
+    let p = ficha.pets[idx]; 
+    p.v = Math.min(p.vmax, Math.max(0, (parseInt(p.v) || 0) + parseInt(qtd))); 
+    renderFicha(); 
+}
+
+function setPetMaxHp(idx, val) { 
+    snap(); 
+    ficha.pets[idx].vmax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
+    renderFicha(); 
+}
+
+function modPetVinculo(idx, qtd) { 
+    snap(); 
+    let p = ficha.pets[idx]; 
+    p.vinculo = Math.min(p.vinculoMax || 100, Math.max(0, (parseInt(p.vinculo) || 0) + parseInt(qtd))); 
+    renderFicha(); 
+}
+
+function setPetVinculoMax(idx, val) { 
+    snap(); 
+    ficha.pets[idx].vinculoMax = Math.min(100, Math.max(1, parseInt(val) || 1)); 
+    renderFicha(); 
+}
+
 function handleBarClick(attr, event) {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -1882,69 +1806,6 @@ function handleBarClick(attr, event) {
     snap();
     ficha[attr] = Math.min(maxVal, Math.max(0, newVal));
     renderFicha();
-}
-
-// Timers para clique longo
-let autoTimers = {};
-function startAutoMod(attr, qtd, isPet = false, petIdx = null, isVinculo = false) {
-    const key = attr + (isPet ? '_pet' + petIdx : '') + (isVinculo ? '_vinculo' : '');
-    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
-    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
-    
-    if (isPet && isVinculo) modPetVinculo(petIdx, qtd);
-    else if (isPet) modPetHp(petIdx, qtd);
-    else modVal(attr, qtd);
-    
-    autoTimers[key] = setTimeout(() => {
-        const intervalId = setInterval(() => {
-            if (isPet && isVinculo) modPetVinculo(petIdx, qtd);
-            else if (isPet) modPetHp(petIdx, qtd);
-            else modVal(attr, qtd);
-        }, 100);
-        autoTimers[key + '_interval'] = intervalId;
-    }, 500);
-}
-
-function stopAutoMod(attr, isPet = false, petIdx = null, isVinculo = false) {
-    const key = attr + (isPet ? '_pet' + petIdx : '') + (isVinculo ? '_vinculo' : '');
-    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
-    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
-}
-
-function startAutoModAtributo(attr, qtd) {
-    const key = 'atributo_' + attr;
-    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
-    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
-    modAtributo(attr, qtd);
-    autoTimers[key] = setTimeout(() => {
-        const intervalId = setInterval(() => {
-            modAtributo(attr, qtd);
-        }, 100);
-        autoTimers[key + '_interval'] = intervalId;
-    }, 500);
-}
-function stopAutoModAtributo(attr) {
-    const key = 'atributo_' + attr;
-    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
-    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
-}
-
-function startAutoModPericia(per, qtd) {
-    const key = 'pericia_' + per;
-    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
-    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
-    modPericia(per, qtd);
-    autoTimers[key] = setTimeout(() => {
-        const intervalId = setInterval(() => {
-            modPericia(per, qtd);
-        }, 100);
-        autoTimers[key + '_interval'] = intervalId;
-    }, 500);
-}
-function stopAutoModPericia(per) {
-    const key = 'pericia_' + per;
-    if (autoTimers[key]) { clearTimeout(autoTimers[key]); delete autoTimers[key]; }
-    if (autoTimers[key + '_interval']) { clearInterval(autoTimers[key + '_interval']); delete autoTimers[key + '_interval']; }
 }
 
 function addItem(key, ids, props) {
@@ -1980,13 +1841,9 @@ function addPetFull() {
     });
     tempPetImg = ""; 
     document.getElementById('petPreview').style.display = 'none';
-    document.getElementById('petN').value = '';
-    document.getElementById('petV').value = '';
-    document.getElementById('petLvl').value = '';
-    document.getElementById('petDef').value = '';
-    document.getElementById('petAtk').value = '';
-    document.getElementById('petVinculo').value = '100';
-    document.getElementById('petD').value = '';
+    ['petN','petV','petLvl','petDef','petAtk','petVinculo','petD'].forEach(id => {
+        document.getElementById(id).value = id === 'petVinculo' ? '100' : '';
+    });
     renderFicha();
     mostrarNotificacao(`🐉 ${n} vinculado ao seu destino!`);
 }
@@ -2003,54 +1860,64 @@ function remover(key, idx) {
 function salvarHeader() { 
     ficha.nome = document.getElementById('nome').value; 
     ficha.idade = document.getElementById('idade').value; 
-    ficha.classe = document.getElementById('classe').value; 
     salvarNoBanco(); 
-    mostrarNotificacao('Alterações salvas no pergaminho!');
 }
 
 function salvarDiario() { 
     ficha.historia = document.getElementById('historia').value; 
     ficha.anotacoes = document.getElementById('anotacoes').value; 
     salvarNoBanco(); 
-    mostrarNotificacao('Diário salvo no pergaminho!');
 }
 
+// ==================== RENDERIZAÇÃO COMPLETA ====================
 function renderFicha() {
     document.getElementById('nome').value = ficha.nome || '';
     document.getElementById('idade').value = ficha.idade || '';
+    document.getElementById('raca').value = ficha.racaDisplay || ficha.raca || '';
     document.getElementById('classe').value = ficha.classe || '';
     document.getElementById('imgChar').src = ficha.img || 'https://via.placeholder.com/120x160';
 
+    const racaAtual = ficha.raca;
+    const raca2Atual = ficha.raca2;
     const classeAtual = ficha.classe;
-    const bonus = classeBonus[classeAtual] || null;
-    const atributosBonus = atributosClasse[classeAtual] || {};
-    const periciasBonus = periciasClasse[classeAtual] || {};
+    
+    let bonusRaca = {};
+    let descricaoRaca = '';
+    let isPura = racas[racaAtual]?.pura || false;
+    let isHibrida = raca2Atual && !isPura;
+    
+    if (isHibrida) {
+        bonusRaca = calcularBonusHibrido(racaAtual, raca2Atual) || {};
+        descricaoRaca = getDescricaoHibrida(racaAtual, raca2Atual);
+    } else if (racas[racaAtual]) {
+        bonusRaca = { ...racas[racaAtual].bonus };
+        descricaoRaca = `<strong>🧬 ${racaAtual}</strong> ${isPura ? '<span class="raca-pura-badge">PURA</span>' : ''}<br>${racas[racaAtual].descricao}`;
+    }
+    
+    const bonusClasse = classes[classeAtual] || null;
+
+    const racaBonusEl = document.getElementById('raca-bonus');
+    const racaDescEl = document.getElementById('raca-descricao-status');
+    if (Object.keys(bonusRaca).length > 0) {
+        const bonusTexto = Object.entries(bonusRaca).map(([k,v]) => `${k}: +${v}`).join(' · ');
+        const titulo = isHibrida ? `🧬 Híbrido ${racaAtual} + ${raca2Atual}` : `🧬 ${racaAtual}`;
+        racaBonusEl.innerHTML = `<strong style="color:var(--accent-color);">${titulo}</strong> ${isPura ? '<span class="raca-pura-badge">PURA</span>' : ''} - Bônus: ${bonusTexto}`;
+        racaDescEl.innerHTML = `<strong>📜 Descrição da Raça:</strong><br>${descricaoRaca}`;
+    } else {
+        racaBonusEl.innerHTML = '';
+        racaDescEl.innerHTML = '';
+    }
+
     const classeBonusEl = document.getElementById('classe-bonus');
     const classeDescEl = document.getElementById('classe-descricao-status');
-    const atributosBonusEl = document.getElementById('atributos-bonus');
-    const periciasBonusEl = document.getElementById('pericias-bonus');
-
-    if (bonus && classeAtual) {
-        const atributosTexto = Object.entries(atributosBonus)
-            .filter(([a]) => atributosBase.includes(a))
-            .map(([a,b]) => `${a} ${b}`)
-            .join(' · ');
-        classeBonusEl.innerHTML = `<strong style="color:var(--accent-color);">⚔️ ${classeAtual} ⚔️</strong> - ❤️ PV: ${bonus.pv} | 🔮 PE: ${bonus.pe}`;
-        classeDescEl.innerHTML = `<strong>📜 Descrição da Classe:</strong><br>${descricoesClasse[classeAtual] || ''}`;
-        atributosBonusEl.innerHTML = `<strong>💪 Bônus de Atributos:</strong> ${atributosTexto || 'Nenhum'}`;
-        
-        const periciasTexto = Object.entries(periciasBonus)
-            .map(([p,v]) => `${p} ${v}`)
-            .join(' · ');
-        periciasBonusEl.innerHTML = `<strong>📖 Perícias Treinadas:</strong> ${periciasTexto}`;
+    if (bonusClasse) {
+        classeBonusEl.innerHTML = `<strong style="color:var(--accent-color);">⚔️ ${classeAtual} ⚔️</strong> - ❤️ PV: ${bonusClasse.pv} | 🔮 PE: ${bonusClasse.pe}`;
+        classeDescEl.innerHTML = `<strong>📜 Descrição da Classe:</strong><br>${bonusClasse.descricao}`;
     } else {
         classeBonusEl.innerHTML = '';
         classeDescEl.innerHTML = '';
-        atributosBonusEl.innerHTML = '';
-        periciasBonusEl.innerHTML = '';
     }
 
-    // Barras de status
     const sCont = document.getElementById('status-bars-container');
     sCont.innerHTML = '';
     const stats = [
@@ -2085,42 +1952,108 @@ function renderFicha() {
         </div>`;
     });
 
-    // Atributos
+    const atributosRacaBonusEl = document.getElementById('atributos-raca-bonus');
+    const atributosClasseBonusEl = document.getElementById('atributos-classe-bonus');
+    
+    const racaAttrBonus = Object.entries(bonusRaca)
+        .filter(([k]) => atributosBase.includes(k))
+        .map(([k,v]) => `${k}: +${v}`)
+        .join(' · ');
+    atributosRacaBonusEl.innerHTML = racaAttrBonus ? `<strong>🧬 Bônus Racial:</strong> ${racaAttrBonus}` : '';
+    
+    if (bonusClasse) {
+        const classeAttrBonus = Object.entries(bonusClasse.atributos)
+            .map(([k,v]) => `${k}: +${v}`)
+            .join(' · ');
+        atributosClasseBonusEl.innerHTML = `<strong>⚔️ Bônus de Classe:</strong> ${classeAttrBonus}`;
+    } else {
+        atributosClasseBonusEl.innerHTML = '';
+    }
+
     const atList = document.getElementById('lista-atributos');
     atList.innerHTML = '';
     atributosBase.forEach(attr => {
         let valor = ficha.atributos[attr] || 0;
+        let racaBonusVal = (atributosBase.includes(attr) && bonusRaca[attr]) ? bonusRaca[attr] : 0;
+        let classeBonusVal = (bonusClasse && bonusClasse.atributos[attr]) ? bonusClasse.atributos[attr] : 0;
+        let totalBonus = racaBonusVal + classeBonusVal;
+        let valorTotal = valor + totalBonus;
+        
         atList.innerHTML += `
-            <div class="atributo-linha">
-                <span class="atributo-nome">💪 ${attr}</span>
-                <span class="atributo-valor">${valor}</span>
+            <div class="atributo-linha" style="${totalBonus > 0 ? 'border-left: 3px solid var(--accent-color);' : ''}">
+                <span class="atributo-nome">💪 ${attr} ${totalBonus > 0 ? '⭐' : ''}</span>
+                <span class="atributo-valor">${valorTotal}</span>
                 <div class="atributo-botoes">
-                    <button onmousedown="startAutoModAtributo('${attr}', -1)" onmouseup="stopAutoModAtributo('${attr}')" onmouseleave="stopAutoModAtributo('${attr}')">-</button>
-                    <button onmousedown="startAutoModAtributo('${attr}', 1)" onmouseup="stopAutoModAtributo('${attr}')" onmouseleave="stopAutoModAtributo('${attr}')">+</button>
+                    <button onclick="modAtributo('${attr}', -1)">-</button>
+                    <button onclick="modAtributo('${attr}', 1)">+</button>
                 </div>
             </div>
         `;
     });
 
-    // Perícias
+    const periciasRacaBonusEl = document.getElementById('pericias-raca-bonus');
+    const periciasClasseBonusEl = document.getElementById('pericias-classe-bonus');
+    
+    const racaPerBonus = Object.entries(bonusRaca)
+        .filter(([k]) => periciasBase.includes(k))
+        .map(([k,v]) => `${k}: +${v}`)
+        .join(' · ');
+    periciasRacaBonusEl.innerHTML = racaPerBonus ? `<strong>🧬 Bônus Racial:</strong> ${racaPerBonus}` : '';
+    
+    if (bonusClasse) {
+        const classePerBonus = Object.entries(bonusClasse.pericias)
+            .map(([k,v]) => `${k}: +${v}`)
+            .join(' · ');
+        periciasClasseBonusEl.innerHTML = `<strong>⚔️ Bônus de Classe:</strong> ${classePerBonus}`;
+    } else {
+        periciasClasseBonusEl.innerHTML = '';
+    }
+
     const perList = document.getElementById('lista-pericias');
     perList.innerHTML = '';
-    periciasBase.forEach(per => {
+    
+    let todasPericias = new Set([...periciasBase, ...Object.keys(ficha.pericias)]);
+    todasPericias.forEach(per => {
         let valor = ficha.pericias[per] || 0;
-        let isClassePer = periciasBonus.hasOwnProperty(per);
+        let racaBonusVal = (periciasBase.includes(per) && bonusRaca[per]) ? bonusRaca[per] : 0;
+        let classeBonusVal = (bonusClasse && bonusClasse.pericias[per]) ? bonusClasse.pericias[per] : 0;
+        let totalBonus = racaBonusVal + classeBonusVal;
+        let valorTotal = valor + totalBonus;
+        
         perList.innerHTML += `
-            <div class="pericia-linha" style="${isClassePer ? 'border-left: 3px solid var(--accent-color);' : ''}">
-                <span class="pericia-nome">📖 ${per} ${isClassePer ? '⭐' : ''}</span>
-                <span class="pericia-valor">${valor}</span>
+            <div class="pericia-linha" style="${totalBonus > 0 ? 'border-left: 3px solid var(--accent-color);' : ''}">
+                <span class="pericia-nome">📖 ${per} ${totalBonus > 0 ? '⭐' : ''}</span>
+                <span class="pericia-valor">${valorTotal}</span>
                 <div class="pericia-botoes">
-                    <button onmousedown="startAutoModPericia('${per}', -1)" onmouseup="stopAutoModPericia('${per}')" onmouseleave="stopAutoModPericia('${per}')">-</button>
-                    <button onmousedown="startAutoModPericia('${per}', 1)" onmouseup="stopAutoModPericia('${per}')" onmouseleave="stopAutoModPericia('${per}')">+</button>
+                    <button onclick="modPericia('${per}', -1)">-</button>
+                    <button onclick="modPericia('${per}', 1)">+</button>
                 </div>
             </div>
         `;
     });
 
-    // Renderizar Familiares (com vínculo individual)
+    function renderGeneric(id, data, type, temp) {
+        const el = document.getElementById(id); 
+        if (!el) return;
+        el.innerHTML = '';
+        if(!data) return;
+        if(type === 'at') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
+        else if(type === 'per') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
+        else data.forEach((item, i) => el.innerHTML += temp(item, i));
+    }
+
+    renderGeneric('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('habilidades',${i})">✖</button><h4 onclick="editar('habilidades',${i},'n','Poder')">✨ ${it.n}</h4><p onclick="editar('habilidades',${i},'d','Descrição')">${it.d}</p></div>`);
+    renderGeneric('listaAr', ficha.armas, 'a', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('armas',${i})">✖</button><h4 onclick="editar('armas',${i},'n','Arma')">⚔️ ${it.n}</h4><p onclick="editar('armas',${i},'dan','Dano')">🎲 Dano: ${it.dan}</p><p onclick="editar('armas',${i},'d','Efeito')">${it.d}</p></div>`);
+    renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">✖</button><h4 onclick="editar('inventario',${i},'n','Item')">🎒 ${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
+    renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">✖</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">⚠️ ${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
+
+    let totalDef = 0;
+    renderGeneric('listaEq', ficha.equipamentos, 'e', (it, i) => {
+        totalDef += (parseInt(it.v) || 0);
+        return `<div class="card-item"><button class="btn-delete" onclick="remover('equipamentos',${i})">✖</button><h4>🛡️ ${it.n}</h4><p>Defesa: +${it.v}</p></div>`;
+    });
+    document.getElementById('defTotal').innerText = totalDef;
+
     const petList = document.getElementById('listaPets');
     petList.innerHTML = '';
     if (ficha.pets) {
@@ -2168,10 +2101,10 @@ function renderFicha() {
                     </div>
                 </div>
                 <div class="bar-btns" style="margin-bottom: 10px;">
-                    <button onmousedown="startAutoMod(null,-5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-5</button>
-                    <button onmousedown="startAutoMod(null,-1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">-1</button>
-                    <button onmousedown="startAutoMod(null,1, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+1</button>
-                    <button onmousedown="startAutoMod(null,5, true, ${i}, true)" onmouseup="stopAutoMod(null, true, ${i}, true)" onmouseleave="stopAutoMod(null, true, ${i}, true)">+5</button>
+                    <button onclick="modPetVinculo(${i}, -5)">-5</button>
+                    <button onclick="modPetVinculo(${i}, -1)">-1</button>
+                    <button onclick="modPetVinculo(${i}, 1)">+1</button>
+                    <button onclick="modPetVinculo(${i}, 5)">+5</button>
                     <input type="number" class="max-input" value="${maxVinculo}" onchange="setPetVinculoMax(${i}, this.value)" max="100">
                 </div>
                 
@@ -2184,81 +2117,59 @@ function renderFicha() {
         });
     }
 
-    // Listas genéricas
-    function renderGeneric(id, data, type, temp) {
-        const el = document.getElementById(id); 
-        if (!el) return;
-        el.innerHTML = '';
-        if(!data) return;
-        if(type === 'at') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
-        else if(type === 'per') Object.keys(data).forEach(k => el.innerHTML += temp(k, data[k]));
-        else data.forEach((item, i) => el.innerHTML += temp(item, i));
-    }
-
-    renderGeneric('listaPd', ficha.habilidades, 'h', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('habilidades',${i})">✖</button><h4 onclick="editar('habilidades',${i},'n','Poder')">✨ ${it.n}</h4><p onclick="editar('habilidades',${i},'d','Descrição')">${it.d}</p></div>`);
-    renderGeneric('listaAr', ficha.armas, 'a', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('armas',${i})">✖</button><h4 onclick="editar('armas',${i},'n','Arma')">⚔️ ${it.n}</h4><p onclick="editar('armas',${i},'dan','Dano')">🎲 Dano: ${it.dan}</p><p onclick="editar('armas',${i},'d','Efeito')">${it.d}</p></div>`);
-    renderGeneric('listaInv', ficha.inventario, 'inv', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('inventario',${i})">✖</button><h4 onclick="editar('inventario',${i},'n','Item')">🎒 ${it.n} (x${it.q})</h4><p onclick="editar('inventario',${i},'d','Descrição')">${it.d}</p></div>`);
-    renderGeneric('listaPe', ficha.penitencias, 'p', (it, i) => `<div class="card-item"><button class="btn-delete" onclick="remover('penitencias',${i})">✖</button><h4 onclick="editar('penitencias',${i},'n','Penitência')">⚠️ ${it.n}</h4><p onclick="editar('penitencias',${i},'d','Descrição')">${it.d}</p></div>`);
-
-    let totalDef = 0;
-    renderGeneric('listaEq', ficha.equipamentos, 'e', (it, i) => {
-        totalDef += (parseInt(it.v) || 0);
-        return `<div class="card-item"><button class="btn-delete" onclick="remover('equipamentos',${i})">✖</button><h4>🛡️ ${it.n}</h4><p>Defesa: +${it.v}</p></div>`;
-    });
-    document.getElementById('defTotal').innerText = totalDef;
-    
     document.getElementById('historia').value = ficha.historia || '';
     document.getElementById('anotacoes').value = ficha.anotacoes || '';
     
     salvarNoBanco();
 }
 
-function desfazer() { if(undo.length > 0) { redo.push(JSON.stringify(ficha)); ficha = JSON.parse(undo.pop()); renderFicha(); mostrarNotificacao('↩️ Desfazendo ação...'); } }
-function refazer() { if(redo.length > 0) { undo.push(JSON.stringify(ficha)); ficha = JSON.parse(redo.pop()); renderFicha(); mostrarNotificacao('↪️ Refazendo ação...'); } }
-function exportarFicha() { const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); const a = document.createElement('a'); a.href = data; a.download = (ficha.nome || 'heroi') + "_pergaminho.json"; a.click(); mostrarNotificacao('⚔️ Pergaminho exportado! ⚔️'); }
-function importarFicha() { const input = document.createElement('input'); input.type = 'file'; input.onchange = e => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = ev => { snap(); ficha = JSON.parse(ev.target.result); renderFicha(); mostrarNotificacao('📜 Pergaminho importado!'); }; reader.readAsText(file); }; input.click(); }
+function desfazer() { 
+    if(undo.length > 0) { 
+        redo.push(JSON.stringify(ficha)); 
+        ficha = JSON.parse(undo.pop()); 
+        renderFicha(); 
+        mostrarNotificacao('↩️ Desfazendo ação...'); 
+    } 
+}
 
-window.onload = function() {
-    const select = document.getElementById('criacao-classe');
-    if (select) {
-        Object.keys(classeBonus).sort().forEach(classe => {
-            const option = document.createElement('option');
-            option.value = classe;
-            option.textContent = classe;
-            select.appendChild(option);
-        });
-    }
-    
-    const savedTheme = localStorage.getItem('GOLD_THEME');
-    if (savedTheme && themes.includes(savedTheme)) {
-        document.body.setAttribute('data-theme', savedTheme);
-    }
-    renderThemes();
-};
+function refazer() { 
+    if(redo.length > 0) { 
+        undo.push(JSON.stringify(ficha)); 
+        ficha = JSON.parse(redo.pop()); 
+        renderFicha(); 
+        mostrarNotificacao('↪️ Refazendo ação...'); 
+    } 
+}
 
-document.getElementById('criacao-classe').addEventListener('change', function(e) {
-    const classe = e.target.value;
-    if (classe && classeBonus[classe]) {
-        const bonus = classeBonus[classe];
-        const atributosBonus = atributosClasse[classe] || {};
-        const periciasBonus = periciasClasse[classe] || {};
-        const bonusTexto = Object.entries(atributosBonus)
-            .filter(([a]) => atributosBase.includes(a))
-            .map(([a,b]) => `${a} ${b}`)
-            .join(', ');
-        const periciasTexto = Object.entries(periciasBonus)
-            .map(([p,v]) => `${p} ${v}`)
-            .join(', ');
-        document.getElementById('classe-descricao').innerHTML = 
-            `<strong>⚔️ ${classe} ⚔️</strong><br>
-             <span style="color:var(--hp-color);">❤️ PV: ${bonus.pv}</span> | <span style="color:var(--en-color);">🔮 PE: ${bonus.pe}</span><br>
-             <strong>💪 Atributos:</strong> ${bonusTexto || 'Nenhum'}<br>
-             <strong>📖 Perícias:</strong> ${periciasTexto}<br><br>
-             ${descricoesClasse[classe] || ''}`;
-    } else {
-        document.getElementById('classe-descricao').innerHTML = '';
-    }
-});
+function exportarFicha() { 
+    const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ficha)); 
+    const a = document.createElement('a'); 
+    a.href = data; 
+    a.download = (ficha.nome || 'heroi') + "_pergaminho.json"; 
+    a.click(); 
+    mostrarNotificacao('⚔️ Pergaminho exportado! ⚔️'); 
+}
+
+function importarFicha() { 
+    const input = document.createElement('input'); 
+    input.type = 'file'; 
+    input.onchange = e => { 
+        const file = e.target.files[0]; 
+        const reader = new FileReader(); 
+        reader.onload = ev => { 
+            snap(); 
+            ficha = JSON.parse(ev.target.result); 
+            if (!ficha.raca2) ficha.raca2 = null;
+            if (!ficha.racaDisplay) {
+                ficha.racaDisplay = ficha.raca2 ? ficha.raca + ' + ' + ficha.raca2 : ficha.raca;
+            }
+            renderFicha(); 
+            mostrarNotificacao('📜 Pergaminho importado!'); 
+        }; 
+        reader.readAsText(file); 
+    }; 
+    input.click(); 
+}
 
 function toggleSidebar() {
     const s = document.getElementById('sidebar'), o = document.getElementById('overlay');
@@ -2273,6 +2184,17 @@ function switchTab(e, idx) {
     document.getElementById(`sec-${idx}`).classList.add('active');
     window.scrollTo(0,0);
 }
+
+window.onload = function() {
+    preencherSelectRacas();
+    preencherSelectClasses();
+    
+    const savedTheme = localStorage.getItem('HD_THEME');
+    if (savedTheme && themes.includes(savedTheme)) {
+        document.body.setAttribute('data-theme', savedTheme);
+    }
+    renderThemes();
+};
 </script>
 </body>
 </html>
